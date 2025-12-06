@@ -1,0 +1,205 @@
+/**
+ * app/_components/admin/sa-dashboard/EditTenantModal.styles.ts
+ *
+ * EditTenantModal 用スタイル定義
+ * Phase 14.35-B で EditTenantModal.tsx から分離
+ */
+
+import type { CSSProperties } from 'react';
+
+export const styles: Record<string, CSSProperties> = {
+  overlay: {
+    position: 'fixed',
+    inset: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 1000,
+  },
+  modal: {
+    backgroundColor: 'white',
+    borderRadius: '12px',
+    width: '100%',
+    maxWidth: '600px',
+    maxHeight: '90vh',
+    overflow: 'auto',
+    boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
+  },
+  header: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '20px 24px',
+    borderBottom: '1px solid var(--border-color)',
+  },
+  headerTitle: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+    fontSize: '18px',
+    fontWeight: 600,
+    margin: 0,
+  },
+  closeBtn: {
+    padding: '8px',
+    borderRadius: '8px',
+    border: 'none',
+    backgroundColor: 'transparent',
+    cursor: 'pointer',
+    display: 'flex',
+  },
+  body: {
+    padding: '24px',
+  },
+  section: {
+    marginBottom: '24px',
+  },
+  sectionTitle: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    fontSize: '14px',
+    fontWeight: 600,
+    color: 'var(--text-dark)',
+    marginBottom: '12px',
+  },
+  formGroup: {
+    marginBottom: '16px',
+  },
+  label: {
+    display: 'block',
+    fontSize: '14px',
+    fontWeight: 500,
+    color: 'var(--text-dark)',
+    marginBottom: '6px',
+  },
+  input: {
+    width: '100%',
+    padding: '10px 12px',
+    borderRadius: '8px',
+    border: '1px solid var(--border-color)',
+    fontSize: '14px',
+    boxSizing: 'border-box',
+  },
+  inputDisabled: {
+    backgroundColor: 'var(--bg-gray)',
+    color: 'var(--text-muted)',
+    cursor: 'not-allowed',
+  },
+  select: {
+    width: '100%',
+    padding: '10px 12px',
+    borderRadius: '8px',
+    border: '1px solid var(--border-color)',
+    fontSize: '14px',
+    backgroundColor: 'white',
+  },
+  featureGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, 1fr)',
+    gap: '12px',
+  },
+  featureItem: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '12px',
+    backgroundColor: 'var(--bg-gray)',
+    borderRadius: '8px',
+  },
+  featureLabel: {
+    fontSize: '14px',
+    color: 'var(--text-dark)',
+  },
+  toggleBtn: {
+    padding: '4px',
+    borderRadius: '4px',
+    border: 'none',
+    backgroundColor: 'transparent',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  colorInputGroup: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+  },
+  colorInput: {
+    width: '50px',
+    height: '40px',
+    padding: '4px',
+    borderRadius: '8px',
+    border: '1px solid var(--border-color)',
+    cursor: 'pointer',
+  },
+  colorValue: {
+    fontFamily: 'monospace',
+    fontSize: '14px',
+    color: 'var(--text-muted)',
+  },
+  footer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    gap: '12px',
+    padding: '20px 24px',
+    borderTop: '1px solid var(--border-color)',
+  },
+  cancelBtn: {
+    padding: '10px 20px',
+    borderRadius: '8px',
+    border: '1px solid var(--border-color)',
+    backgroundColor: 'white',
+    fontSize: '14px',
+    fontWeight: 500,
+    cursor: 'pointer',
+  },
+  submitBtn: {
+    padding: '10px 20px',
+    borderRadius: '8px',
+    border: 'none',
+    backgroundColor: 'var(--primary)',
+    color: 'white',
+    fontSize: '14px',
+    fontWeight: 500,
+    cursor: 'pointer',
+  },
+  hint: {
+    fontSize: '12px',
+    color: 'var(--text-muted)',
+    marginTop: '4px',
+  },
+  warning: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: '8px',
+    padding: '12px',
+    backgroundColor: '#fef3c7',
+    borderRadius: '8px',
+    marginBottom: '16px',
+    fontSize: '13px',
+    color: '#92400e',
+  },
+  colorPreviewContainer: {
+    display: 'flex',
+    gap: '8px',
+    padding: '12px',
+    backgroundColor: 'var(--bg-gray)',
+    borderRadius: '8px',
+    marginTop: '8px',
+  },
+  colorPreviewItem: {
+    textAlign: 'center',
+  },
+  colorPreviewBox: {
+    width: '40px',
+    height: '40px',
+    borderRadius: '8px',
+    marginBottom: '4px',
+  },
+  colorPreviewLabel: {
+    fontSize: '10px',
+    color: 'var(--text-muted)',
+  },
+};

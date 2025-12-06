@@ -1,0 +1,28 @@
+{
+  "name": "fdc-modular-starter",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Founders Direct Cockpit - Modular Starter (Next.js 15 + React 19)",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "lucide-react": "^0.556.0",
+    "next": "^15.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "@types/react": "^19.0.1",
+    "@types/react-dom": "^19.0.1",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}

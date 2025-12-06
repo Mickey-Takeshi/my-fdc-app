@@ -1,0 +1,336 @@
+/**
+ * app/_components/action-map/FocusMode.module.css
+ *
+ * Phase 11: フォーカスモード スタイル
+ * Note: TODOタブと同様の明るいテーマに統一
+ */
+
+/* オーバーレイ */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+/* モーダル本体 */
+.modal {
+  background: #ffffff;
+  border-radius: 12px;
+  max-width: 700px;
+  width: 100%;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+/* ヘッダー */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-dark, #333);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.focusIcon {
+  font-size: 1.5rem;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: var(--text-light, #666);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.closeButton:hover {
+  background: #f5f5f5;
+  color: var(--text-dark, #333);
+}
+
+/* ボディ */
+.body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+/* Action Item 情報セクション */
+.itemInfo {
+  margin-bottom: 24px;
+}
+
+.itemTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-dark, #333);
+  margin: 0 0 16px 0;
+}
+
+/* 進捗バーセクション */
+.progressSection {
+  margin-bottom: 20px;
+}
+
+.progressBar {
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.progressText {
+  font-size: 0.875rem;
+  color: var(--text-light, #666);
+}
+
+/* メタ情報グリッド */
+.metaGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.metaItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metaLabel {
+  font-size: 0.75rem;
+  color: var(--text-light, #888);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.metaValue {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-dark, #333);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.remainingDays {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+/* 説明 */
+.description {
+  background: #f5f5f5;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.description p {
+  margin: 4px 0 0 0;
+  color: var(--text-dark, #333);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+/* TODO セクション */
+.todoSection {
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.todoHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.todoTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-dark, #333);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.addTodoButton {
+  padding: 6px 12px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.addTodoButton:hover:not(:disabled) {
+  background: var(--primary-dark);
+}
+
+.addTodoButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 空の TODO */
+.emptyTodo {
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--text-light, #666);
+}
+
+.emptyTodo p {
+  margin: 0 0 8px 0;
+  font-size: 0.9rem;
+}
+
+.hint {
+  font-size: 0.8rem;
+  color: var(--text-light, #888);
+}
+
+/* TODO リスト */
+.todoList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.todoItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.todoItem:hover {
+  background: #fafafa;
+  border-color: #ccc;
+}
+
+.todoItem.completed {
+  opacity: 0.6;
+}
+
+.todoItem.completed .todoName {
+  text-decoration: line-through;
+}
+
+.todoStatus {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.todoTime {
+  font-size: 0.75rem;
+  color: var(--text-light, #888);
+  min-width: 80px;
+  font-family: monospace;
+}
+
+.todoName {
+  flex: 1;
+  font-size: 0.9rem;
+  color: var(--text-dark, #333);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.todoSuit {
+  font-size: 0.75rem;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+/* フッター */
+.footer {
+  display: flex;
+  gap: 12px;
+  padding: 16px 20px;
+  border-top: 1px solid #e0e0e0;
+  background: #f5f5f5;
+}
+
+.actionButton {
+  flex: 1;
+  padding: 10px 16px;
+  background: #ffffff;
+  color: var(--text-dark, #333);
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.actionButton:hover:not(:disabled) {
+  background: #f5f5f5;
+  border-color: var(--primary);
+}
+
+.actionButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* レスポンシブ */
+@media (max-width: 600px) {
+  .overlay {
+    padding: 10px;
+  }
+
+  .modal {
+    max-height: 90vh;
+  }
+
+  .metaGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer {
+    flex-wrap: wrap;
+  }
+
+  .actionButton {
+    flex: 1 1 calc(50% - 6px);
+  }
+}
