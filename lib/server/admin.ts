@@ -4,7 +4,7 @@
  * Phase 18: ワークスペース管理者機能のサーバーサイド処理
  */
 
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import crypto from 'crypto';
 import {
   Invitation,
@@ -15,11 +15,23 @@ import {
 } from '@/lib/types/admin';
 import { WorkspaceRole } from '@/lib/types/workspace';
 
-// Service Role クライアント（RLS をバイパス）
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+// Service Role クライアント（RLS をバイパス）- 遅延初期化
+let _supabaseAdmin: SupabaseClient | null = null;
+
+function getSupabaseAdmin(): SupabaseClient | null {
+  if (_supabaseAdmin) return _supabaseAdmin;
+
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!url || !key) {
+    console.warn('[Admin] Supabase not configured');
+    return null;
+  }
+
+  _supabaseAdmin = createClient(url, key);
+  return _supabaseAdmin;
+}
 
 /**
  * ユーザーの権限をチェック
@@ -29,6 +41,11 @@ export async function checkUserRole(
   workspaceId: string,
   requiredRoles: WorkspaceRole[]
 ): Promise<{ allowed: boolean; currentRole: WorkspaceRole | null }> {
+  const supabaseAdmin = getSupabaseAdmin();
+  if (!supabaseAdmin) {
+    return { allowed: false, currentRole: null };
+  }
+
   const { data, error } = await supabaseAdmin
     .from('workspace_members')
     .select('role')
@@ -62,6 +79,11 @@ export async function createInvitation(
   createdBy: string,
   request: CreateInvitationRequest
 ): Promise<{ invitation: Invitation | null; error: string | null }> {
+  const supabaseAdmin = getSupabaseAdmin();
+  if (!supabaseAdmin) {
+    return { invitation: null, error: 'Database not configured' };
+  }
+
   const { email, role } = request;
 
   // メールアドレスでユーザーを検索
@@ -151,6 +173,11 @@ export async function createInvitation(
 export async function getInvitations(
   workspaceId: string
 ): Promise<InvitationWithCreator[]> {
+  const supabaseAdmin = getSupabaseAdmin();
+  if (!supabaseAdmin) {
+    return [];
+  }
+
   const { data, error } = await supabaseAdmin
     .from('invitations')
     .select(`
@@ -192,6 +219,11 @@ export async function cancelInvitation(
   userId: string,
   workspaceId: string
 ): Promise<{ success: boolean; error: string | null }> {
+  const supabaseAdmin = getSupabaseAdmin();
+  if (!supabaseAdmin) {
+    return { success: false, error: 'Database not configured' };
+  }
+
   const { data: invitation, error: fetchError } = await supabaseAdmin
     .from('invitations')
     .select('*')
@@ -229,6 +261,11 @@ export async function acceptInvitation(
   token: string,
   userId: string
 ): Promise<{ success: boolean; workspaceId: string | null; error: string | null }> {
+  const supabaseAdmin = getSupabaseAdmin();
+  if (!supabaseAdmin) {
+    return { success: false, workspaceId: null, error: 'Database not configured' };
+  }
+
   // 招待を検索
   const { data: invitation, error: fetchError } = await supabaseAdmin
     .from('invitations')
@@ -327,6 +364,11 @@ export async function changeMemberRole(
   newRole: WorkspaceRole,
   actorId: string
 ): Promise<{ success: boolean; error: string | null }> {
+  const supabaseAdmin = getSupabaseAdmin();
+  if (!supabaseAdmin) {
+    return { success: false, error: 'Database not configured' };
+  }
+
   // 自分自身の変更は不可
   if (targetUserId === actorId) {
     return { success: false, error: '自分自身のロールは変更できません' };
@@ -392,6 +434,11 @@ export async function removeMember(
   targetUserId: string,
   actorId: string
 ): Promise<{ success: boolean; error: string | null }> {
+  const supabaseAdmin = getSupabaseAdmin();
+  if (!supabaseAdmin) {
+    return { success: false, error: 'Database not configured' };
+  }
+
   // 自分自身の削除は不可
   if (targetUserId === actorId) {
     return { success: false, error: '自分自身を削除することはできません' };
@@ -450,6 +497,12 @@ export async function recordAuditLog(
   action: AuditAction,
   details: Record<string, unknown>
 ): Promise<void> {
+  const supabaseAdmin = getSupabaseAdmin();
+  if (!supabaseAdmin) {
+    console.warn('[Admin] Cannot record audit log: Database not configured');
+    return;
+  }
+
   const { error } = await supabaseAdmin
     .from('audit_logs')
     .insert({
@@ -472,6 +525,11 @@ export async function getAuditLogs(
   limit: number = 50,
   offset: number = 0
 ): Promise<{ logs: AuditLogWithUser[]; total: number }> {
+  const supabaseAdmin = getSupabaseAdmin();
+  if (!supabaseAdmin) {
+    return { logs: [], total: 0 };
+  }
+
   // 総数を取得
   const { count } = await supabaseAdmin
     .from('audit_logs')
