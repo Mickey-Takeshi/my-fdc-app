@@ -5,22 +5,23 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { createAdminClient } from '@/lib/supabase/client';
 import { validateSession } from '@/lib/server/auth';
 import { BRAND_POINT_ORDER } from '@/lib/types/brand';
 
 export const dynamic = 'force-dynamic';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
 
 type RouteParams = { params: Promise<{ workspaceId: string }> };
 
 // ブランド一覧取得
 export async function GET(request: NextRequest, { params }: RouteParams) {
   try {
+    const supabase = createAdminClient();
+    if (!supabase) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
+
     const { workspaceId } = await params;
     const sessionToken = request.cookies.get('fdc_session')?.value;
 
@@ -66,6 +67,11 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 // ブランド作成
 export async function POST(request: NextRequest, { params }: RouteParams) {
   try {
+    const supabase = createAdminClient();
+    if (!supabase) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
+
     const { workspaceId } = await params;
     const sessionToken = request.cookies.get('fdc_session')?.value;
 
