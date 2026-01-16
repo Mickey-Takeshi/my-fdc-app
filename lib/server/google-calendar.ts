@@ -4,7 +4,7 @@
  * Phase 13: Google Calendar API クライアント
  */
 
-import { getValidAccessToken } from './google-tokens';
+import { callGoogleApi } from './google-api-base';
 import type {
   GoogleCalendar,
   GoogleCalendarListResponse,
@@ -24,32 +24,7 @@ async function callCalendarApi<T>(
   endpoint: string,
   params?: Record<string, string>
 ): Promise<T | null> {
-  const accessToken = await getValidAccessToken(userId);
-  if (!accessToken) {
-    console.error('[Calendar API] No valid access token');
-    return null;
-  }
-
-  const url = new URL(`${CALENDAR_API_BASE}${endpoint}`);
-  if (params) {
-    Object.entries(params).forEach(([key, value]) => {
-      url.searchParams.set(key, value);
-    });
-  }
-
-  const response = await fetch(url.toString(), {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error('[Calendar API] Error:', response.status, errorText);
-    return null;
-  }
-
-  return response.json();
+  return callGoogleApi<T>(userId, CALENDAR_API_BASE, endpoint, { params });
 }
 
 /**

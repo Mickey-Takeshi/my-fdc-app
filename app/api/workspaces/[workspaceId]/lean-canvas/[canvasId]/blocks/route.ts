@@ -5,8 +5,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createAdminClient } from '@/lib/supabase/client';
-import { validateSession } from '@/lib/server/auth';
+import { checkAuth, isAuthError } from '@/lib/server/api-auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,34 +14,14 @@ type RouteParams = { params: Promise<{ workspaceId: string; canvasId: string }> 
 // ブロック更新（upsert）
 export async function PUT(request: NextRequest, { params }: RouteParams) {
   try {
-    const supabase = createAdminClient();
-    if (!supabase) {
-      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
-    }
-
     const { workspaceId, canvasId } = await params;
-    const sessionToken = request.cookies.get('fdc_session')?.value;
+    const auth = await checkAuth(request, workspaceId);
 
-    if (!sessionToken) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    if (isAuthError(auth)) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
 
-    const session = await validateSession(sessionToken);
-    if (!session) {
-      return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
-    }
-
-    // メンバーシップ確認
-    const { data: membership } = await supabase
-      .from('workspace_members')
-      .select('role')
-      .eq('workspace_id', workspaceId)
-      .eq('user_id', session.userId)
-      .single();
-
-    if (!membership) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-    }
+    const { supabase } = auth;
 
     // Canvas存在確認
     const { data: canvas } = await supabase

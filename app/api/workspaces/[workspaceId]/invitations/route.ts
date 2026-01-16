@@ -5,12 +5,8 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { validateSession } from '@/lib/server/auth';
-import {
-  checkUserRole,
-  createInvitation,
-  getInvitations,
-} from '@/lib/server/admin';
+import { checkAdminAuth, isAuthError } from '@/lib/server/api-auth';
+import { createInvitation, getInvitations } from '@/lib/server/admin';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,21 +16,11 @@ type RouteParams = { params: Promise<{ workspaceId: string }> };
 export async function GET(request: NextRequest, { params }: RouteParams) {
   try {
     const { workspaceId } = await params;
-    const sessionToken = request.cookies.get('fdc_session')?.value;
 
-    if (!sessionToken) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    const session = await validateSession(sessionToken);
-    if (!session) {
-      return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
-    }
-
-    // 権限チェック
-    const { allowed } = await checkUserRole(session.userId, workspaceId, ['OWNER', 'ADMIN']);
-    if (!allowed) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+    // 認証・権限チェック（OWNER/ADMIN のみ）
+    const auth = await checkAdminAuth(request, workspaceId);
+    if (isAuthError(auth)) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
 
     const invitations = await getInvitations(workspaceId);
@@ -53,21 +39,11 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 export async function POST(request: NextRequest, { params }: RouteParams) {
   try {
     const { workspaceId } = await params;
-    const sessionToken = request.cookies.get('fdc_session')?.value;
 
-    if (!sessionToken) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    const session = await validateSession(sessionToken);
-    if (!session) {
-      return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
-    }
-
-    // 権限チェック
-    const { allowed } = await checkUserRole(session.userId, workspaceId, ['OWNER', 'ADMIN']);
-    if (!allowed) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+    // 認証・権限チェック（OWNER/ADMIN のみ）
+    const auth = await checkAdminAuth(request, workspaceId);
+    if (isAuthError(auth)) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
 
     const body = await request.json();
@@ -89,7 +65,7 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
 
     const { invitation, error } = await createInvitation(
       workspaceId,
-      session.userId,
+      auth.userId,
       { email, role }
     );
 

@@ -5,8 +5,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createAdminClient } from '@/lib/supabase/client';
-import { validateSession } from '@/lib/server/auth';
+import { checkAuth, checkAdminAuth, isAuthError } from '@/lib/server/api-auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,34 +14,14 @@ type RouteParams = { params: Promise<{ workspaceId: string; canvasId: string }> 
 // Canvas詳細取得（ブロック含む）
 export async function GET(request: NextRequest, { params }: RouteParams) {
   try {
-    const supabase = createAdminClient();
-    if (!supabase) {
-      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
-    }
-
     const { workspaceId, canvasId } = await params;
-    const sessionToken = request.cookies.get('fdc_session')?.value;
+    const auth = await checkAuth(request, workspaceId);
 
-    if (!sessionToken) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    if (isAuthError(auth)) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
 
-    const session = await validateSession(sessionToken);
-    if (!session) {
-      return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
-    }
-
-    // メンバーシップ確認
-    const { data: membership } = await supabase
-      .from('workspace_members')
-      .select('role')
-      .eq('workspace_id', workspaceId)
-      .eq('user_id', session.userId)
-      .single();
-
-    if (!membership) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-    }
+    const { supabase } = auth;
 
     // Canvas取得
     const { data: canvas, error } = await supabase
@@ -94,34 +73,14 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 // Canvas更新
 export async function PATCH(request: NextRequest, { params }: RouteParams) {
   try {
-    const supabase = createAdminClient();
-    if (!supabase) {
-      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
-    }
-
     const { workspaceId, canvasId } = await params;
-    const sessionToken = request.cookies.get('fdc_session')?.value;
+    const auth = await checkAuth(request, workspaceId);
 
-    if (!sessionToken) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    if (isAuthError(auth)) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
 
-    const session = await validateSession(sessionToken);
-    if (!session) {
-      return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
-    }
-
-    // メンバーシップ確認
-    const { data: membership } = await supabase
-      .from('workspace_members')
-      .select('role')
-      .eq('workspace_id', workspaceId)
-      .eq('user_id', session.userId)
-      .single();
-
-    if (!membership) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-    }
+    const { supabase } = auth;
 
     const body = await request.json();
     const updates: Record<string, unknown> = { updated_at: new Date().toISOString() };
@@ -163,34 +122,15 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
 // Canvas削除
 export async function DELETE(request: NextRequest, { params }: RouteParams) {
   try {
-    const supabase = createAdminClient();
-    if (!supabase) {
-      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
-    }
-
     const { workspaceId, canvasId } = await params;
-    const sessionToken = request.cookies.get('fdc_session')?.value;
-
-    if (!sessionToken) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    const session = await validateSession(sessionToken);
-    if (!session) {
-      return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
-    }
-
     // OWNER/ADMIN のみ削除可能
-    const { data: membership } = await supabase
-      .from('workspace_members')
-      .select('role')
-      .eq('workspace_id', workspaceId)
-      .eq('user_id', session.userId)
-      .single();
+    const auth = await checkAdminAuth(request, workspaceId);
 
-    if (!membership || !['OWNER', 'ADMIN'].includes(membership.role)) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+    if (isAuthError(auth)) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
+
+    const { supabase } = auth;
 
     const { error } = await supabase
       .from('lean_canvas')

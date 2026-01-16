@@ -5,8 +5,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createAdminClient } from '@/lib/supabase/client';
-import { validateSession } from '@/lib/server/auth';
+import { checkAuth, isAuthError } from '@/lib/server/api-auth';
 import { BrandPointType, BRAND_POINT_ORDER } from '@/lib/types/brand';
 
 export const dynamic = 'force-dynamic';
@@ -16,22 +15,14 @@ type RouteParams = { params: Promise<{ workspaceId: string; brandId: string }> }
 // ポイント更新（upsert）
 export async function PUT(request: NextRequest, { params }: RouteParams) {
   try {
-    const supabase = createAdminClient();
-    if (!supabase) {
-      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
-    }
-
     const { workspaceId, brandId } = await params;
-    const sessionToken = request.cookies.get('fdc_session')?.value;
 
-    if (!sessionToken) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    const auth = await checkAuth(request, workspaceId);
+    if (isAuthError(auth)) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
 
-    const session = await validateSession(sessionToken);
-    if (!session) {
-      return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
-    }
+    const { supabase } = auth;
 
     const body = await request.json();
     const { pointType, content } = body;

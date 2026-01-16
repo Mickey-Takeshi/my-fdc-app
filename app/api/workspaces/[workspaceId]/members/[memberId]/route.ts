@@ -5,8 +5,8 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { validateSession } from '@/lib/server/auth';
-import { checkUserRole, changeMemberRole, removeMember } from '@/lib/server/admin';
+import { checkAdminAuth, isAuthError } from '@/lib/server/api-auth';
+import { changeMemberRole, removeMember } from '@/lib/server/admin';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,22 +18,13 @@ type RouteParams = {
 export async function PATCH(request: NextRequest, { params }: RouteParams) {
   try {
     const { workspaceId, memberId } = await params;
-    const sessionToken = request.cookies.get('fdc_session')?.value;
+    const auth = await checkAdminAuth(request, workspaceId);
 
-    if (!sessionToken) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    if (isAuthError(auth)) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
 
-    const session = await validateSession(sessionToken);
-    if (!session) {
-      return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
-    }
-
-    // 権限チェック
-    const { allowed } = await checkUserRole(session.userId, workspaceId, ['OWNER', 'ADMIN']);
-    if (!allowed) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-    }
+    const { userId } = auth;
 
     const body = await request.json();
     const { role } = body;
@@ -46,7 +37,7 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
       workspaceId,
       memberId,
       role,
-      session.userId
+      userId
     );
 
     if (!success) {
@@ -67,27 +58,18 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
 export async function DELETE(request: NextRequest, { params }: RouteParams) {
   try {
     const { workspaceId, memberId } = await params;
-    const sessionToken = request.cookies.get('fdc_session')?.value;
+    const auth = await checkAdminAuth(request, workspaceId);
 
-    if (!sessionToken) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    if (isAuthError(auth)) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
 
-    const session = await validateSession(sessionToken);
-    if (!session) {
-      return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
-    }
-
-    // 権限チェック
-    const { allowed } = await checkUserRole(session.userId, workspaceId, ['OWNER', 'ADMIN']);
-    if (!allowed) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-    }
+    const { userId } = auth;
 
     const { success, error } = await removeMember(
       workspaceId,
       memberId,
-      session.userId
+      userId
     );
 
     if (!success) {

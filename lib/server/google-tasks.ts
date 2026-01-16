@@ -4,7 +4,7 @@
  * Phase 14: Google Tasks API クライアント
  */
 
-import { getValidAccessToken } from './google-tokens';
+import { callGoogleApi, GoogleApiCallOptions } from './google-api-base';
 import type {
   GoogleTaskList,
   GoogleTaskListsResponse,
@@ -21,51 +21,9 @@ const TASKS_API_BASE = 'https://tasks.googleapis.com/tasks/v1';
 async function callTasksApi<T>(
   userId: string,
   endpoint: string,
-  options: {
-    method?: string;
-    body?: unknown;
-    params?: Record<string, string>;
-  } = {}
+  options: GoogleApiCallOptions = {}
 ): Promise<T | null> {
-  const accessToken = await getValidAccessToken(userId);
-  if (!accessToken) {
-    console.error('[Tasks API] No valid access token');
-    return null;
-  }
-
-  const url = new URL(`${TASKS_API_BASE}${endpoint}`);
-  if (options.params) {
-    Object.entries(options.params).forEach(([key, value]) => {
-      url.searchParams.set(key, value);
-    });
-  }
-
-  const fetchOptions: RequestInit = {
-    method: options.method || 'GET',
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      'Content-Type': 'application/json',
-    },
-  };
-
-  if (options.body) {
-    fetchOptions.body = JSON.stringify(options.body);
-  }
-
-  const response = await fetch(url.toString(), fetchOptions);
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error('[Tasks API] Error:', response.status, errorText);
-    return null;
-  }
-
-  // DELETE は 204 No Content を返す
-  if (response.status === 204) {
-    return null;
-  }
-
-  return response.json();
+  return callGoogleApi<T>(userId, TASKS_API_BASE, endpoint, options);
 }
 
 /**

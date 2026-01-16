@@ -5,8 +5,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createAdminClient } from '@/lib/supabase/client';
-import { validateSession } from '@/lib/server/auth';
+import { checkAuth, isAuthError } from '@/lib/server/api-auth';
 import { BRAND_POINT_ORDER } from '@/lib/types/brand';
 
 export const dynamic = 'force-dynamic';
@@ -17,22 +16,14 @@ type RouteParams = { params: Promise<{ workspaceId: string }> };
 // ブランド一覧取得
 export async function GET(request: NextRequest, { params }: RouteParams) {
   try {
-    const supabase = createAdminClient();
-    if (!supabase) {
-      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
-    }
-
     const { workspaceId } = await params;
-    const sessionToken = request.cookies.get('fdc_session')?.value;
+    const auth = await checkAuth(request, workspaceId);
 
-    if (!sessionToken) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    if (isAuthError(auth)) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
 
-    const session = await validateSession(sessionToken);
-    if (!session) {
-      return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
-    }
+    const { supabase } = auth;
 
     const { data, error } = await supabase
       .from('brands')
@@ -67,22 +58,14 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 // ブランド作成
 export async function POST(request: NextRequest, { params }: RouteParams) {
   try {
-    const supabase = createAdminClient();
-    if (!supabase) {
-      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
-    }
-
     const { workspaceId } = await params;
-    const sessionToken = request.cookies.get('fdc_session')?.value;
+    const auth = await checkAuth(request, workspaceId);
 
-    if (!sessionToken) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    if (isAuthError(auth)) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
 
-    const session = await validateSession(sessionToken);
-    if (!session) {
-      return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
-    }
+    const { session, supabase } = auth;
 
     const body = await request.json();
     const { name, tagline, story } = body;

@@ -8,49 +8,13 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createAdminClient } from '@/lib/supabase/client';
-import { validateSession } from '@/lib/server/auth';
+import { checkAuth, isAuthError } from '@/lib/server/api-auth';
 import { CreateLeadSchema } from '@/lib/types/lead';
 
 export const dynamic = 'force-dynamic';
 
 interface RouteParams {
   params: Promise<{ workspaceId: string }>;
-}
-
-/**
- * 認証 + ワークスペースアクセスチェック
- */
-async function checkAuth(request: NextRequest, workspaceId: string) {
-  const sessionToken = request.cookies.get('fdc_session')?.value;
-
-  if (!sessionToken) {
-    return { error: 'Unauthorized', status: 401 };
-  }
-
-  const session = await validateSession(sessionToken);
-  if (!session) {
-    return { error: 'Invalid session', status: 401 };
-  }
-
-  const supabase = createAdminClient();
-  if (!supabase) {
-    return { error: 'Database not configured', status: 500 };
-  }
-
-  // ワークスペースメンバーシップ確認
-  const { data: membership, error } = await supabase
-    .from('workspace_members')
-    .select('role')
-    .eq('workspace_id', workspaceId)
-    .eq('user_id', session.userId)
-    .single();
-
-  if (error || !membership) {
-    return { error: 'Access denied', status: 403 };
-  }
-
-  return { session, supabase, role: membership.role };
 }
 
 /**
@@ -61,7 +25,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
   const { workspaceId } = await params;
 
   const auth = await checkAuth(request, workspaceId);
-  if ('error' in auth) {
+  if (isAuthError(auth)) {
     return NextResponse.json({ error: auth.error }, { status: auth.status });
   }
 
@@ -139,7 +103,7 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
   const { workspaceId } = await params;
 
   const auth = await checkAuth(request, workspaceId);
-  if ('error' in auth) {
+  if (isAuthError(auth)) {
     return NextResponse.json({ error: auth.error }, { status: auth.status });
   }
 

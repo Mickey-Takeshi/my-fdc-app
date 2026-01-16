@@ -5,8 +5,8 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { validateSession } from '@/lib/server/auth';
-import { checkUserRole, cancelInvitation } from '@/lib/server/admin';
+import { checkAdminAuth, isAuthError } from '@/lib/server/api-auth';
+import { cancelInvitation } from '@/lib/server/admin';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,26 +18,16 @@ type RouteParams = {
 export async function DELETE(request: NextRequest, { params }: RouteParams) {
   try {
     const { workspaceId, invitationId } = await params;
-    const sessionToken = request.cookies.get('fdc_session')?.value;
 
-    if (!sessionToken) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    const session = await validateSession(sessionToken);
-    if (!session) {
-      return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
-    }
-
-    // 権限チェック
-    const { allowed } = await checkUserRole(session.userId, workspaceId, ['OWNER', 'ADMIN']);
-    if (!allowed) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+    // 認証・権限チェック（OWNER/ADMIN のみ）
+    const auth = await checkAdminAuth(request, workspaceId);
+    if (isAuthError(auth)) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
 
     const { success, error } = await cancelInvitation(
       invitationId,
-      session.userId,
+      auth.userId,
       workspaceId
     );
 

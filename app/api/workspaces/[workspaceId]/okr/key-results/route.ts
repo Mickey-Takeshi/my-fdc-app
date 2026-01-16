@@ -6,8 +6,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createAdminClient } from '@/lib/supabase/client';
-import { validateSession } from '@/lib/server/auth';
+import { checkAuth, isAuthError } from '@/lib/server/api-auth';
 import { calculateKeyResultProgress } from '@/lib/types/okr';
 
 export const dynamic = 'force-dynamic';
@@ -20,33 +19,13 @@ interface RouteParams {
 export async function GET(request: NextRequest, { params }: RouteParams) {
   try {
     const { workspaceId } = await params;
-    const sessionToken = request.cookies.get('fdc_session')?.value;
+    const auth = await checkAuth(request, workspaceId);
 
-    if (!sessionToken) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    if (isAuthError(auth)) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
 
-    const session = await validateSession(sessionToken);
-    if (!session) {
-      return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
-    }
-
-    const supabase = createAdminClient();
-    if (!supabase) {
-      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
-    }
-
-    // メンバーシップ確認
-    const { data: membership, error: memberError } = await supabase
-      .from('workspace_members')
-      .select('role')
-      .eq('workspace_id', workspaceId)
-      .eq('user_id', session.userId)
-      .single();
-
-    if (memberError || !membership) {
-      return NextResponse.json({ error: 'Access denied' }, { status: 403 });
-    }
+    const { supabase } = auth;
 
     // アクティブなObjectiveのKRを取得
     const { data: objectives, error: objError } = await supabase

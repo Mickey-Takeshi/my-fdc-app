@@ -9,8 +9,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createAdminClient } from '@/lib/supabase/client';
-import { validateSession } from '@/lib/server/auth';
+import { checkSessionOnly, isAuthError } from '@/lib/server/api-auth';
 import { CreateWorkspaceSchema } from '@/lib/types/workspace';
 
 export const dynamic = 'force-dynamic';
@@ -20,25 +19,14 @@ export const dynamic = 'force-dynamic';
  * ユーザーが所属するワークスペース一覧を取得
  */
 export async function GET(request: NextRequest) {
-  const sessionToken = request.cookies.get('fdc_session')?.value;
-
-  if (!sessionToken) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
   try {
-    const session = await validateSession(sessionToken);
-    if (!session) {
-      return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
+    // 認証チェック
+    const auth = await checkSessionOnly(request);
+    if (isAuthError(auth)) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
 
-    const supabase = createAdminClient();
-    if (!supabase) {
-      return NextResponse.json(
-        { error: 'Database not configured' },
-        { status: 500 }
-      );
-    }
+    const { session, supabase } = auth;
 
     // ユーザーが所属するワークスペースを取得
     const { data, error } = await supabase
@@ -108,17 +96,14 @@ export async function GET(request: NextRequest) {
  * 新規ワークスペースを作成（作成者は OWNER）
  */
 export async function POST(request: NextRequest) {
-  const sessionToken = request.cookies.get('fdc_session')?.value;
-
-  if (!sessionToken) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
   try {
-    const session = await validateSession(sessionToken);
-    if (!session) {
-      return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
+    // 認証チェック
+    const auth = await checkSessionOnly(request);
+    if (isAuthError(auth)) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
+
+    const { session, supabase } = auth;
 
     const body = await request.json();
     const parsed = CreateWorkspaceSchema.safeParse(body);
@@ -127,14 +112,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: 'Invalid request', details: parsed.error.flatten() },
         { status: 400 }
-      );
-    }
-
-    const supabase = createAdminClient();
-    if (!supabase) {
-      return NextResponse.json(
-        { error: 'Database not configured' },
-        { status: 500 }
       );
     }
 

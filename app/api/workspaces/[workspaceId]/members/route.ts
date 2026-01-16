@@ -9,9 +9,8 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createAdminClient } from '@/lib/supabase/client';
-import { validateSession } from '@/lib/server/auth';
-import { AddMemberSchema, isAdminOrAbove } from '@/lib/types/workspace';
+import { checkAuth, checkAdminAuth, isAuthError } from '@/lib/server/api-auth';
+import { AddMemberSchema } from '@/lib/types/workspace';
 
 export const dynamic = 'force-dynamic';
 
@@ -33,49 +32,6 @@ interface WorkspaceMemberRow {
 }
 
 /**
- * 認証 + ロールチェック
- */
-async function checkAuth(
-  request: NextRequest,
-  workspaceId: string,
-  requiredAdminOrAbove = false
-) {
-  const sessionToken = request.cookies.get('fdc_session')?.value;
-
-  if (!sessionToken) {
-    return { error: 'Unauthorized', status: 401 };
-  }
-
-  const session = await validateSession(sessionToken);
-  if (!session) {
-    return { error: 'Invalid session', status: 401 };
-  }
-
-  const supabase = createAdminClient();
-  if (!supabase) {
-    return { error: 'Database not configured', status: 500 };
-  }
-
-  // メンバーシップ確認
-  const { data: membership, error } = await supabase
-    .from('workspace_members')
-    .select('role')
-    .eq('workspace_id', workspaceId)
-    .eq('user_id', session.userId)
-    .single();
-
-  if (error || !membership) {
-    return { error: 'Access denied', status: 403 };
-  }
-
-  if (requiredAdminOrAbove && !isAdminOrAbove(membership.role as 'OWNER' | 'ADMIN' | 'MEMBER')) {
-    return { error: 'Admin permission required', status: 403 };
-  }
-
-  return { session, supabase, role: membership.role };
-}
-
-/**
  * GET /api/workspaces/[workspaceId]/members
  * メンバー一覧を取得
  */
@@ -86,7 +42,7 @@ export async function GET(
   const { workspaceId } = await params;
 
   const auth = await checkAuth(request, workspaceId);
-  if ('error' in auth) {
+  if (isAuthError(auth)) {
     return NextResponse.json({ error: auth.error }, { status: auth.status });
   }
 
@@ -149,8 +105,8 @@ export async function POST(
 ) {
   const { workspaceId } = await params;
 
-  const auth = await checkAuth(request, workspaceId, true);
-  if ('error' in auth) {
+  const auth = await checkAdminAuth(request, workspaceId);
+  if (isAuthError(auth)) {
     return NextResponse.json({ error: auth.error }, { status: auth.status });
   }
 
