@@ -14,6 +14,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { AuthProvider, type AuthUser } from '@/lib/contexts/AuthContext';
 import { WorkspaceProvider } from '@/lib/contexts/WorkspaceContext';
+import { SnackbarProvider } from '@/lib/contexts/SnackbarContext';
 import {
   LayoutDashboard,
   LogOut,
@@ -182,6 +183,7 @@ export default function AppLayout({
   return (
     <AuthProvider user={user} loading={loading}>
       <WorkspaceProvider>
+        <SnackbarProvider>
         {/* ヘッダー */}
         <header className="header">
         <div className="header-content">
@@ -226,6 +228,7 @@ export default function AppLayout({
         {/* メインコンテンツ */}
         <main>{children}</main>
       </div>
+        </SnackbarProvider>
       </WorkspaceProvider>
     </AuthProvider>
   );
