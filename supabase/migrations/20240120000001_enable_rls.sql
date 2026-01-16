@@ -72,14 +72,18 @@ USING (
   )
 );
 
--- ADMIN以上のみメンバー追加可能
-CREATE POLICY "Admin can add members"
+-- メンバー追加: ADMIN以上、または自分自身をOWNERとして追加（ワークスペース作成時）
+CREATE POLICY "Admin can add members or owner self-insert"
 ON workspace_members FOR INSERT
 WITH CHECK (
+  -- 既存のADMIN/OWNERが追加する場合
   workspace_id IN (
     SELECT workspace_id FROM workspace_members
     WHERE user_id = auth.uid() AND role IN ('OWNER', 'ADMIN')
   )
+  OR
+  -- 自分自身をOWNERとして追加する場合（ワークスペース作成時）
+  (user_id = auth.uid() AND role = 'OWNER')
 );
 
 -- ADMIN以上のみメンバー更新可能
