@@ -1,11 +1,5 @@
-/**
- * app/page.tsx
- *
- * ルートページ → ログインページへリダイレクト
- */
-
-import { redirect } from 'next/navigation';
+import { LandingPage } from '@/app/_components/landing/LandingPage';
 
 export default function RootPage() {
-  redirect('/login');
+  return <LandingPage />;
 }

@@ -1,0 +1,188 @@
+{
+  "config": {
+    "configFile": "/Users/takes/.claude-worktrees/Project/elegant-wu/playwright.config.ts",
+    "rootDir": "/Users/takes/.claude-worktrees/Project/elegant-wu/tests/e2e",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        {
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "playwright-report/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/takes/.claude-worktrees/Project/elegant-wu/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/takes/.claude-worktrees/Project/elegant-wu/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.57.0",
+    "workers": 5,
+    "webServer": {
+      "command": "npm run dev",
+      "url": "http://localhost:3000",
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "auth.spec.ts",
+      "file": "auth.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "認証フロー",
+          "file": "auth.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "ログインページが表示される",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-e6115e86705669dea95f",
+              "file": "auth.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "未認証ユーザーはダッシュボードにアクセスできない",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-7ac35ca1b5d114d71ef8",
+              "file": "auth.spec.ts",
+              "line": 11,
+              "column": 7
+            },
+            {
+              "title": "未認証ユーザーはタスクページにアクセスできない",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-a9905ba68520aa63f411",
+              "file": "auth.spec.ts",
+              "line": 18,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "visual.spec.ts",
+      "file": "visual.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Visual Regression Tests",
+          "file": "visual.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "ログインページのスナップショット",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "8324bb52c49185e48ff4-bb782a27ff6748479221",
+              "file": "visual.spec.ts",
+              "line": 4,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-01-16T03:30:34.053Z",
+    "duration": 25.900999999999954,
+    "expected": 0,
+    "skipped": 4,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
