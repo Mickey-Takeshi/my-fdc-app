@@ -45,21 +45,29 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // その他: Cache First
+  // その他: Cache First with Network Fallback
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       if (cachedResponse) {
         return cachedResponse;
       }
-      return fetch(event.request).then((response) => {
-        if (response.status === 200) {
-          const responseClone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseClone);
-          });
-        }
-        return response;
-      });
+      return fetch(event.request)
+        .then((response) => {
+          if (response.status === 200) {
+            const responseClone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, responseClone);
+            });
+          }
+          return response;
+        })
+        .catch(() => {
+          // 画像リクエストの場合はアイコンをフォールバック
+          if (event.request.destination === 'image') {
+            return caches.match('/icon.svg');
+          }
+          return new Response('Offline', { status: 503 });
+        });
     })
   );
 });
