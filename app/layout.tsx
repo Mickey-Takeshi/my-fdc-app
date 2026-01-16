@@ -15,8 +15,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'FDC Modular Starter',
-  description: 'Founders Direct Cockpit - Modular Starter',
+  title: 'FDC - スタートアップ成長プラットフォーム',
+  description:
+    'スタートアップの成長を加速するオールインワンプラットフォーム。OKR管理、顧客管理、タスク管理を一元化。',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
@@ -26,6 +27,20 @@ export const metadata: Metadata = {
   icons: {
     icon: [{ url: '/icon.svg', type: 'image/svg+xml' }],
     apple: [{ url: '/icon.svg', type: 'image/svg+xml' }],
+  },
+  openGraph: {
+    title: 'FDC - スタートアップ成長プラットフォーム',
+    description:
+      'スタートアップの成長を加速するオールインワンプラットフォーム。OKR管理、顧客管理、タスク管理を一元化。',
+    type: 'website',
+    locale: 'ja_JP',
+    siteName: 'FDC',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'FDC - スタートアップ成長プラットフォーム',
+    description:
+      'スタートアップの成長を加速するオールインワンプラットフォーム。OKR管理、顧客管理、タスク管理を一元化。',
   },
 };
 
