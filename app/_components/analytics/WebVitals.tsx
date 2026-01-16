@@ -1,7 +1,3 @@
-/**
- * Core Web Vitals 計測コンポーネント
- */
-
 'use client';
 
 import { useEffect } from 'react';
@@ -12,30 +8,17 @@ interface Metric {
   rating: 'good' | 'needs-improvement' | 'poor';
 }
 
+const RATING_COLORS = { good: '#22c55e', 'needs-improvement': '#f59e0b', poor: '#ef4444' };
+
 export function WebVitals() {
   useEffect(() => {
     import('web-vitals').then(({ onCLS, onINP, onLCP, onFCP, onTTFB }) => {
-      const reportMetric = (metric: Metric) => {
+      const report = (m: Metric) => {
         if (process.env.NODE_ENV === 'development') {
-          const color =
-            metric.rating === 'good'
-              ? '#22c55e'
-              : metric.rating === 'needs-improvement'
-                ? '#f59e0b'
-                : '#ef4444';
-
-          console.log(
-            `%c[Web Vitals] ${metric.name}: ${metric.value.toFixed(2)} (${metric.rating})`,
-            `color: ${color}; font-weight: bold;`
-          );
+          console.log(`%c[Web Vitals] ${m.name}: ${m.value.toFixed(2)} (${m.rating})`, `color: ${RATING_COLORS[m.rating]}; font-weight: bold;`);
         }
       };
-
-      onCLS(reportMetric);
-      onINP(reportMetric);
-      onLCP(reportMetric);
-      onFCP(reportMetric);
-      onTTFB(reportMetric);
+      [onCLS, onINP, onLCP, onFCP, onTTFB].forEach((fn) => fn(report));
     });
   }, []);
 
