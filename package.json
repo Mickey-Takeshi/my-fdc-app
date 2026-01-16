@@ -16,7 +16,11 @@
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:headed": "playwright test --headed",
     "test:visual": "playwright test tests/e2e/visual.spec.ts",
-    "test:visual:update": "playwright test tests/e2e/visual.spec.ts --update-snapshots"
+    "test:visual:update": "playwright test tests/e2e/visual.spec.ts --update-snapshots",
+    "audit:check": "npm audit --audit-level=moderate",
+    "audit:fix": "npm audit fix",
+    "outdated": "npm outdated",
+    "deps:check": "npm outdated && npm audit --audit-level=moderate"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
