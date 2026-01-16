@@ -1,25 +1,39 @@
 /**
- * app/layout.tsx
- *
- * ルートレイアウト（ミニマルスターター版）
- * Phase 22: フォント最適化・Web Vitals計測追加
+ * ルートレイアウト
  */
 
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { WebVitals } from '@/app/_components/analytics/WebVitals';
+import { ServiceWorkerRegistration } from '@/app/_components/pwa/ServiceWorkerRegistration';
 
-// フォント最適化: subset指定でサイズ削減
 const inter = Inter({
   subsets: ['latin'],
-  display: 'swap', // FOUT防止: フォント読み込み中は代替フォント表示
+  display: 'swap',
   preload: true,
 });
 
 export const metadata: Metadata = {
   title: 'FDC Modular Starter',
   description: 'Founders Direct Cockpit - Modular Starter',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'FDC',
+  },
+  icons: {
+    icon: [{ url: '/icon.svg', type: 'image/svg+xml' }],
+    apple: [{ url: '/icon.svg', type: 'image/svg+xml' }],
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#667eea',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({
@@ -31,6 +45,7 @@ export default function RootLayout({
     <html lang="ja">
       <body className={inter.className}>
         <WebVitals />
+        <ServiceWorkerRegistration />
         {children}
       </body>
     </html>
