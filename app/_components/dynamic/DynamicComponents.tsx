@@ -1,14 +1,9 @@
 /**
- * app/_components/dynamic/DynamicComponents.tsx
- *
- * Phase 22: 動的インポートによるコード分割
- * - 重いコンポーネントを遅延読み込み
- * - 初期バンドルサイズを削減
+ * 動的インポートによるコード分割
  */
 
 import dynamic from 'next/dynamic';
 
-// ローディングコンポーネント
 function LoadingSpinner() {
   return (
     <div
@@ -33,26 +28,18 @@ function LoadingSpinner() {
   );
 }
 
-// CanvasGrid を動的インポート（重いコンポーネントの例）
 export const DynamicCanvasGrid = dynamic(
   () =>
     import('@/app/_components/lean-canvas/CanvasGrid').then(
       (mod) => mod.CanvasGrid
     ),
-  {
-    loading: () => <LoadingSpinner />,
-    ssr: false, // クライアントサイドのみ
-  }
+  { loading: () => <LoadingSpinner />, ssr: false }
 );
 
-// CustomerJourney を動的インポート
 export const DynamicCustomerJourney = dynamic(
   () =>
     import('@/app/_components/lean-canvas/CustomerJourney').then(
       (mod) => mod.CustomerJourney
     ),
-  {
-    loading: () => <LoadingSpinner />,
-    ssr: false,
-  }
+  { loading: () => <LoadingSpinner />, ssr: false }
 );

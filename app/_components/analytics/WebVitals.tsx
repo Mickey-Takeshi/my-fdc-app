@@ -1,29 +1,21 @@
 /**
- * app/_components/analytics/WebVitals.tsx
- *
- * Phase 22: Core Web Vitals 計測
- * - LCP, INP, CLS を計測してコンソールに出力
- * - 本番では分析サービスに送信可能
+ * Core Web Vitals 計測コンポーネント
  */
 
 'use client';
 
 import { useEffect } from 'react';
 
-type MetricRating = 'good' | 'needs-improvement' | 'poor';
-
 interface Metric {
   name: string;
   value: number;
-  rating: MetricRating;
+  rating: 'good' | 'needs-improvement' | 'poor';
 }
 
 export function WebVitals() {
   useEffect(() => {
-    // web-vitals ライブラリを動的インポート
     import('web-vitals').then(({ onCLS, onINP, onLCP, onFCP, onTTFB }) => {
       const reportMetric = (metric: Metric) => {
-        // 開発環境: コンソールに出力
         if (process.env.NODE_ENV === 'development') {
           const color =
             metric.rating === 'good'
@@ -37,15 +29,6 @@ export function WebVitals() {
             `color: ${color}; font-weight: bold;`
           );
         }
-
-        // 本番環境: 分析サービスに送信（例）
-        // if (process.env.NODE_ENV === 'production') {
-        //   sendToAnalytics({
-        //     name: metric.name,
-        //     value: metric.value,
-        //     rating: metric.rating,
-        //   });
-        // }
       };
 
       onCLS(reportMetric);
