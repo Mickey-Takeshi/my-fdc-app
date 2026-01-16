@@ -89,13 +89,15 @@ updates:
 
 | パッケージ | バージョン | 最終更新 | 備考 |
 |-----------|-----------|---------|------|
-| next | 15.x | 2025-01 | App Router使用 |
-| react | 19.x | 2025-01 | React 19対応 |
-| typescript | 5.x | 2025-01 | strict mode |
-| @supabase/supabase-js | 2.x | 2025-01 | 認証・DB |
-| zod | 3.x | 2025-01 | バリデーション |
-| vitest | 2.x | 2025-01 | ユニットテスト |
-| playwright | 1.x | 2025-01 | E2Eテスト |
+| next | (実際のバージョン) | 2025-01 | App Router使用 |
+| react | (実際のバージョン) | 2025-01 | React 19 |
+| typescript | (実際のバージョン) | 2025-01 | strict mode |
+| @supabase/supabase-js | (実際のバージョン) | 2025-01 | 認証・DB |
+| zod | (実際のバージョン) | 2025-01 | バリデーション |
+| vitest | (実際のバージョン) | 2025-01 | ユニットテスト |
+| @playwright/test | (実際のバージョン) | 2025-01 | E2Eテスト |
+
+※ `npm list [package] --depth=0` で実際のバージョンを確認して記入
 
 ## 更新履歴
 
