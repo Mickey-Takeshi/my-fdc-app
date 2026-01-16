@@ -4,7 +4,12 @@ import { useState } from 'react';
 import { Send } from 'lucide-react';
 
 export function ContactSection() {
-  const [formData, setFormData] = useState({ companyName: '', name: '', email: '', message: '' });
+  const [formData, setFormData] = useState({
+    companyName: '',
+    name: '',
+    email: '',
+    message: '',
+  });
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -39,9 +44,12 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" style={{ padding: '100px 24px' }}>
+    <section id="contact" aria-labelledby="contact-heading" style={{ padding: '100px 24px' }}>
       <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-        <h2 style={{ textAlign: 'center', fontSize: '36px', fontWeight: 700, marginBottom: '16px' }}>
+        <h2
+          id="contact-heading"
+          style={{ textAlign: 'center', fontSize: '36px', fontWeight: 700, marginBottom: '16px' }}
+        >
           お問い合わせ
         </h2>
         <p style={{ textAlign: 'center', color: '#6b7280', marginBottom: '40px' }}>
@@ -49,14 +57,30 @@ export function ContactSection() {
         </p>
 
         {status === 'success' ? (
-          <div style={{ background: '#dcfce7', color: '#166534', padding: '24px', borderRadius: '12px', textAlign: 'center' }}>
+          <div
+            role="status"
+            aria-live="polite"
+            style={{
+              background: '#dcfce7',
+              color: '#166534',
+              padding: '24px',
+              borderRadius: '12px',
+              textAlign: 'center',
+            }}
+          >
             お問い合わせありがとうございます。担当者より折り返しご連絡いたします。
           </div>
         ) : (
-          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <form
+            onSubmit={handleSubmit}
+            style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
+          >
             <div>
-              <label style={{ display: 'block', marginBottom: '8px', fontWeight: 500 }}>会社名</label>
+              <label htmlFor="contact-company" style={{ display: 'block', marginBottom: '8px', fontWeight: 500 }}>
+                会社名
+              </label>
               <input
+                id="contact-company"
                 type="text"
                 value={formData.companyName}
                 onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
@@ -64,35 +88,41 @@ export function ContactSection() {
               />
             </div>
             <div>
-              <label style={{ display: 'block', marginBottom: '8px', fontWeight: 500 }}>
-                お名前 <span style={{ color: '#ef4444' }}>*</span>
+              <label htmlFor="contact-name" style={{ display: 'block', marginBottom: '8px', fontWeight: 500 }}>
+                お名前 <span aria-hidden="true" style={{ color: '#ef4444' }}>*</span>
               </label>
               <input
+                id="contact-name"
                 type="text"
                 required
+                aria-required="true"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 style={inputStyle}
               />
             </div>
             <div>
-              <label style={{ display: 'block', marginBottom: '8px', fontWeight: 500 }}>
-                メールアドレス <span style={{ color: '#ef4444' }}>*</span>
+              <label htmlFor="contact-email" style={{ display: 'block', marginBottom: '8px', fontWeight: 500 }}>
+                メールアドレス <span aria-hidden="true" style={{ color: '#ef4444' }}>*</span>
               </label>
               <input
+                id="contact-email"
                 type="email"
                 required
+                aria-required="true"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 style={inputStyle}
               />
             </div>
             <div>
-              <label style={{ display: 'block', marginBottom: '8px', fontWeight: 500 }}>
-                お問い合わせ内容 <span style={{ color: '#ef4444' }}>*</span>
+              <label htmlFor="contact-message" style={{ display: 'block', marginBottom: '8px', fontWeight: 500 }}>
+                お問い合わせ内容 <span aria-hidden="true" style={{ color: '#ef4444' }}>*</span>
               </label>
               <textarea
+                id="contact-message"
                 required
+                aria-required="true"
                 rows={5}
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
@@ -100,11 +130,14 @@ export function ContactSection() {
               />
             </div>
             {status === 'error' && (
-              <div style={{ color: '#ef4444', fontSize: '14px' }}>送信に失敗しました。しばらく経ってからお試しください。</div>
+              <div role="alert" aria-live="assertive" style={{ color: '#ef4444', fontSize: '14px' }}>
+                送信に失敗しました。しばらく経ってからお試しください。
+              </div>
             )}
             <button
               type="submit"
               disabled={status === 'sending'}
+              aria-busy={status === 'sending'}
               style={{
                 background: 'linear-gradient(135deg, #667eea, #764ba2)',
                 color: 'white',
@@ -121,7 +154,7 @@ export function ContactSection() {
                 gap: '8px',
               }}
             >
-              <Send size={20} />
+              <Send size={20} aria-hidden="true" />
               {status === 'sending' ? '送信中...' : '送信する'}
             </button>
           </form>
