@@ -1,7 +1,7 @@
 /**
- * middleware.ts
+ * proxy.ts
  *
- * Next.js 15 Middleware - 認証チェックとリダイレクト
+ * Next.js 16 Proxy - 認証チェックとリダイレクト
  *
  * 【責務】
  * - Cookie ベースのセッション検証
@@ -12,7 +12,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Cookie からセッション情報を取得
@@ -55,7 +55,7 @@ export function middleware(request: NextRequest) {
 }
 
 /**
- * Middleware を適用するパスの設定
+ * Proxy を適用するパスの設定
  */
 export const config = {
   matcher: [

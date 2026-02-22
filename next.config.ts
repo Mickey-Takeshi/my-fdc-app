@@ -1,7 +1,7 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  // Next.js 15 設定
+  // Next.js 16 設定
   reactStrictMode: true,
 
   // 画像最適化の外部ドメイン許可

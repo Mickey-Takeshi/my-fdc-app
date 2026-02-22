@@ -11,7 +11,7 @@
 
 **📊 現在の開発状況（2025-12-08）**:
 - **バージョン**: v1.1.0
-- **フロントエンド構成**: Next.js 16.0.7 + App Router + React 19.2.1
+- **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
 - **データ永続化**: localStorage（学習用）
@@ -111,8 +111,8 @@ founders-direct-modular/
 
 | レイヤー | 技術 | バージョン |
 |---------|------|-----------|
-| フロントエンド | Next.js | 15.1.0 |
-| UIライブラリ | React | 19.0.0 |
+| フロントエンド | Next.js | 16.0.10 |
+| UIライブラリ | React | 19.2.1 |
 | 言語 | TypeScript | 5.7.2 |
 | データ永続化 | localStorage | - |
 
@@ -156,7 +156,7 @@ founders-direct-modular/
 
 ---
 
-**Last Updated**: 2025-12-08
-**Version**: v1.1
+**Last Updated**: 2026-02-22
+**Version**: v2.0
 **Status**: Phase 0 完了 + LP追加
 **Maintained by**: FDC Development Team

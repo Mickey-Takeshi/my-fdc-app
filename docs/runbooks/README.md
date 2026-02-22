@@ -75,7 +75,7 @@ references/ 内の以下を参照:
 ### Phase 4: Supabase Auth
 1. Google OAuth設定手順
 2. /api/auth/* エンドポイント
-3. middleware.ts
+3. proxy.ts（認証プロキシ）
 4. Googleログインボタン
 
 ### Phase 5: ワークスペース + ロール
@@ -299,6 +299,6 @@ Phase N を実行してください。
 
 ---
 
-**Last Updated**: 2025-12-06
+**Last Updated**: 2026-02-22
 **Version**: v1.1
 **Maintained by**: FDC Development Team

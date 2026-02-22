@@ -33,7 +33,7 @@ docs/FDC-CORE.md
 ## プロジェクト概要
 
 - **名称**: FDC Modular Starter（学習用スターター）
-- **技術スタック**: Next.js 15 / React 19 / TypeScript 5.x
+- **技術スタック**: Next.js 16.0.10 / React 19 / TypeScript 5.x
 - **Node.js**: 22.x 以上
 
 ---
@@ -78,6 +78,7 @@ npm run build            # 本番ビルド
 
 ```
 fdc-modular-starter/
+├── proxy.ts             # 認証プロキシ（Next.js 16）
 ├── app/                 # Next.js App Router
 │   ├── page.tsx         # トップページ
 │   └── layout.tsx       # ルートレイアウト
@@ -124,18 +125,18 @@ export function TaskCard({ task }: { task: Task }) {
 
 ---
 
-## Next.js 16 を使う場合（オプション）
+## Next.js 16 の注意点
 
-Next.js 16 にアップグレードする場合は、以下のドキュメントを必読に追加してください：
+このプロジェクトは Next.js 16 を使用しています。以下のドキュメントも必読です：
 
 ```
 docs/guides/NEXTJS16-QUICK-REFERENCE.md
 ```
 
-**主な変更点:**
-- `middleware.ts` → `proxy.ts`（ファイル名・関数名変更）
-- `params` / `searchParams` → `await` 必須
-- `next lint` → `eslint .`（コマンド変更）
+**重要な変更点（AIが間違えやすい）:**
+- `proxy.ts` を使用（`middleware.ts` ではない）
+- `params` / `searchParams` → `await` 必須（Server Component）
+- `lint` スクリプトは `eslint .`（`next lint` ではない）
 
 ---
 
@@ -154,4 +155,4 @@ Claude に「references/ui/task/ を参考にして」と指示すると、
 
 ---
 
-**Last Updated**: 2025-12-10
+**Last Updated**: 2026-02-22
