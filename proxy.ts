@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 
 const PUBLIC_ROUTES = ['/login', '/api', '/_next', '/favicon.ico', '/invite'];
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (PUBLIC_ROUTES.some((route) => pathname.startsWith(route))) {
