@@ -24,8 +24,13 @@ export const dynamic = 'force-dynamic';
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const code = searchParams.get('code');
-  const next = searchParams.get('next') ?? '/dashboard';
+  const nextParam = searchParams.get('next') ?? '/dashboard';
   const error = searchParams.get('error');
+
+  // オープンリダイレクト防止（B氏）
+  const redirectTarget = new URL(nextParam, request.url);
+  const next =
+    redirectTarget.origin === new URL(request.url).origin ? nextParam : '/dashboard';
 
   // エラーチェック
   if (error || !code) {

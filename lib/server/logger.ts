@@ -14,6 +14,10 @@ export const logger = pino({
   timestamp: () => `,"timestamp":"${new Date().toISOString()}"`,
 });
 
+export function apiLogger(context: { service: string; workspaceId?: string }) {
+  return logger.child({ ...context, correlationId: crypto.randomUUID() });
+}
+
 export function createRequestLogger(requestId: string) {
   return logger.child({ requestId });
 }
