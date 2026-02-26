@@ -3,11 +3,12 @@
 /**
  * app/(app)/dashboard/page.tsx
  *
- * ダッシュボードページ（Phase 0: 空ダッシュボード）
- * Phase 1 でタスク機能を追加します
+ * ダッシュボードページ
+ * Phase 13: Google Calendar 連携（今日の予定表示）
  */
 
 import { Rocket, ArrowRight, CheckSquare, Settings, Database } from 'lucide-react';
+import { TodaySchedule } from '@/app/_components/calendar';
 
 export default function DashboardPage() {
   return (
@@ -96,6 +97,11 @@ export default function DashboardPage() {
             </li>
           </ul>
         </div>
+      </div>
+
+      {/* 今日の予定（Phase 13） */}
+      <div className="card" style={{ marginTop: '24px', padding: '20px' }}>
+        <TodaySchedule />
       </div>
 
       {/* Coming Soon カード */}

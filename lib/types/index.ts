@@ -5,11 +5,15 @@
  * Phase 1 で Task, AppData を追加します
  */
 
+// アカウントタイプ
+export type AccountType = 'SA' | 'ADMIN' | 'MEMBER';
+
 // ユーザー情報
 export interface User {
   id: string;
   email: string;
   name: string;
+  accountType?: AccountType;
 }
 
 // Phase 1 で追加:
