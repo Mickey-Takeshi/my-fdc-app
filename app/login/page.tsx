@@ -121,13 +121,13 @@ function LoginContent() {
     try {
       // localStorage 認証（デモモード）
       if (password === 'fdc') {
-        localStorage.setItem(
-          'fdc_session',
-          JSON.stringify({
-            user: { id: '1', email: 'demo@example.com', name: 'Demo User' },
-            loggedInAt: new Date().toISOString(),
-          })
-        );
+        const sessionData = JSON.stringify({
+          user: { id: '1', email: 'demo@example.com', name: 'Demo User' },
+          loggedInAt: new Date().toISOString(),
+        });
+        localStorage.setItem('fdc_session', sessionData);
+        // proxy.ts がクッキーで認証チェックするため、クッキーもセット
+        document.cookie = `fdc_session=demo; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Lax`;
         await new Promise((resolve) => setTimeout(resolve, 300));
         router.push('/dashboard');
       } else {
