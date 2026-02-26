@@ -119,21 +119,31 @@ function LoginContent() {
     setError('');
 
     try {
-      // localStorage 認証（デモモード）
-      if (password === 'fdc') {
-        const sessionData = JSON.stringify({
-          user: { id: '1', email: 'demo@example.com', name: 'Demo User' },
-          loggedInAt: new Date().toISOString(),
-        });
-        localStorage.setItem('fdc_session', sessionData);
-        // proxy.ts がクッキーで認証チェックするため、クッキーもセット
-        document.cookie = `fdc_session=demo; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Lax`;
-        await new Promise((resolve) => setTimeout(resolve, 300));
-        router.push('/dashboard');
-      } else {
-        setError('パスワードが違います');
+      // API 経由でデモログイン（Supabase モードでも動作する）
+      const res = await fetch('/api/auth/demo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || 'ログインに失敗しました');
         setIsLoading(false);
+        return;
       }
+
+      // localStorage にもセット（デモモード互換）
+      localStorage.setItem(
+        'fdc_session',
+        JSON.stringify({
+          user: data.user,
+          loggedInAt: new Date().toISOString(),
+        })
+      );
+
+      router.push('/dashboard');
     } catch (err) {
       console.error('[Login] Error:', err);
       setError('ログイン処理中にエラーが発生しました');
