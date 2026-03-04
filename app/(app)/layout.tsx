@@ -14,6 +14,7 @@ import { AuthProvider, type AuthUser } from '@/lib/contexts/AuthContext';
 import LandingPage from '@/components/landing/default/LandingPage';
 import {
   LayoutDashboard,
+  CheckSquare,
   LogOut,
   type LucideIcon,
 } from 'lucide-react';
@@ -26,7 +27,7 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { href: '/dashboard', label: 'ダッシュボード', icon: LayoutDashboard },
-  // ランブックで追加: { href: '/tasks', label: 'タスク', icon: CheckSquare },
+  { href: '/tasks', label: 'タスク', icon: CheckSquare },
   // ランブックで追加: { href: '/settings', label: '設定', icon: Settings },
 ];
 
