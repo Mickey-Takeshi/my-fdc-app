@@ -9,14 +9,14 @@
 - 技術詳細は `docs/guides/DEVELOPMENT.md` を正とし、本ガイドはその上位コンパスとする。
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
-**📊 現在の開発状況（2025-12-08）**:
-- **バージョン**: v1.1.0
+**📊 現在の開発状況（2026-03-04）**:
+- **バージョン**: v2.4.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
 - **データ永続化**: localStorage（学習用）
-- **現在のPhase**: Phase 0 完了（スターター構築）+ LP追加
-- **次フェーズ**: Phase 1（タスクページ追加）
+- **現在のPhase**: Phase 1 完了（タスクページ追加）
+- **次フェーズ**: Phase 2（設定ページ追加）
 - **LP**: ランディングページテンプレート同梱（Phase 24対応）
 
 ---
@@ -30,6 +30,7 @@ founders-direct-modular/
 ├── app/                    # Next.js App Router
 │   ├── (app)/              # 認証済みユーザー用ルート
 │   │   ├── dashboard/      # ダッシュボード
+│   │   ├── tasks/           # タスク管理ページ
 │   │   └── layout.tsx      # 認証レイアウト（未ログイン時LP表示）
 │   ├── login/              # ログインページ
 │   ├── globals.css         # グローバルスタイル
@@ -54,7 +55,8 @@ founders-direct-modular/
 │   │   └── DataContext.tsx # データコンテキスト
 │   ├── hooks/              # カスタムフック
 │   └── types/              # 型定義
-│       └── index.ts
+│       ├── index.ts
+│       └── task.ts          # Task インターフェース
 ├── public/                 # 静的ファイル
 │   └── images/             # LP用画像
 ├── docs/                   # ドキュメント
@@ -123,7 +125,7 @@ founders-direct-modular/
 | フェーズ | 状態 | 概要 |
 |---------|------|------|
 | Phase 0 | ✅ 完了 | スターター構築（ログイン、ダッシュボード） |
-| Phase 1 | 🔜 予定 | タスクページ追加 |
+| Phase 1 | ✅ 完了 | タスクページ追加（CRUD + 統計 + 進捗バー） |
 | Phase 2 | 🔜 予定 | 設定ページ追加 |
 | Phase 3 | 🔜 予定 | リード管理機能 |
 | Phase 4 | 🔜 予定 | 顧客管理機能 |
@@ -156,7 +158,7 @@ founders-direct-modular/
 
 ---
 
-**Last Updated**: 2026-02-22
-**Version**: v2.0
-**Status**: Phase 0 完了 + LP追加
+**Last Updated**: 2026-03-04
+**Version**: v2.4.0
+**Status**: Phase 1 完了
 **Maintained by**: FDC Development Team

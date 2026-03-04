@@ -22,11 +22,14 @@ export default function LoginPage() {
     setIsLoading(true);
     // デモ用認証
     if (password === 'fdc') {
-      // セッションをlocalStorageに保存
-      localStorage.setItem('fdc_session', JSON.stringify({
+      const sessionData = JSON.stringify({
         user: { id: '1', email: 'demo@example.com', name: 'Demo User' },
         loggedInAt: new Date().toISOString(),
-      }));
+      });
+      // localStorage に保存（クライアント側の認証チェック用）
+      localStorage.setItem('fdc_session', sessionData);
+      // Cookie に保存（proxy.ts のサーバー側ルート保護用）
+      document.cookie = `fdc_session=${encodeURIComponent(sessionData)}; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Lax`;
       // 少し遅延を入れてUIを見せる
       await new Promise(resolve => setTimeout(resolve, 300));
       router.push('/dashboard');

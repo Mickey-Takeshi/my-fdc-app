@@ -6,7 +6,7 @@
 
 'use client';
 
-import { useReducer, useEffect, useCallback } from 'react';
+import { useReducer, useEffect, useCallback, useRef } from 'react';
 import type { Task } from '@/lib/types/task';
 
 // ── Storage ──
@@ -77,18 +77,18 @@ function taskReducer(state: Task[], action: TaskAction): Task[] {
 // ── Hook ──
 export function useTaskReducer() {
   const [tasks, dispatch] = useReducer(taskReducer, []);
+  const isInitialized = useRef(false);
 
   // 初回マウント時に localStorage から読み込み
   useEffect(() => {
     dispatch({ type: 'INIT', payload: loadTasks() });
+    isInitialized.current = true;
   }, []);
 
-  // tasks が変化したら localStorage に保存（INIT 以降）
+  // tasks が変化したら localStorage に保存（初期化完了後のみ）
   useEffect(() => {
-    // INIT 前は空配列なので保存しない
-    if (tasks.length > 0 || localStorage.getItem(STORAGE_KEY) !== null) {
-      saveTasks(tasks);
-    }
+    if (!isInitialized.current) return;
+    saveTasks(tasks);
   }, [tasks]);
 
   const addTask = useCallback((title: string) => {

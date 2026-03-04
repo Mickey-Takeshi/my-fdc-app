@@ -3,14 +3,14 @@
 /**
  * app/(app)/layout.tsx
  *
- * 認証済みユーザー用レイアウト（Phase 0: 認証のみ）
- * Phase 1 で DataProvider を追加します
+ * 認証済みユーザー用レイアウト
+ * Phase 0: 認証 / Phase 1: タスクページ追加
  */
 
 import { useEffect, useState, useCallback } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { AuthProvider, type AuthUser } from '@/lib/contexts/AuthContext';
-// Phase 1 で追加: import { DataProvider } from '@/lib/contexts/DataContext';
+// Phase 2 以降で DataProvider 統合を検討
 import LandingPage from '@/components/landing/default/LandingPage';
 import {
   LayoutDashboard,
@@ -66,6 +66,8 @@ export default function AppLayout({
 
   const handleLogout = () => {
     localStorage.removeItem('fdc_session');
+    // Cookie も削除（proxy.ts のルート保護と同期）
+    document.cookie = 'fdc_session=; path=/; max-age=0';
     router.push('/login');
   };
 
@@ -84,7 +86,6 @@ export default function AppLayout({
 
   return (
     <AuthProvider user={user} loading={loading}>
-      {/* Phase 1 で DataProvider でラップ */}
       {/* ヘッダー */}
       <header className="header">
         <div className="header-content">
