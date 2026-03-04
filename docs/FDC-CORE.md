@@ -10,13 +10,13 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **📊 現在の開発状況（2026-03-04）**:
-- **バージョン**: v2.5.0
+- **バージョン**: v3.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
-- **データ永続化**: localStorage（学習用）
-- **現在のPhase**: Phase 2 完了（設定ページ追加）
-- **次フェーズ**: Phase 3（Supabase セットアップ）
+- **データ永続化**: localStorage + Supabase PostgreSQL
+- **現在のPhase**: Phase 3 完了（Supabase セットアップ）
+- **次フェーズ**: Phase 4（Supabase Auth / Google OAuth）
 - **LP**: ランディングページテンプレート同梱（Phase 24対応）
 
 ---
@@ -118,7 +118,7 @@ founders-direct-modular/
 | フロントエンド | Next.js | 16.0.10 |
 | UIライブラリ | React | 19.2.1 |
 | 言語 | TypeScript | 5.7.2 |
-| データ永続化 | localStorage | - |
+| データ永続化 | localStorage + Supabase | - |
 
 ---
 
@@ -129,9 +129,9 @@ founders-direct-modular/
 | Phase 0 | ✅ 完了 | スターター構築（ログイン、ダッシュボード） |
 | Phase 1 | ✅ 完了 | タスクページ追加（CRUD + 統計 + 進捗バー） |
 | Phase 2 | ✅ 完了 | 設定ページ追加（Profile / Export / Import / Reset） |
-| Phase 3 | 🔜 予定 | リード管理機能 |
-| Phase 4 | 🔜 予定 | 顧客管理機能 |
-| Phase 5 | 🔜 予定 | Supabase 統合 |
+| Phase 3 | ✅ 完了 | Supabase セットアップ（PostgreSQL 接続基盤） |
+| Phase 4 | 🔜 予定 | Supabase Auth（Google OAuth） |
+| Phase 5 | 🔜 予定 | ワークスペース + ロール |
 
 ---
 
@@ -161,6 +161,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-04
-**Version**: v2.5.0
-**Status**: Phase 2 完了
+**Version**: v3.0.0
+**Status**: Phase 3 完了
 **Maintained by**: FDC Development Team

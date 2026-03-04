@@ -13,9 +13,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Phase | 内容 |
 |-------|------|
-| Phase 3 | Supabase セットアップ |
 | Phase 4 | Supabase Auth（Google OAuth） |
 | Phase 5 | ワークスペース + ロール |
+
+---
+
+## [3.0.0] - 2026-03-04 - Phase 3: Supabase セットアップ
+
+### 概要
+
+Supabase PostgreSQL への接続基盤を構築。クライアント/サーバー用 Supabase クライアント、環境変数設定。既存 Supabase DB（users, tasks, workspaces 等）を活用。
+
+### Added
+
+| ファイル | 内容 |
+|---------|------|
+| `lib/client/supabase.ts` | ブラウザ用 Supabase クライアント（@supabase/ssr） |
+| `lib/server/supabase.ts` | サーバー用 Supabase クライアント（Service Role Key） |
+| `@supabase/supabase-js` | Supabase JS ライブラリ |
+| `@supabase/ssr` | Supabase SSR ヘルパー |
+
+### Changed
+
+| ファイル | 内容 |
+|---------|------|
+| `.env.local` | Supabase URL, anon key, service role key を追加 |
 
 ---
 
