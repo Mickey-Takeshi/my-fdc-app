@@ -4,7 +4,7 @@
  * app/(app)/layout.tsx
  *
  * 認証済みユーザー用レイアウト
- * Phase 0: 認証 / Phase 1: タスクページ追加
+ * Phase 0: 認証 / Phase 1: タスクページ / Phase 2: 設定ページ
  */
 
 import { useEffect, useState, useCallback } from 'react';
@@ -15,6 +15,7 @@ import LandingPage from '@/components/landing/default/LandingPage';
 import {
   LayoutDashboard,
   CheckSquare,
+  Settings,
   LogOut,
   type LucideIcon,
 } from 'lucide-react';
@@ -28,7 +29,7 @@ interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   { href: '/dashboard', label: 'ダッシュボード', icon: LayoutDashboard },
   { href: '/tasks', label: 'タスク', icon: CheckSquare },
-  // ランブックで追加: { href: '/settings', label: '設定', icon: Settings },
+  { href: '/settings', label: '設定', icon: Settings },
 ];
 
 export default function AppLayout({

@@ -13,10 +13,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Phase | 内容 |
 |-------|------|
-| Phase 2 | 設定ページ追加（データエクスポート/リセット） |
-| Phase 3 | リード管理機能（CRUD + ステータス管理） |
-| Phase 4 | 顧客管理機能 |
-| Phase 5 | Supabase 統合 |
+| Phase 3 | Supabase セットアップ |
+| Phase 4 | Supabase Auth（Google OAuth） |
+| Phase 5 | ワークスペース + ロール |
+
+---
+
+## [2.5.0] - 2026-03-04 - Phase 2: 設定ページ追加
+
+### 概要
+
+設定ページを追加。プロフィール編集、JSON形式のデータExport/Import、リセット機能を実装。
+
+### Added
+
+| ファイル | 内容 |
+|---------|------|
+| `lib/types/settings.ts` | Settings / ExportData インターフェース定義 |
+| `app/(app)/settings/page.tsx` | 設定ページ（プロフィール編集 / Export / Import / Reset） |
+
+### Changed
+
+| ファイル | 内容 |
+|---------|------|
+| `app/(app)/layout.tsx` | ナビゲーションに設定タブを追加 |
 
 ---
 
