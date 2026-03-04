@@ -9,11 +9,9 @@
  */
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Lock, LogIn, Rocket } from 'lucide-react';
 
 export default function LoginPage() {
-  const router = useRouter();
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +30,8 @@ export default function LoginPage() {
       document.cookie = `fdc_session=${encodeURIComponent(sessionData)}; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Lax`;
       // 少し遅延を入れてUIを見せる
       await new Promise(resolve => setTimeout(resolve, 300));
-      router.push('/dashboard');
+      // ハードナビゲーションで確実に Cookie を送信
+      window.location.href = '/dashboard';
     } else {
       setError('パスワードが違います');
       setIsLoading(false);
