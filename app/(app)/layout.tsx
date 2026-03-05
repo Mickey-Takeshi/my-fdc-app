@@ -9,7 +9,9 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 import { AuthProvider, type AuthUser } from '@/lib/contexts/AuthContext';
+import { WorkspaceProvider } from '@/lib/contexts/WorkspaceContext';
 import { createClient } from '@/lib/client/supabase';
 import LandingPage from '@/components/landing/default/LandingPage';
 import {
@@ -140,6 +142,7 @@ export default function AppLayout({
 
   return (
     <AuthProvider user={user} loading={loading} logout={handleLogout}>
+    <WorkspaceProvider>
       {/* ヘッダー */}
       <header className="header">
         <div className="header-content">
@@ -163,14 +166,14 @@ export default function AppLayout({
           {NAV_ITEMS.map((item) => {
             const Icon = item.icon;
             return (
-              <a
+              <Link
                 key={item.href}
                 href={item.href}
                 className={`tab ${pathname === item.href ? 'active' : ''}`}
               >
                 <Icon className="tab-icon" size={20} />
                 {item.label}
-              </a>
+              </Link>
             );
           })}
         </nav>
@@ -178,6 +181,7 @@ export default function AppLayout({
         {/* メインコンテンツ */}
         <main>{children}</main>
       </div>
+    </WorkspaceProvider>
     </AuthProvider>
   );
 }
