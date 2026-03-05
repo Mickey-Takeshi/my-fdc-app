@@ -13,7 +13,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Phase | 内容 |
 |-------|------|
-| Phase 8+ | アプローチ履歴、PART-04 以降 |
+| Phase 9+ | PART-04 以降 |
+
+---
+
+## [8.0.0] - 2026-03-04 - Phase 8: アプローチ履歴
+
+### 概要
+
+リードへのアプローチ（接触）履歴の記録・分析機能を実装。タイムライン形式でアプローチ履歴を表示、種別・結果の記録、全期間/今月/今週の統計、タイプ別集計バー。リード詳細モーダルにアプローチタブを追加。
+
+### Added
+
+| ファイル | 内容 |
+|---------|------|
+| `lib/types/approach.ts` | Approach, ApproachType, ApproachResult, ApproachStats 型定義 |
+| `app/api/approaches/route.ts` | アプローチ一覧取得・作成 API |
+| `app/api/approaches/[id]/route.ts` | アプローチ削除 API |
+| `app/(app)/leads/_components/ApproachTimeline.tsx` | タイムライン表示 + アプローチ追加フォーム |
+| `app/(app)/leads/_components/ApproachStatsSection.tsx` | アプローチ統計（期間別 + タイプ別） |
+
+### Changed
+
+| ファイル | 内容 |
+|---------|------|
+| `app/(app)/leads/_components/ProspectDetailModal.tsx` | 詳細/アプローチのタブ切替追加 |
+| `app/(app)/leads/page.tsx` | アプローチ統計セクション追加 |
+| `app/globals.css` | タイムライン CSS を追加 |
 
 ---
 

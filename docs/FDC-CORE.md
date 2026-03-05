@@ -10,16 +10,16 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **📊 現在の開発状況（2026-03-04）**:
-- **バージョン**: v7.0.0
+- **バージョン**: v8.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
 - **データ永続化**: localStorage + Supabase PostgreSQL
 - **認証**: Supabase Auth（Google OAuth）+ デモログイン
 - **マルチテナント**: ワークスペース + RBAC（OWNER/ADMIN/MEMBER）
-- **CRM**: リード管理 + クライアント管理（ファネル + カンバン/リスト）
-- **現在のPhase**: Phase 7 完了（クライアント管理）
-- **次フェーズ**: Phase 8+（アプローチ履歴）
+- **CRM**: リード + クライアント + アプローチ履歴
+- **現在のPhase**: Phase 8 完了（アプローチ履歴）
+- **次フェーズ**: Phase 9+（PART-04 以降）
 - **LP**: ランディングページテンプレート同梱（Phase 24対応）
 
 ---
@@ -79,7 +79,8 @@ founders-direct-modular/
 │       ├── settings.ts      # Settings インターフェース
 │       ├── workspace.ts     # Workspace / WorkspaceMember 型
 │       ├── prospect.ts     # Prospect / LeadRow 型（Phase 6）
-│       └── client.ts       # Client / ClientRow 型（Phase 7）
+│       ├── client.ts       # Client / ClientRow 型（Phase 7）
+│       └── approach.ts     # Approach / ApproachRow 型（Phase 8）
 ├── public/                 # 静的ファイル
 │   └── images/             # LP用画像
 ├── docs/                   # ドキュメント
@@ -157,6 +158,7 @@ founders-direct-modular/
 | Phase 5 | ✅ 完了 | ワークスペース + ロール（RBAC API + useWorkspace フック） |
 | Phase 6 | ✅ 完了 | リード管理（ファネル + カンバン/リスト + 検索/フィルター） |
 | Phase 7 | ✅ 完了 | クライアント管理（一覧 + 追加/編集 + 失注リード表示） |
+| Phase 8 | ✅ 完了 | アプローチ履歴（タイムライン + 統計 + PDCA分析） |
 
 ---
 
@@ -186,6 +188,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-04
-**Version**: v7.0.0
-**Status**: Phase 7 完了
+**Version**: v8.0.0
+**Status**: Phase 8 完了
 **Maintained by**: FDC Development Team

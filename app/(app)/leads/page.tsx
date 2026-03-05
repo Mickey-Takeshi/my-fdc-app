@@ -3,11 +3,12 @@
 /**
  * app/(app)/leads/page.tsx
  *
- * リード管理ページ（Phase 6）
+ * リード管理ページ（Phase 6, Phase 8 拡張）
  * - カンバン / リスト表示切替
  * - ステータスフィルター
  * - 検索機能
  * - リード CRUD
+ * - アプローチ統計（Phase 8）
  */
 
 import { useState, useEffect, useCallback } from 'react';
@@ -29,10 +30,12 @@ import {
   type Prospect,
   type ProspectStatus,
 } from '@/lib/types/prospect';
+import type { Approach } from '@/lib/types/approach';
 import KanbanView from './_components/KanbanView';
 import ListView from './_components/ListView';
 import AddProspectForm from './_components/AddProspectForm';
 import ProspectDetailModal from './_components/ProspectDetailModal';
+import ApproachStatsSection from './_components/ApproachStatsSection';
 
 type ViewMode = 'kanban' | 'list';
 
@@ -40,6 +43,7 @@ export default function LeadsPage() {
   const { currentWorkspace, loading: wsLoading } = useWorkspace();
 
   const [leads, setLeads] = useState<Prospect[]>([]);
+  const [approaches, setApproaches] = useState<Approach[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [viewMode, setViewMode] = useState<ViewMode>('kanban');
@@ -48,7 +52,7 @@ export default function LeadsPage() {
   const [showAddForm, setShowAddForm] = useState(false);
   const [selectedProspect, setSelectedProspect] = useState<Prospect | null>(null);
 
-  /** リード一覧を取得 */
+  /** リード一覧とアプローチ一覧を取得 */
   const fetchLeads = useCallback(async () => {
     if (!currentWorkspace) return;
 
@@ -56,18 +60,26 @@ export default function LeadsPage() {
     setError('');
 
     try {
-      const res = await fetch(
-        `/api/leads?workspace_id=${currentWorkspace.id}`,
-        { headers: { 'Content-Type': 'application/json' } }
-      );
-      const json = await res.json();
+      const [leadsRes, approachesRes] = await Promise.all([
+        fetch(`/api/leads?workspace_id=${currentWorkspace.id}`, {
+          headers: { 'Content-Type': 'application/json' },
+        }),
+        fetch(`/api/approaches?workspace_id=${currentWorkspace.id}`, {
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      ]);
 
-      if (!res.ok) {
-        setError(json.error || 'リードの取得に失敗しました');
+      const leadsJson = await leadsRes.json();
+      if (!leadsRes.ok) {
+        setError(leadsJson.error || 'リードの取得に失敗しました');
         return;
       }
+      setLeads(leadsJson.leads ?? []);
 
-      setLeads(json.leads ?? []);
+      if (approachesRes.ok) {
+        const approachesJson = await approachesRes.json();
+        setApproaches(approachesJson.approaches ?? []);
+      }
     } catch {
       setError('ネットワークエラーが発生しました');
     } finally {
@@ -432,6 +444,13 @@ export default function LeadsPage() {
               </div>
             </div>
           )}
+        </div>
+      )}
+
+      {/* アプローチ統計（Phase 8） */}
+      {approaches.length > 0 && (
+        <div style={{ marginTop: '24px' }}>
+          <ApproachStatsSection approaches={approaches} />
         </div>
       )}
 

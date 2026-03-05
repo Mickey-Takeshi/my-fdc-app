@@ -1364,6 +1364,123 @@ html {
   box-shadow: var(--shadow);
 }
 
+/* Approach Timeline (Phase 8) */
+.approach-timeline {
+  padding: 4px 0;
+}
+
+.timeline-list {
+  position: relative;
+  padding-left: 24px;
+}
+
+.timeline-list::before {
+  content: '';
+  position: absolute;
+  left: 11px;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  background: var(--border-light);
+}
+
+.timeline-item {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -24px;
+  top: 2px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--primary-alpha-10);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.timeline-content {
+  flex: 1;
+  background: var(--bg-gray);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+}
+
+.timeline-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.timeline-type {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.timeline-result {
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.timeline-result.result-positive {
+  background: rgba(76, 175, 80, 0.1);
+  color: #2E7D32;
+}
+
+.timeline-result.result-neutral {
+  background: rgba(158, 158, 158, 0.1);
+  color: #616161;
+}
+
+.timeline-result.result-negative {
+  background: rgba(244, 67, 54, 0.1);
+  color: #C62828;
+}
+
+.timeline-date {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+.timeline-delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 2px;
+  border-radius: 4px;
+  transition: color 0.2s;
+}
+
+.timeline-delete:hover {
+  color: var(--error);
+}
+
+.timeline-body {
+  color: var(--text-medium);
+  line-height: 1.5;
+}
+
+.timeline-note {
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid var(--border-light);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
 /* Responsive: Kanban */
 @media (max-width: 1024px) {
   .kanban-board {
