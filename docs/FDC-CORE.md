@@ -10,14 +10,15 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **📊 現在の開発状況（2026-03-04）**:
-- **バージョン**: v4.0.0
+- **バージョン**: v5.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
 - **データ永続化**: localStorage + Supabase PostgreSQL
 - **認証**: Supabase Auth（Google OAuth）+ デモログイン
-- **現在のPhase**: Phase 4 完了（Supabase Auth / Google OAuth）
-- **次フェーズ**: Phase 5（ワークスペース + ロール）
+- **マルチテナント**: ワークスペース + RBAC（OWNER/ADMIN/MEMBER）
+- **現在のPhase**: Phase 5 完了（ワークスペース + ロール）
+- **次フェーズ**: Phase 6+（PART-03 以降）
 - **LP**: ランディングページテンプレート同梱（Phase 24対応）
 
 ---
@@ -58,7 +59,9 @@ founders-direct-modular/
 │   ├── client/             # クライアント用ライブラリ
 │   │   └── supabase.ts     # ブラウザ用 Supabase クライアント
 │   ├── server/             # サーバー用ライブラリ
-│   │   └── supabase.ts     # Service Role 用 Supabase クライアント
+│   │   ├── supabase.ts     # Service Role 用 Supabase クライアント
+│   │   ├── auth.ts         # サーバーサイド認証ヘルパー
+│   │   └── permissions.ts  # RBAC 権限チェック
 │   ├── contexts/           # React Context
 │   │   ├── AuthContext.tsx # 認証コンテキスト（logout 関数含む）
 │   │   └── DataContext.tsx # データコンテキスト
@@ -66,7 +69,8 @@ founders-direct-modular/
 │   └── types/              # 型定義
 │       ├── index.ts
 │       ├── task.ts          # Task インターフェース
-│       └── settings.ts      # Settings インターフェース
+│       ├── settings.ts      # Settings インターフェース
+│       └── workspace.ts     # Workspace / WorkspaceMember 型
 ├── public/                 # 静的ファイル
 │   └── images/             # LP用画像
 ├── docs/                   # ドキュメント
@@ -128,6 +132,7 @@ founders-direct-modular/
 | 言語 | TypeScript | 5.7.2 |
 | データ永続化 | localStorage + Supabase | - |
 | 認証 | Supabase Auth (Google OAuth) | - |
+| バリデーション | Zod | 4.3.6 |
 
 ---
 
@@ -140,7 +145,7 @@ founders-direct-modular/
 | Phase 2 | ✅ 完了 | 設定ページ追加（Profile / Export / Import / Reset） |
 | Phase 3 | ✅ 完了 | Supabase セットアップ（PostgreSQL 接続基盤） |
 | Phase 4 | ✅ 完了 | Supabase Auth（Google OAuth + デモログイン） |
-| Phase 5 | 🔜 予定 | ワークスペース + ロール |
+| Phase 5 | ✅ 完了 | ワークスペース + ロール（RBAC API + useWorkspace フック） |
 
 ---
 
@@ -170,6 +175,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-04
-**Version**: v4.0.0
-**Status**: Phase 4 完了
+**Version**: v5.0.0
+**Status**: Phase 5 完了
 **Maintained by**: FDC Development Team

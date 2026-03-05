@@ -13,7 +13,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Phase | 内容 |
 |-------|------|
-| Phase 5 | ワークスペース + ロール |
+| Phase 6+ | PART-03 以降 |
+
+---
+
+## [5.0.0] - 2026-03-04 - Phase 5: ワークスペース + ロール
+
+### 概要
+
+マルチテナント基盤を構築。ワークスペース CRUD API、メンバー招待・削除・ロール変更 API、RBAC（OWNER/ADMIN/MEMBER）権限チェック、useWorkspace フック。Zod によるリクエストバリデーション。
+
+### Added
+
+| ファイル | 内容 |
+|---------|------|
+| `lib/types/workspace.ts` | Workspace, WorkspaceMember, WorkspaceRole 型定義 |
+| `lib/server/auth.ts` | サーバーサイド認証ヘルパー（Cookie からユーザー取得） |
+| `lib/server/permissions.ts` | RBAC 権限チェック（OWNER > ADMIN > MEMBER） |
+| `app/api/workspaces/route.ts` | ワークスペース一覧取得・作成 API |
+| `app/api/workspaces/[id]/route.ts` | ワークスペース詳細・更新・削除 API |
+| `app/api/workspaces/[id]/members/route.ts` | メンバー一覧・招待 API |
+| `app/api/workspaces/[id]/members/[userId]/route.ts` | ロール変更・メンバー削除 API |
+| `lib/hooks/useWorkspace.ts` | ワークスペース管理フック（クライアントサイド） |
+| `zod` | リクエストバリデーションライブラリ |
 
 ---
 
