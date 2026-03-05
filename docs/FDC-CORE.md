@@ -1,4 +1,4 @@
-# FDC-CORE.md（v1.8 - 2026-03-05）
+# FDC-CORE.md（v1.9 - 2026-03-05）
 
 ## 0. 位置づけ
 
@@ -10,7 +10,7 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **現在の開発状況（2026-03-05）**:
-- **バージョン**: v70.0.0
+- **バージョン**: v73.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
@@ -46,8 +46,9 @@
 - **AI統合**: AI戦略 + 実装設計 + UX/安全性設計（Phase 62-64）
 - **AI運用**: モニタリング + 品質管理 + インシデント対応（Phase 65-67）
 - **スケーリング**: DBスケーリング + アプリスケーリング + パフォーマンスモニタリング（Phase 68-70）
-- **現在のPhase**: Phase 70 完了（Scaling: DB Scaling + App Scaling + Performance Monitoring）
-- **次フェーズ**: Phase 71（次期機能）
+- **チーム運用**: 開発プロセス + コラボレーション + オンボーディング（Phase 71-73）
+- **現在のPhase**: Phase 73 完了（Team: Dev Process + Collaboration + Onboarding）
+- **次フェーズ**: Phase 74（次期機能）
 
 ---
 
@@ -161,6 +162,10 @@ founders-direct-modular/
 │   ├── ai/                 # AI統合（Phase 62-64）
 │   ├── ai-ops/             # AI運用（Phase 65-67）
 │   ├── scaling/            # スケーリング設計（Phase 68-70）
+│   ├── team/               # チーム運用（Phase 71-73）
+│   │   ├── dev-process.md  # 開発プロセス設計
+│   │   ├── collaboration.md # コラボレーション設計
+│   │   └── onboarding.md   # オンボーディング設計
 │   └── runbooks/           # ランブック
 ├── package.json
 ├── tsconfig.json
@@ -295,6 +300,9 @@ founders-direct-modular/
 | Phase 68 | ✅ 完了 | DBスケーリング（インデックス戦略 + クエリ最適化 + コネクションプール + リードレプリカ） |
 | Phase 69 | ✅ 完了 | アプリスケーリング（キャッシュ戦略 + CDN + バックグラウンドジョブ + レート制限） |
 | Phase 70 | ✅ 完了 | パフォーマンスモニタリング（負荷テスト + SLO/SLI + モニタリング + アラート + インシデント対応） |
+| Phase 71 | ✅ 完了 | 開発プロセス設計（ブランチ戦略 + コードレビュー + CI/CD + ADR + PR テンプレート） |
+| Phase 72 | ✅ 完了 | チームコラボレーション設計（マルチテナント + RBAC + 招待フロー + アクティビティログ） |
+| Phase 73 | ✅ 完了 | オンボーディング設計（開発者オンボーディング + ナレッジベース + CODEOWNERS + ペアプロ + メンター） |
 
 ---
 
@@ -324,6 +332,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-05
-**Version**: v70.0.0
-**Status**: Phase 70 完了
+**Version**: v73.0.0
+**Status**: Phase 73 完了
 **Maintained by**: FDC Development Team
