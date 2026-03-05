@@ -11,7 +11,7 @@
 
 import type Stripe from 'stripe';
 import { createServiceClient } from '@/lib/server/supabase';
-import type { SubscriptionStatus, BillingCycle } from '@/lib/types/billing';
+import type { SubscriptionStatus, BillingCycle, PlanTier } from '@/lib/types/billing';
 
 // -- Type Helpers -----------------------------------------------------------
 
@@ -40,6 +40,15 @@ function extractBillingCycle(metadata: Stripe.Metadata | null): BillingCycle {
   const cycle = metadata?.billing_cycle;
   if (cycle === 'half_yearly') return 'half_yearly';
   return 'monthly';
+}
+
+/**
+ * メタデータから plan_tier を取得
+ */
+function extractPlanTier(metadata: Stripe.Metadata | null): PlanTier {
+  const tier = metadata?.plan_tier;
+  if (tier === 'starter' || tier === 'team' || tier === 'yourSaas') return tier;
+  return 'free';
 }
 
 /**
@@ -114,12 +123,14 @@ export async function handleCheckoutCompleted(
   }
 
   const billingCycle = extractBillingCycle(session.metadata);
+  const planTier = extractPlanTier(session.metadata);
 
   const { error } = await supabase.from('workshop_subscriptions').upsert(
     {
       workspace_id: workspaceId,
       stripe_subscription_id: subscriptionId,
       billing_cycle: billingCycle,
+      plan_tier: planTier,
       status: 'active' satisfies SubscriptionStatus,
       contract_start_date: new Date().toISOString().split('T')[0],
       current_period_start: new Date().toISOString(),

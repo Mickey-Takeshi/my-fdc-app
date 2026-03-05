@@ -115,6 +115,20 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
     );
   }
 
+  // 子テーブル key_results を先に削除（カスケード）
+  const { error: childError } = await authResult.supabase
+    .from('key_results')
+    .delete()
+    .eq('objective_id', id);
+
+  if (childError) {
+    console.error('KeyResults cascade delete error:', childError);
+    return NextResponse.json(
+      { error: 'Key Results の削除に失敗しました' },
+      { status: 500 }
+    );
+  }
+
   const { error } = await authResult.supabase
     .from('objectives')
     .delete()

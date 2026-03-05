@@ -112,7 +112,7 @@ export default function AppLayout({
     checkAuth();
   }, [checkAuth]);
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     // Supabase セッションをクリア（非同期、エラーは無視）
     const supabase = createClient();
     supabase.auth.signOut().catch(() => {
@@ -125,7 +125,7 @@ export default function AppLayout({
 
     // ハードナビゲーションで確実にリダイレクト
     window.location.href = '/login';
-  };
+  }, []);
 
   if (loading) {
     return (

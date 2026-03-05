@@ -33,7 +33,7 @@ export default function TodaySchedule({ workspaceId, onTaskCreated }: TodaySched
 
   useEffect(() => {
     fetchTodayEvents();
-  }, []);
+  }, [workspaceId]);
 
   const fetchTodayEvents = async () => {
     setLoading(true);

@@ -61,7 +61,7 @@ export default function LeanCanvasPage() {
     } finally {
       setLoading(false);
     }
-  }, [currentWorkspace, selectedCanvas]);
+  }, [currentWorkspace]);
 
   const fetchBlocks = useCallback(async () => {
     if (!selectedCanvas) return;

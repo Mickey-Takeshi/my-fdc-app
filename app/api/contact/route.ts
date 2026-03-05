@@ -24,6 +24,18 @@ interface ContactFormData {
   message: string;
 }
 
+/**
+ * HTML 特殊文字をエスケープして XSS を防止
+ */
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body: ContactFormData = await request.json();
@@ -68,12 +80,20 @@ export async function POST(request: NextRequest) {
 
     const resend = new Resend(apiKey);
 
+    // XSS 防止: ユーザー入力をエスケープ
+    const safeName = escapeHtml(body.name);
+    const safeEmail = escapeHtml(body.email);
+    const safeCompany = body.company ? escapeHtml(body.company) : '';
+    const safePhone = body.phone ? escapeHtml(body.phone) : '';
+    const safeSubject = body.subject ? escapeHtml(body.subject) : '';
+    const safeMessage = escapeHtml(body.message);
+
     const { error } = await resend.emails.send({
       from: `お問い合わせ <${fromEmail}>`,
       to: notifyEmail,
       subject: body.subject
-        ? `【お問い合わせ】${body.subject}`
-        : `【お問い合わせ】${body.name}様より`,
+        ? `【お問い合わせ】${safeSubject}`
+        : `【お問い合わせ】${safeName}様より`,
       html: `
         <h2>お問い合わせがありました</h2>
 
@@ -83,7 +103,7 @@ export async function POST(request: NextRequest) {
               お名前
             </td>
             <td style="padding: 12px; border: 1px solid #ddd;">
-              ${body.name}
+              ${safeName}
             </td>
           </tr>
           <tr>
@@ -91,36 +111,36 @@ export async function POST(request: NextRequest) {
               メールアドレス
             </td>
             <td style="padding: 12px; border: 1px solid #ddd;">
-              ${body.email}
+              ${safeEmail}
             </td>
           </tr>
-          ${body.company ? `
+          ${safeCompany ? `
           <tr>
             <td style="padding: 12px; border: 1px solid #ddd; background: #f5f5f5; font-weight: bold;">
               会社名
             </td>
             <td style="padding: 12px; border: 1px solid #ddd;">
-              ${body.company}
+              ${safeCompany}
             </td>
           </tr>
           ` : ''}
-          ${body.phone ? `
+          ${safePhone ? `
           <tr>
             <td style="padding: 12px; border: 1px solid #ddd; background: #f5f5f5; font-weight: bold;">
               電話番号
             </td>
             <td style="padding: 12px; border: 1px solid #ddd;">
-              ${body.phone}
+              ${safePhone}
             </td>
           </tr>
           ` : ''}
-          ${body.subject ? `
+          ${safeSubject ? `
           <tr>
             <td style="padding: 12px; border: 1px solid #ddd; background: #f5f5f5; font-weight: bold;">
               件名
             </td>
             <td style="padding: 12px; border: 1px solid #ddd;">
-              ${body.subject}
+              ${safeSubject}
             </td>
           </tr>
           ` : ''}
@@ -129,7 +149,7 @@ export async function POST(request: NextRequest) {
               お問い合わせ内容
             </td>
             <td style="padding: 12px; border: 1px solid #ddd; white-space: pre-wrap;">
-              ${body.message}
+              ${safeMessage}
             </td>
           </tr>
         </table>

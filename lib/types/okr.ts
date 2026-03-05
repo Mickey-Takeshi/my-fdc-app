@@ -79,8 +79,8 @@ export function toObjective(row: ObjectiveRow): Objective {
 
 /** DB行 → KeyResult 変換 */
 export function toKeyResult(row: KeyResultRow): KeyResult {
-  const targetValue = row.target_value || 100;
-  const currentValue = row.current_value || 0;
+  const targetValue = row.target_value ?? 100;
+  const currentValue = row.current_value ?? 0;
   const progressRate = targetValue > 0
     ? Math.round((currentValue / targetValue) * 100)
     : 0;
@@ -92,7 +92,7 @@ export function toKeyResult(row: KeyResultRow): KeyResult {
     title: row.title,
     targetValue,
     currentValue,
-    unit: row.unit || '%',
+    unit: row.unit ?? '%',
     createdAt: row.created_at,
     updatedAt: row.updated_at,
     progressRate,

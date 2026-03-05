@@ -22,11 +22,11 @@ interface GoogleTokens {
 export async function getGoogleAccessToken(userId: string): Promise<string | null> {
   const supabase = createServiceClient();
 
-  // userId は auth.users.id（google_sub として保存）
+  // userId は users.id（アプリ内ユーザー ID）
   const { data: user } = await supabase
     .from('users')
     .select('google_access_token, google_refresh_token, google_token_expires_at, google_api_enabled')
-    .eq('google_sub', userId)
+    .eq('id', userId)
     .single();
 
   if (!user || !user.google_api_enabled || !user.google_access_token) {
@@ -56,7 +56,7 @@ export async function getGoogleAccessToken(userId: string): Promise<string | nul
           google_token_expires_at: newToken.expiresAt,
           updated_at: new Date().toISOString(),
         })
-        .eq('google_sub', userId);
+        .eq('id', userId);
 
       return newToken.accessToken;
     }

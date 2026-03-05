@@ -68,7 +68,7 @@ export default function MVVPage() {
     } finally {
       setLoading(false);
     }
-  }, [currentWorkspace, selectedBrand]);
+  }, [currentWorkspace]);
 
   const fetchMVV = useCallback(async () => {
     if (!selectedBrand) return;

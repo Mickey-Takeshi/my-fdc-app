@@ -96,7 +96,7 @@ const ActionMapCard = memo(function ActionMapCard({
   };
 
   const handleStatusCycle = async (item: ActionItem) => {
-    const statusOrder: ActionItemStatus[] = ['not_started', 'in_progress', 'done'];
+    const statusOrder: ActionItemStatus[] = ['not_started', 'in_progress', 'blocked', 'done'];
     const currentIdx = statusOrder.indexOf(item.status);
     const nextStatus = statusOrder[(currentIdx + 1) % statusOrder.length];
     await onUpdateItem(item.id, { status: nextStatus });

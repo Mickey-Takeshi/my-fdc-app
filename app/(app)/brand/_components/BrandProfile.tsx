@@ -6,7 +6,7 @@
  * ブランド基本情報 編集コンポーネント（Phase 15）
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Save, Edit3 } from 'lucide-react';
 import type { Brand } from '@/lib/types/brand';
 
@@ -21,6 +21,14 @@ export default function BrandProfile({ brand, onUpdate }: BrandProfileProps) {
   const [tagline, setTagline] = useState(brand.tagline);
   const [story, setStory] = useState(brand.story);
   const [saving, setSaving] = useState(false);
+
+  // brand prop が変更されたら内部状態を同期
+  useEffect(() => {
+    setName(brand.name);
+    setTagline(brand.tagline);
+    setStory(brand.story);
+    setEditing(false);
+  }, [brand]);
 
   const handleSave = async () => {
     setSaving(true);

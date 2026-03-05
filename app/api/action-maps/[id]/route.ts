@@ -125,6 +125,20 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
     );
   }
 
+  // 子テーブル action_items を先に削除（カスケード）
+  const { error: childError } = await authResult.supabase
+    .from('action_items')
+    .delete()
+    .eq('action_map_id', id);
+
+  if (childError) {
+    console.error('ActionItems cascade delete error:', childError);
+    return NextResponse.json(
+      { error: 'Action Itemsの削除に失敗しました' },
+      { status: 500 }
+    );
+  }
+
   const { error } = await authResult.supabase
     .from('action_maps')
     .delete()

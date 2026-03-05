@@ -59,7 +59,7 @@ export default function BrandPage() {
     } finally {
       setLoading(false);
     }
-  }, [currentWorkspace, selectedBrand]);
+  }, [currentWorkspace]);
 
   const fetchPoints = useCallback(async () => {
     if (!selectedBrand) return;
