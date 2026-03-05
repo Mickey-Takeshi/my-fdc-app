@@ -10,7 +10,7 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **現在の開発状況（2026-03-05）**:
-- **バージョン**: v40.0.0
+- **バージョン**: v43.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
@@ -34,8 +34,9 @@
 - **アーキテクチャ**: コマンドパターン + 設計レビューチェックリスト + 状態管理ガイド
 - **パフォーマンス**: クエリ最適化 + ページネーション + キャッシュ戦略（Phase 35-37）
 - **コード品質**: 孤立ファイル整理 + デバッグガイド + コードレビューガイド（Phase 38-40）
-- **現在のPhase**: Phase 40 完了（Code Quality: File Cleanup + Debug Guide + Code Review Guide）
-- **次フェーズ**: Phase 41（次期機能）
+- **セキュリティ強化**: 脆弱性対応ガイド + 災害復旧計画 + 認証・認可の深掘り（Phase 41-43）
+- **現在のPhase**: Phase 43 完了（Security: Vulnerability Response + Disaster Recovery + Auth Deep Dive）
+- **次フェーズ**: Phase 44（次期機能）
 
 ---
 
@@ -232,6 +233,9 @@ founders-direct-modular/
 | Phase 38 | ✅ 完了 | 重複・孤立ファイル整理 |
 | Phase 39 | ✅ 完了 | デバッグ手法ガイド（HAR分析・タイムゾーン・切り分け） |
 | Phase 40 | ✅ 完了 | コードレビュー・リファクタリングガイド |
+| Phase 41 | ✅ 完了 | セキュリティ監視（npm audit + security-check workflow + 脆弱性対応ガイド） |
+| Phase 42 | ✅ 完了 | 災害復旧計画（3層バックアップ + DR Plan テンプレート） |
+| Phase 43 | ✅ 完了 | 認証・認可の深掘り（JWT + RBAC + OAuth + セキュリティヘッダー） |
 
 ---
 
@@ -261,6 +265,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-05
-**Version**: v40.0.0
-**Status**: Phase 40 完了
+**Version**: v43.0.0
+**Status**: Phase 43 完了
 **Maintained by**: FDC Development Team
