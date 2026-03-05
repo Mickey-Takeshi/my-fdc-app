@@ -33,7 +33,7 @@ export default function DashboardPage() {
     progressRate: 0,
     totalObjectives: 0,
   });
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const fetchStats = useCallback(async () => {
     if (!currentWorkspace) return;

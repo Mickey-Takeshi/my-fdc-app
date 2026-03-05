@@ -39,7 +39,7 @@ export default function TasksPage() {
   const { currentWorkspace, loading: wsLoading } = useWorkspace();
 
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);

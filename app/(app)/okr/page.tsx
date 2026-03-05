@@ -36,7 +36,7 @@ export default function OkrPage() {
 
   const [objectives, setObjectives] = useState<Objective[]>([]);
   const [actionMaps, setActionMaps] = useState<ActionMap[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
 

@@ -36,7 +36,7 @@ export default function ActionMapsPage() {
 
   const [actionMaps, setActionMaps] = useState<ActionMap[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
 

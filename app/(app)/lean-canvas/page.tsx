@@ -27,7 +27,7 @@ export default function LeanCanvasPage() {
   const [canvases, setCanvases] = useState<LeanCanvas[]>([]);
   const [selectedCanvas, setSelectedCanvas] = useState<LeanCanvas | null>(null);
   const [blocks, setBlocks] = useState<LeanCanvasBlock[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   const fetchData = useCallback(async () => {
