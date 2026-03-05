@@ -1,4 +1,4 @@
-# FDC-CORE.md（v1.10 - 2026-03-05）
+# FDC-CORE.md（v1.11 - 2026-03-05）
 
 ## 0. 位置づけ
 
@@ -10,7 +10,7 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **現在の開発状況（2026-03-05）**:
-- **バージョン**: v79.0.0
+- **バージョン**: v82.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
@@ -49,8 +49,9 @@
 - **チーム運用**: 開発プロセス + コラボレーション + オンボーディング（Phase 71-73）
 - **Founder OS**: エグゼクティブダッシュボード + プロセス設計 + 時間管理（Phase 74-76）
 - **コンプライアンス**: 法務ドキュメント + データ保護 + 監査ログ（Phase 77-79）
-- **現在のPhase**: Phase 79 完了（Compliance: Legal Docs + Data Protection + Audit Log）
-- **次フェーズ**: Phase 80（次期機能）
+- **国際化**: next-intl設定 + 翻訳ワークフロー + ローカライズ（Phase 80-82）
+- **現在のPhase**: Phase 82 完了（i18n: Internationalization Setup + Translation Workflow + Localization）
+- **次フェーズ**: Phase 83（次期機能）
 
 ---
 
@@ -176,6 +177,10 @@ founders-direct-modular/
 │   │   ├── legal-docs.md          # 法務ドキュメント設計
 │   │   ├── data-protection.md     # データ保護設計
 │   │   └── audit-log.md           # 監査ログ設計
+│   ├── i18n/                # 国際化（Phase 80-82）
+│   │   ├── i18n-setup.md          # 国際化基盤設計
+│   │   ├── translation-workflow.md # 翻訳ワークフロー設計
+│   │   └── localization.md        # ローカライズ設計
 │   └── runbooks/           # ランブック
 ├── package.json
 ├── tsconfig.json
@@ -319,6 +324,9 @@ founders-direct-modular/
 | Phase 77 | ✅ 完了 | 法務ドキュメント（利用規約 + プライバシーポリシー + 同意管理 + Cookie同意） |
 | Phase 78 | ✅ 完了 | データ保護（GDPR + 個人情報保護法 + データ主体の権利 + 委託先管理） |
 | Phase 79 | ✅ 完了 | 監査ログ（イベント記録 + 検索UI + コンプライアンスレポート + 保持ポリシー） |
+| Phase 80 | ✅ 完了 | 国際化基盤（next-intl設定 + ルーティング + 翻訳ファイル構成 + 言語切り替えUI） |
+| Phase 81 | ✅ 完了 | 翻訳ワークフロー（キー命名規則 + 型安全翻訳 + 未翻訳検出 + AI翻訳 + 用語集） |
+| Phase 82 | ✅ 完了 | ローカライズ（日付・通貨・数値フォーマット + useFormatter + RTL対応 + 文化的考慮） |
 
 ---
 
@@ -348,6 +356,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-05
-**Version**: v79.0.0
-**Status**: Phase 79 完了
+**Version**: v82.0.0
+**Status**: Phase 82 完了
 **Maintained by**: FDC Development Team
