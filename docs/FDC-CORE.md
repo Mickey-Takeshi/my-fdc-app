@@ -10,7 +10,7 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **現在の開発状況（2026-03-05）**:
-- **バージョン**: v28.0.0
+- **バージョン**: v31.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
@@ -30,8 +30,9 @@
 - **LP SEO**: OpenGraph メタデータ（Phase 24）
 - **UI改善**: UndoSnackbar + SyncStatusIndicator + useOptimistic（Phase 25）
 - **運用基盤**: Dependabot + バージョン管理 + DB メンテナンス + ヘルスチェック + インシデント対応（Phase 26-28）
-- **現在のPhase**: Phase 28 完了（Operations: Version Management + DB Maintenance + Monitoring）
-- **次フェーズ**: Phase 29（次期機能）
+- **DevEnv**: 環境セットアップ + 認証トラブルシューティング + Claude MAX マルチアカウント + CI/CD（Phase 29-31）
+- **現在のPhase**: Phase 31 完了（DevEnv: Environment Setup + Documentation + CI/CD）
+- **次フェーズ**: Phase 32（次期機能）
 
 ---
 
@@ -215,6 +216,9 @@ founders-direct-modular/
 | Phase 26 | ✅ 完了 | Version Management（Dependabot 強化 + TECH-STACK-VERSIONS） |
 | Phase 27 | ✅ 完了 | DB Maintenance（BACKUP-DR + db-maintenance.sql） |
 | Phase 28 | ✅ 完了 | Monitoring & Incident Response（Health Check API + INCIDENT-RESPONSE + vercel.json） |
+| Phase 29 | ✅ 完了 | Test Environment Setup & Auth Troubleshooting（.env.example + ENVIRONMENT-SETUP + AUTH-TROUBLESHOOTING） |
+| Phase 30 | ✅ 完了 | Claude MAX Multi-Account（CLAUDE-MULTI-ACCOUNT ドキュメント） |
+| Phase 31 | ✅ 完了 | CI/CD（ci.yml + dependabot-auto-merge.yml） |
 
 ---
 
@@ -244,6 +248,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-05
-**Version**: v28.0.0
-**Status**: Phase 28 完了
+**Version**: v31.0.0
+**Status**: Phase 31 完了
 **Maintained by**: FDC Development Team

@@ -13,7 +13,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Phase | 内容 |
 |-------|------|
-| Phase 29+ | 今後の機能拡張 |
+| Phase 32+ | 今後の機能拡張 |
+
+---
+
+## [31.0.0] - 2026-03-05 - Phase 29-31: DevEnv (Environment Setup, Documentation, CI/CD)
+
+### 概要
+
+開発環境の整備。環境変数テンプレートの更新、環境セットアップガイド、認証トラブルシューティングガイド、Claude MAX マルチアカウントガイド、CI ワークフロー、Dependabot 自動マージワークフロー。
+
+### Added
+
+| ファイル | 内容 |
+|---------|------|
+| `docs/guides/ENVIRONMENT-SETUP.md` | 環境セットアップガイド（環境マトリクス、セットアップ手順、Auth フロー、Worktree）（Phase 29） |
+| `docs/guides/AUTH-TROUBLESHOOTING.md` | 認証トラブルシューティングガイド（redirect_uri_mismatch、PKCE、トークン暗号化等）（Phase 29） |
+| `docs/guides/CLAUDE-MULTI-ACCOUNT.md` | Claude MAX マルチアカウントセットアップガイド（c1/c2 エイリアス）（Phase 30） |
+| `.github/workflows/ci.yml` | CI ワークフロー（type-check + test:unit + build、PR トリガー）（Phase 31） |
+| `.github/workflows/dependabot-auto-merge.yml` | Dependabot パッチ更新自動マージワークフロー（Phase 31） |
+
+### Changed
+
+| ファイル | 内容 |
+|---------|------|
+| `.env.example` | 全必須環境変数を追加（Supabase、Google OAuth、TOKEN_ENCRYPTION_KEY）（Phase 29） |
 
 ---
 
