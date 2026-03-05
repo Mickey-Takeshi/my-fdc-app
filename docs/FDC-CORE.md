@@ -10,7 +10,7 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **現在の開発状況（2026-03-05）**:
-- **バージョン**: v34.0.0
+- **バージョン**: v37.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
@@ -32,8 +32,9 @@
 - **運用基盤**: Dependabot + バージョン管理 + DB メンテナンス + ヘルスチェック + インシデント対応（Phase 26-28）
 - **DevEnv**: 環境セットアップ + 認証トラブルシューティング + Claude MAX マルチアカウント + CI/CD（Phase 29-31）
 - **アーキテクチャ**: コマンドパターン + 設計レビューチェックリスト + 状態管理ガイド
-- **現在のPhase**: Phase 34 完了（Architecture: UX + Command Pattern + State Management）
-- **次フェーズ**: Phase 32（次期機能）
+- **パフォーマンス**: クエリ最適化 + ページネーション + キャッシュ戦略（Phase 35-37）
+- **現在のPhase**: Phase 37 完了（Performance: Query Optimization + Pagination + Cache Strategy）
+- **次フェーズ**: Phase 38（次期機能）
 
 ---
 
@@ -106,7 +107,8 @@ founders-direct-modular/
 │   │   ├── sanitize.ts     # 入力サニタイズ + レート制限（Phase 20）
 │   │   └── logger.ts       # Pino 構造化ログ（Phase 21）
 │   ├── utils/              # ユーティリティ
-│   │   └── performance.ts  # Core Web Vitals（Phase 22）
+│   │   ├── performance.ts  # Core Web Vitals（Phase 22）
+│   │   └── pagination.ts   # ページネーション（Phase 35）
 │   ├── contexts/           # React Context
 │   │   ├── AuthContext.tsx # 認証コンテキスト（logout 関数含む）
 │   │   └── DataContext.tsx # データコンテキスト
@@ -223,6 +225,9 @@ founders-direct-modular/
 | Phase 32 | ✅ 完了 | UX & アーキテクチャ改善（設計レビュー9観点 + エラーメッセージ） |
 | Phase 33 | ✅ 完了 | コマンドパターン（DataCommand型 + applyCommand） |
 | Phase 34 | ✅ 完了 | 状態管理パターン（Server State vs Client State ガイド） |
+| Phase 35 | ✅ 完了 | クエリ最適化（推奨インデックス + N+1対策 + EXPLAIN分析） |
+| Phase 36 | ✅ 完了 | フロントエンドパフォーマンス（Core Web Vitals + Dynamic Import） |
+| Phase 37 | ✅ 完了 | キャッシュ戦略（データ型別キャッシュ + Optimistic Update + ページネーション） |
 
 ---
 
@@ -252,6 +257,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-05
-**Version**: v31.0.0
-**Status**: Phase 31 完了
+**Version**: v37.0.0
+**Status**: Phase 37 完了
 **Maintained by**: FDC Development Team
