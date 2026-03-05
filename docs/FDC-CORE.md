@@ -1,4 +1,4 @@
-# FDC-CORE.md（v1.9 - 2026-03-05）
+# FDC-CORE.md（v1.10 - 2026-03-05）
 
 ## 0. 位置づけ
 
@@ -10,7 +10,7 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **現在の開発状況（2026-03-05）**:
-- **バージョン**: v76.0.0
+- **バージョン**: v79.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
@@ -48,8 +48,9 @@
 - **スケーリング**: DBスケーリング + アプリスケーリング + パフォーマンスモニタリング（Phase 68-70）
 - **チーム運用**: 開発プロセス + コラボレーション + オンボーディング（Phase 71-73）
 - **Founder OS**: エグゼクティブダッシュボード + プロセス設計 + 時間管理（Phase 74-76）
-- **現在のPhase**: Phase 76 完了（Founder OS: Executive Dashboard + Process + Time Management）
-- **次フェーズ**: Phase 77（次期機能）
+- **コンプライアンス**: 法務ドキュメント + データ保護 + 監査ログ（Phase 77-79）
+- **現在のPhase**: Phase 79 完了（Compliance: Legal Docs + Data Protection + Audit Log）
+- **次フェーズ**: Phase 80（次期機能）
 
 ---
 
@@ -171,6 +172,10 @@ founders-direct-modular/
 │   │   ├── executive-dashboard.md # エグゼクティブダッシュボード
 │   │   ├── process-design.md      # プロセス設計
 │   │   └── time-management.md     # 時間管理
+│   ├── compliance/          # コンプライアンス（Phase 77-79）
+│   │   ├── legal-docs.md          # 法務ドキュメント設計
+│   │   ├── data-protection.md     # データ保護設計
+│   │   └── audit-log.md           # 監査ログ設計
 │   └── runbooks/           # ランブック
 ├── package.json
 ├── tsconfig.json
@@ -311,6 +316,9 @@ founders-direct-modular/
 | Phase 74 | ✅ 完了 | エグゼクティブダッシュボード（North Star Metric + 経営指標 + 予算管理 + 取締役会レポート + キャッシュフロー） |
 | Phase 75 | ✅ 完了 | プロセス設計（定例会議 + RACI意思決定 + OKR運用 + ドキュメント文化） |
 | Phase 76 | ✅ 完了 | 時間管理（委任マトリクス + 集中時間 + 情報フィルタリング + バーンアウト防止） |
+| Phase 77 | ✅ 完了 | 法務ドキュメント（利用規約 + プライバシーポリシー + 同意管理 + Cookie同意） |
+| Phase 78 | ✅ 完了 | データ保護（GDPR + 個人情報保護法 + データ主体の権利 + 委託先管理） |
+| Phase 79 | ✅ 完了 | 監査ログ（イベント記録 + 検索UI + コンプライアンスレポート + 保持ポリシー） |
 
 ---
 
@@ -340,6 +348,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-05
-**Version**: v76.0.0
-**Status**: Phase 76 完了
+**Version**: v79.0.0
+**Status**: Phase 79 完了
 **Maintained by**: FDC Development Team
