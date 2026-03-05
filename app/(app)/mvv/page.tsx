@@ -29,7 +29,7 @@ export default function MVVPage() {
   const [brands, setBrands] = useState<Brand[]>([]);
   const [selectedBrand, setSelectedBrand] = useState<Brand | null>(null);
   const [mvv, setMvv] = useState<MVV | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   // 編集状態
@@ -170,7 +170,7 @@ export default function MVVPage() {
     setEditValues((prev) => prev.filter((_, i) => i !== index));
   };
 
-  if (wsLoading || loading) {
+  if (wsLoading || !currentWorkspace) {
     return (
       <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
         <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
@@ -179,7 +179,7 @@ export default function MVVPage() {
     );
   }
 
-  if (brands.length === 0) {
+  if (!loading && brands.length === 0) {
     return (
       <div className="card">
         <div className="empty-state">
@@ -227,7 +227,11 @@ export default function MVVPage() {
         </div>
       )}
 
-      {!mvv ? (
+      {loading ? (
+        <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
+          <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
+        </div>
+      ) : !mvv ? (
         <div className="card" style={{ textAlign: 'center', padding: '40px' }}>
           <Compass size={48} style={{ color: 'var(--text-muted)', marginBottom: '16px' }} />
           <p style={{ marginBottom: '16px' }}>MVV (Mission/Vision/Value) を定義しましょう</p>

@@ -39,7 +39,7 @@ export default function TasksPage() {
   const { currentWorkspace, loading: wsLoading } = useWorkspace();
 
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
@@ -236,22 +236,11 @@ export default function TasksPage() {
         : 0,
   };
 
-  if (wsLoading || loading) {
+  if (wsLoading || !currentWorkspace) {
     return (
       <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
         <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
         <p style={{ marginTop: '8px' }}>読み込み中...</p>
-      </div>
-    );
-  }
-
-  if (!currentWorkspace) {
-    return (
-      <div className="card">
-        <div className="empty-state">
-          <AlertCircle size={64} className="empty-state-icon" />
-          <p>ワークスペースが選択されていません</p>
-        </div>
       </div>
     );
   }
@@ -261,28 +250,28 @@ export default function TasksPage() {
       {/* 統計カード */}
       <div className="stats-grid">
         <div className="stat-card">
-          <div className="stat-value">{stats.total}</div>
+          <div className="stat-value">{loading ? '--' : stats.total}</div>
           <div className="stat-label">
             <ClipboardList size={14} style={{ verticalAlign: 'middle', marginRight: 4 }} />
             全タスク
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-value">{stats.done}</div>
+          <div className="stat-value">{loading ? '--' : stats.done}</div>
           <div className="stat-label">
             <ListChecks size={14} style={{ verticalAlign: 'middle', marginRight: 4 }} />
             完了
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-value">{stats.inProgress}</div>
+          <div className="stat-value">{loading ? '--' : stats.inProgress}</div>
           <div className="stat-label">
             <Loader size={14} style={{ verticalAlign: 'middle', marginRight: 4 }} />
             進行中
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-value">{stats.notStarted}</div>
+          <div className="stat-value">{loading ? '--' : stats.notStarted}</div>
           <div className="stat-label">
             <Clock size={14} style={{ verticalAlign: 'middle', marginRight: 4 }} />
             未着手
@@ -291,7 +280,7 @@ export default function TasksPage() {
       </div>
 
       {/* 進捗バー */}
-      {stats.total > 0 && (
+      {!loading && stats.total > 0 && (
         <div className="card" style={{ marginBottom: 20 }}>
           <div
             style={{
@@ -355,7 +344,11 @@ export default function TasksPage() {
       </div>
 
       {/* 4象限ボード */}
-      {tasks.length === 0 ? (
+      {loading ? (
+        <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
+          <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
+        </div>
+      ) : tasks.length === 0 ? (
         <div className="card">
           <div className="empty-state">
             <ClipboardList size={64} className="empty-state-icon" />

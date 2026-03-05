@@ -23,6 +23,7 @@ import {
   TrendingUp,
   Target,
   AlertCircle,
+  Loader,
 } from 'lucide-react';
 import { useWorkspace } from '@/lib/hooks/useWorkspace';
 import {
@@ -56,7 +57,7 @@ export default function LeadsPage() {
 
   const [leads, setLeads] = useState<Prospect[]>([]);
   const [approaches, setApproaches] = useState<Approach[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [viewMode, setViewMode] = useState<ViewMode>('kanban');
   const [searchQuery, setSearchQuery] = useState('');
@@ -238,21 +239,11 @@ export default function LeadsPage() {
     lost: leads.filter((l) => l.status === 'lost').length,
   };
 
-  if (wsLoading || loading) {
+  if (wsLoading || !currentWorkspace) {
     return (
       <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
-        読み込み中...
-      </div>
-    );
-  }
-
-  if (!currentWorkspace) {
-    return (
-      <div className="card">
-        <div className="empty-state">
-          <AlertCircle size={64} className="empty-state-icon" />
-          <p>ワークスペースが選択されていません</p>
-        </div>
+        <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
+        <p style={{ marginTop: '8px' }}>読み込み中...</p>
       </div>
     );
   }
@@ -262,21 +253,21 @@ export default function LeadsPage() {
       {/* 統計カード */}
       <div className="stats-grid">
         <div className="stat-card">
-          <div className="stat-value">{stats.total}</div>
+          <div className="stat-value">{loading ? '--' : stats.total}</div>
           <div className="stat-label">
             <Users size={14} style={{ verticalAlign: 'middle', marginRight: 4 }} />
             全リード
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-value">{stats.active}</div>
+          <div className="stat-value">{loading ? '--' : stats.active}</div>
           <div className="stat-label">
             <TrendingUp size={14} style={{ verticalAlign: 'middle', marginRight: 4 }} />
             進行中
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-value">{stats.won}</div>
+          <div className="stat-value">{loading ? '--' : stats.won}</div>
           <div className="stat-label">
             <Target size={14} style={{ verticalAlign: 'middle', marginRight: 4 }} />
             受注
@@ -284,7 +275,7 @@ export default function LeadsPage() {
         </div>
         <div className="stat-card">
           <div className="stat-value">
-            {stats.total > 0
+            {loading ? '--' : stats.total > 0
               ? `${Math.round((stats.won / stats.total) * 100)}%`
               : '0%'}
           </div>
@@ -379,7 +370,11 @@ export default function LeadsPage() {
       </div>
 
       {/* メインビュー */}
-      {viewMode === 'kanban' ? (
+      {loading ? (
+        <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
+          <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
+        </div>
+      ) : viewMode === 'kanban' ? (
         <KanbanView
           prospects={filteredLeads}
           onSelect={setSelectedProspect}

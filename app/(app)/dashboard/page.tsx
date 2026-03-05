@@ -33,7 +33,7 @@ export default function DashboardPage() {
     progressRate: 0,
     totalObjectives: 0,
   });
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const fetchStats = useCallback(async () => {
     if (!currentWorkspace) return;
@@ -86,7 +86,7 @@ export default function DashboardPage() {
     }
   }, [currentWorkspace, fetchStats]);
 
-  if (wsLoading || loading) {
+  if (wsLoading || !currentWorkspace) {
     return (
       <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
         <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
@@ -100,28 +100,28 @@ export default function DashboardPage() {
       {/* 統計カード */}
       <div className="stats-grid">
         <div className="stat-card">
-          <div className="stat-value">{stats.totalTasks}</div>
+          <div className="stat-value">{loading ? '--' : stats.totalTasks}</div>
           <div className="stat-label">
             <CheckSquare size={14} style={{ verticalAlign: 'middle', marginRight: 4 }} />
             タスク
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-value">{stats.doneTasks}</div>
+          <div className="stat-value">{loading ? '--' : stats.doneTasks}</div>
           <div className="stat-label">
             <TrendingUp size={14} style={{ verticalAlign: 'middle', marginRight: 4 }} />
             完了
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-value">{stats.progressRate}%</div>
+          <div className="stat-value">{loading ? '--' : `${stats.progressRate}%`}</div>
           <div className="stat-label">
             <Target size={14} style={{ verticalAlign: 'middle', marginRight: 4 }} />
             進捗率
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-value">{stats.totalObjectives}</div>
+          <div className="stat-value">{loading ? '--' : stats.totalObjectives}</div>
           <div className="stat-label">
             <Calendar size={14} style={{ verticalAlign: 'middle', marginRight: 4 }} />
             OKR
@@ -130,7 +130,11 @@ export default function DashboardPage() {
       </div>
 
       {/* 今日の予定 */}
-      {currentWorkspace && (
+      {loading ? (
+        <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
+          <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
+        </div>
+      ) : (
         <div style={{ marginTop: '24px' }}>
           <TodaySchedule
             workspaceId={currentWorkspace.id}

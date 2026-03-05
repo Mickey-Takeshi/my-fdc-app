@@ -19,6 +19,7 @@ import {
   UserX,
   AlertCircle,
   Trash2,
+  Loader,
 } from 'lucide-react';
 import { useWorkspace } from '@/lib/hooks/useWorkspace';
 import { CLIENT_STATUS_LABELS, type Client, type ClientStatus } from '@/lib/types/client';
@@ -40,7 +41,7 @@ export default function ClientsPage() {
 
   const [clients, setClients] = useState<Client[]>([]);
   const [lostLeads, setLostLeads] = useState<Prospect[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<ClientStatus | 'all'>('all');
@@ -200,21 +201,11 @@ export default function ClientsPage() {
     lostLeads: lostLeads.length,
   };
 
-  if (wsLoading || loading) {
+  if (wsLoading || !currentWorkspace) {
     return (
       <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
-        読み込み中...
-      </div>
-    );
-  }
-
-  if (!currentWorkspace) {
-    return (
-      <div className="card">
-        <div className="empty-state">
-          <AlertCircle size={64} className="empty-state-icon" />
-          <p>ワークスペースが選択されていません</p>
-        </div>
+        <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
+        <p style={{ marginTop: '8px' }}>読み込み中...</p>
       </div>
     );
   }
@@ -224,28 +215,28 @@ export default function ClientsPage() {
       {/* 統計カード */}
       <div className="stats-grid">
         <div className="stat-card">
-          <div className="stat-value">{stats.total}</div>
+          <div className="stat-value">{loading ? '--' : stats.total}</div>
           <div className="stat-label">
             <Building2 size={14} style={{ verticalAlign: 'middle', marginRight: 4 }} />
             全クライアント
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-value">{stats.active}</div>
+          <div className="stat-value">{loading ? '--' : stats.active}</div>
           <div className="stat-label">
             <UserCheck size={14} style={{ verticalAlign: 'middle', marginRight: 4 }} />
             取引中
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-value">{stats.inactive}</div>
+          <div className="stat-value">{loading ? '--' : stats.inactive}</div>
           <div className="stat-label">
             <UserX size={14} style={{ verticalAlign: 'middle', marginRight: 4 }} />
             休止中
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-value">{stats.lostLeads}</div>
+          <div className="stat-value">{loading ? '--' : stats.lostLeads}</div>
           <div className="stat-label">失注リード</div>
         </div>
       </div>
@@ -315,7 +306,11 @@ export default function ClientsPage() {
       </div>
 
       {/* クライアント一覧 */}
-      {filteredClients.length === 0 ? (
+      {loading ? (
+        <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
+          <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
+        </div>
+      ) : filteredClients.length === 0 ? (
         <div className="card">
           <div className="empty-state">
             <Building2 size={64} className="empty-state-icon" />

@@ -27,7 +27,7 @@ export default function LeanCanvasPage() {
   const [canvases, setCanvases] = useState<LeanCanvas[]>([]);
   const [selectedCanvas, setSelectedCanvas] = useState<LeanCanvas | null>(null);
   const [blocks, setBlocks] = useState<LeanCanvasBlock[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   const fetchData = useCallback(async () => {
@@ -147,7 +147,7 @@ export default function LeanCanvasPage() {
     }
   };
 
-  if (wsLoading || loading) {
+  if (wsLoading || !currentWorkspace) {
     return (
       <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
         <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
@@ -197,7 +197,11 @@ export default function LeanCanvasPage() {
         </div>
       )}
 
-      {selectedCanvas ? (
+      {loading ? (
+        <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
+          <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
+        </div>
+      ) : selectedCanvas ? (
         <CanvasGrid blocks={blocks} onSaveBlock={handleSaveBlock} />
       ) : (
         <div className="card">

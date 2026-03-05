@@ -36,7 +36,7 @@ export default function ActionMapsPage() {
 
   const [actionMaps, setActionMaps] = useState<ActionMap[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
 
@@ -246,22 +246,11 @@ export default function ActionMapsPage() {
     ? Math.round(activeMaps.reduce((sum, m) => sum + (m.progressRate ?? 0), 0) / activeMaps.length)
     : 0;
 
-  if (wsLoading || loading) {
+  if (wsLoading || !currentWorkspace) {
     return (
       <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
         <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
         <p style={{ marginTop: '8px' }}>読み込み中...</p>
-      </div>
-    );
-  }
-
-  if (!currentWorkspace) {
-    return (
-      <div className="card">
-        <div className="empty-state">
-          <AlertCircle size={64} className="empty-state-icon" />
-          <p>ワークスペースが選択されていません</p>
-        </div>
       </div>
     );
   }
@@ -271,21 +260,21 @@ export default function ActionMapsPage() {
       {/* 統計カード */}
       <div className="stats-grid">
         <div className="stat-card">
-          <div className="stat-value">{activeMaps.length}</div>
+          <div className="stat-value">{loading ? '--' : activeMaps.length}</div>
           <div className="stat-label">
             <Map size={14} style={{ verticalAlign: 'middle', marginRight: 4 }} />
             Action Map
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-value">{totalItems}</div>
+          <div className="stat-value">{loading ? '--' : totalItems}</div>
           <div className="stat-label">
             <Target size={14} style={{ verticalAlign: 'middle', marginRight: 4 }} />
             Action Items
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-value">{avgProgress}%</div>
+          <div className="stat-value">{loading ? '--' : `${avgProgress}%`}</div>
           <div className="stat-label">
             <TrendingUp size={14} style={{ verticalAlign: 'middle', marginRight: 4 }} />
             平均進捗
@@ -328,7 +317,11 @@ export default function ActionMapsPage() {
       </div>
 
       {/* ActionMap リスト */}
-      {activeMaps.length === 0 ? (
+      {loading ? (
+        <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
+          <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
+        </div>
+      ) : activeMaps.length === 0 ? (
         <div className="card">
           <div className="empty-state">
             <Map size={64} className="empty-state-icon" />

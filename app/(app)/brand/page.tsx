@@ -29,7 +29,7 @@ export default function BrandPage() {
   const [brands, setBrands] = useState<Brand[]>([]);
   const [selectedBrand, setSelectedBrand] = useState<Brand | null>(null);
   const [points, setPoints] = useState<BrandPoint[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
 
@@ -189,7 +189,7 @@ export default function BrandPage() {
     }
   };
 
-  if (wsLoading || loading) {
+  if (wsLoading || !currentWorkspace) {
     return (
       <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
         <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
@@ -255,7 +255,11 @@ export default function BrandPage() {
       )}
 
       {/* コンテンツ */}
-      {selectedBrand ? (
+      {loading ? (
+        <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
+          <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
+        </div>
+      ) : selectedBrand ? (
         <div className="brand-layout">
           <BrandProfile brand={selectedBrand} onUpdate={handleUpdateBrand} />
           <BrandPoints

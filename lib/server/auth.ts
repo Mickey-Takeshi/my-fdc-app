@@ -3,6 +3,7 @@
  *
  * サーバーサイド認証ヘルパー（Phase 5）
  * Cookie からユーザー情報を取得し、DB のユーザーレコードと紐づける
+ * インメモリキャッシュで同一ユーザーの重複 DB クエリを削減
  */
 
 import type { NextRequest } from 'next/server';
@@ -14,9 +15,44 @@ interface SessionUser {
   name: string;
 }
 
+// -- User Cache ---------------------------------------------------------------
+// 同一プロセス内で email → user のルックアップ結果をキャッシュ
+// API ルートの `getSessionUser()` は毎リクエスト呼ばれるため効果が大きい
+
+interface CachedUser {
+  user: SessionUser;
+  expiresAt: number;
+}
+
+const USER_CACHE_TTL = 5 * 60 * 1000; // 5 分
+const USER_CACHE_MAX = 100; // 最大エントリ数
+const userCache = new Map<string, CachedUser>();
+
+function getCachedUser(email: string): SessionUser | null {
+  const entry = userCache.get(email);
+  if (!entry) return null;
+  if (entry.expiresAt < Date.now()) {
+    userCache.delete(email);
+    return null;
+  }
+  return entry.user;
+}
+
+function setCachedUser(email: string, user: SessionUser): void {
+  // キャッシュサイズ上限チェック（古いエントリを削除）
+  if (userCache.size >= USER_CACHE_MAX) {
+    const firstKey = userCache.keys().next().value;
+    if (firstKey) userCache.delete(firstKey);
+  }
+  userCache.set(email, { user, expiresAt: Date.now() + USER_CACHE_TTL });
+}
+
+// -- Main Function ------------------------------------------------------------
+
 /**
  * リクエストの fdc_session Cookie からユーザー情報を取得
  * DB にユーザーが存在しない場合は自動作成（デモユーザー対応）
+ * キャッシュにより同一ユーザーの連続リクエストを高速化
  */
 export async function getSessionUser(
   request: NextRequest
@@ -30,6 +66,10 @@ export async function getSessionUser(
 
     if (!email) return null;
 
+    // キャッシュチェック
+    const cached = getCachedUser(email);
+    if (cached) return cached;
+
     const supabase = createServiceClient();
 
     // DB でユーザーを検索
@@ -40,6 +80,7 @@ export async function getSessionUser(
       .single();
 
     if (user) {
+      setCachedUser(email, user);
       return user;
     }
 
@@ -56,6 +97,10 @@ export async function getSessionUser(
     if (error) {
       console.error('User auto-creation failed:', error);
       return null;
+    }
+
+    if (newUser) {
+      setCachedUser(email, newUser);
     }
 
     return newUser;
