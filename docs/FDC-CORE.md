@@ -10,7 +10,7 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **📊 現在の開発状況（2026-03-04）**:
-- **バージョン**: v13.0.0
+- **バージョン**: v14.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
@@ -21,9 +21,9 @@
 - **タスク管理**: アイゼンハワーマトリクス（4象限）+ @dnd-kit DnD
 - **施策管理**: Action Map + ActionItem + Task 紐付け + 進捗計算
 - **OKR**: Objectives & Key Results + Action Map 紐付け + 進捗計算
-- **Google連携**: OAuth拡張 + Calendar同期 + 今日の予定表示 + タスク化
-- **現在のPhase**: Phase 13 完了（Calendar 同期）
-- **次フェーズ**: Phase 14（Tasks 同期）
+- **Google連携**: OAuth拡張 + Calendar同期 + Tasks双方向同期
+- **現在のPhase**: Phase 14 完了（Tasks 同期）
+- **次フェーズ**: Phase 15（次期機能）
 - **LP**: ランディングページテンプレート同梱（Phase 24対応）
 
 ---
@@ -52,6 +52,9 @@ founders-direct-modular/
 │   ├── api/                # API Routes
 │   │   ├── auth/
 │   │   │   └── callback/   # OAuth コールバック
+│   │   ├── google/          # Google API 連携
+│   │   │   ├── calendars/   # Calendar API（Phase 13）
+│   │   │   └── tasks/       # Tasks API + 双方向同期（Phase 14）
 │   │   ├── tasks/          # タスク CRUD API（Phase 9）
 │   │   ├── action-maps/    # Action Map CRUD API（Phase 10）
 │   │   ├── action-items/   # ActionItem CRUD API（Phase 10）
@@ -175,6 +178,10 @@ founders-direct-modular/
 | Phase 8 | ✅ 完了 | アプローチ履歴（タイムライン + 統計 + PDCA分析） |
 | Phase 9 | ✅ 完了 | Task 4象限（アイゼンハワーマトリクス + DnD + Joker） |
 | Phase 10 | ✅ 完了 | Action Map（施策管理 + ActionItem + 進捗連動） |
+| Phase 11 | ✅ 完了 | OKR（Objectives & Key Results + ActionMap紐付け） |
+| Phase 12 | ✅ 完了 | Google Calendar/Tasks 連携（OAuth拡張 + トークン暗号化） |
+| Phase 13 | ✅ 完了 | Calendar 同期（予定取得 + ダッシュボード表示 + タスク化） |
+| Phase 14 | ✅ 完了 | Tasks 同期（双方向同期 + Last Write Wins） |
 
 ---
 
@@ -203,7 +210,7 @@ founders-direct-modular/
 
 ---
 
-**Last Updated**: 2026-03-04
-**Version**: v10.0.0
-**Status**: Phase 10 完了
+**Last Updated**: 2026-03-05
+**Version**: v14.0.0
+**Status**: Phase 14 完了
 **Maintained by**: FDC Development Team

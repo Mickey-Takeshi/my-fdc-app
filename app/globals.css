@@ -2575,6 +2575,73 @@ html {
 .calendar-suit-option.suit-diamond { color: #d97706; }
 .calendar-suit-option.suit-club { color: #2563eb; }
 
+/* ============================================
+   Google Tasks 同期（Phase 14）
+   ============================================ */
+
+/* Sync Container */
+.sync-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sync-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.sync-btn:hover:not(:disabled) {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* Sync States */
+.sync-btn-syncing {
+  border-color: var(--primary);
+  color: var(--primary);
+  cursor: wait;
+}
+
+.sync-btn-synced {
+  border-color: #16a34a;
+  color: #16a34a;
+  background: rgba(22, 163, 74, 0.05);
+}
+
+.sync-btn-error {
+  border-color: var(--red);
+  color: var(--red);
+  background: rgba(239, 68, 68, 0.05);
+}
+
+/* Spin animation for sync icon */
+.sync-icon-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Sync Result Badge */
+.sync-result-badge {
+  font-size: 11px;
+  color: #16a34a;
+  background: rgba(22, 163, 74, 0.08);
+  padding: 2px 8px;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+/* Sync Last Time */
+.sync-last-time {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
 /* 低速ネットワーク・アクセシビリティ対応 */
 @media (prefers-reduced-motion: reduce) {
   *,

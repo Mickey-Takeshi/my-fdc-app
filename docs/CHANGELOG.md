@@ -13,7 +13,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Phase | 内容 |
 |-------|------|
-| Phase 14+ | Tasks同期以降 |
+| Phase 15+ | 今後の機能拡張 |
+
+---
+
+## [14.0.0] - 2026-03-05 - Phase 14: Tasks 同期
+
+### 概要
+
+Google Tasks API を使った双方向同期。FDC タスクと Google Tasks を Last Write Wins 方式で同期。タスクページに同期ボタンを追加。
+
+### Added
+
+| ファイル | 内容 |
+|---------|------|
+| `lib/types/google-tasks.ts` | GoogleTaskList, GoogleTask, SyncStatus, SyncResult 型定義 |
+| `app/api/google/tasks/route.ts` | Google Tasks 一覧取得・作成 API |
+| `app/api/google/tasks/[id]/route.ts` | Google Task 更新・削除 API |
+| `app/api/google/tasks/sync/route.ts` | 双方向同期 API（Last Write Wins） |
+| `app/(app)/tasks/_components/SyncButton.tsx` | 同期ボタン + ステータス表示 |
+
+### Changed
+
+| ファイル | 内容 |
+|---------|------|
+| `lib/types/task.ts` | Task 型に googleTaskId, googleTaskListId, lastSyncedAt 追加 |
+| `app/(app)/tasks/page.tsx` | SyncButton 統合 |
+| `app/globals.css` | Google Tasks 同期 UI 用 CSS 追加 |
 
 ---
 

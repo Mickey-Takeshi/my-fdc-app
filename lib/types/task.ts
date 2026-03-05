@@ -61,6 +61,9 @@ export interface Task {
   priority: number;
   actionItemId: string | null;
   linkedActionItemIds: string[];
+  googleTaskId: string | null;
+  googleTaskListId: string | null;
+  lastSyncedAt: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -99,6 +102,9 @@ export function toTask(row: TaskRow): Task {
     priority: row.priority ?? 0,
     actionItemId: row.action_item_id,
     linkedActionItemIds: row.linked_action_item_ids ?? [],
+    googleTaskId: row.google_task_id,
+    googleTaskListId: row.google_task_list_id,
+    lastSyncedAt: row.last_synced_at,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };

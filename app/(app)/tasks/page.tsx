@@ -24,6 +24,7 @@ import type { Task, Suit, TaskStatus } from '@/lib/types/task';
 import TodoBoard from './_components/TodoBoard';
 import AddTaskForm from './_components/AddTaskForm';
 import TaskDetailModal from './_components/TaskDetailModal';
+import SyncButton from './_components/SyncButton';
 
 export default function TasksPage() {
   const { currentWorkspace, loading: wsLoading } = useWorkspace();
@@ -329,8 +330,12 @@ export default function TasksPage() {
         </div>
       )}
 
-      {/* 追加ボタン */}
-      <div style={{ marginBottom: '16px', display: 'flex', justifyContent: 'flex-end' }}>
+      {/* 追加ボタン + 同期ボタン */}
+      <div style={{ marginBottom: '16px', display: 'flex', justifyContent: 'flex-end', gap: '8px', alignItems: 'center' }}>
+        <SyncButton
+          workspaceId={currentWorkspace.id}
+          onSyncComplete={fetchTasks}
+        />
         <button
           className="btn btn-primary"
           onClick={() => setShowAddForm(true)}
