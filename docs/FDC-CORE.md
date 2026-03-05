@@ -10,7 +10,7 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **現在の開発状況（2026-03-05）**:
-- **バージョン**: v31.0.0
+- **バージョン**: v34.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
@@ -31,7 +31,8 @@
 - **UI改善**: UndoSnackbar + SyncStatusIndicator + useOptimistic（Phase 25）
 - **運用基盤**: Dependabot + バージョン管理 + DB メンテナンス + ヘルスチェック + インシデント対応（Phase 26-28）
 - **DevEnv**: 環境セットアップ + 認証トラブルシューティング + Claude MAX マルチアカウント + CI/CD（Phase 29-31）
-- **現在のPhase**: Phase 31 完了（DevEnv: Environment Setup + Documentation + CI/CD）
+- **アーキテクチャ**: コマンドパターン + 設計レビューチェックリスト + 状態管理ガイド
+- **現在のPhase**: Phase 34 完了（Architecture: UX + Command Pattern + State Management）
 - **次フェーズ**: Phase 32（次期機能）
 
 ---
@@ -219,6 +220,9 @@ founders-direct-modular/
 | Phase 29 | ✅ 完了 | Test Environment Setup & Auth Troubleshooting（.env.example + ENVIRONMENT-SETUP + AUTH-TROUBLESHOOTING） |
 | Phase 30 | ✅ 完了 | Claude MAX Multi-Account（CLAUDE-MULTI-ACCOUNT ドキュメント） |
 | Phase 31 | ✅ 完了 | CI/CD（ci.yml + dependabot-auto-merge.yml） |
+| Phase 32 | ✅ 完了 | UX & アーキテクチャ改善（設計レビュー9観点 + エラーメッセージ） |
+| Phase 33 | ✅ 完了 | コマンドパターン（DataCommand型 + applyCommand） |
+| Phase 34 | ✅ 完了 | 状態管理パターン（Server State vs Client State ガイド） |
 
 ---
 

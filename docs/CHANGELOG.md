@@ -13,7 +13,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Phase | 内容 |
 |-------|------|
-| Phase 32+ | 今後の機能拡張 |
+| Phase 35+ | 今後の機能拡張 |
+
+---
+
+## [34.0.0] - 2026-03-05 - Phase 32-34: Architecture
+
+### 概要
+
+アーキテクチャ改善。設計レビュー9観点チェックリスト、コマンドパターン型定義・applyCommand、エラーメッセージユーティリティ、状態管理ガイド。
+
+### Added
+
+| ファイル | 内容 |
+|---------|------|
+| `docs/guides/ARCHITECTURE-REVIEW-CHECKLIST.md` | 設計レビュー9観点 + 12項目チェックリスト |
+| `docs/guides/STATE-MANAGEMENT.md` | 状態管理パターンガイド |
+| `lib/types/commands.ts` | DataCommand 型定義（Task/Brand/OKR/CRM） |
+| `lib/utils/apply-command.ts` | コマンド適用ユーティリティ（Optimistic UI基盤） |
+| `lib/utils/error-messages.ts` | ユーザー向けエラーメッセージ変換 |
+| `tests/unit/lib/apply-command.test.ts` | applyCommand ユニットテスト（7件） |
+| `tests/unit/lib/error-messages.test.ts` | error-messages ユニットテスト（8件） |
 
 ---
 
