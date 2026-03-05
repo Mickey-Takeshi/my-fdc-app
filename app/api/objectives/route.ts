@@ -38,21 +38,21 @@ async function enrichObjectives(
 
   const supabase = createServiceClient();
 
-  // KeyResults を取得
-  const { data: krRows } = await supabase
-    .from('key_results')
-    .select('*')
-    .eq('workspace_id', workspaceId)
-    .order('created_at', { ascending: true });
+  // KeyResults と ActionMaps を並列取得（Phase 86: async waterfall elimination）
+  const [{ data: krRows }, { data: actionMaps }] = await Promise.all([
+    supabase
+      .from('key_results')
+      .select('*')
+      .eq('workspace_id', workspaceId)
+      .order('created_at', { ascending: true }),
+    supabase
+      .from('action_maps')
+      .select('id, key_result_id')
+      .eq('workspace_id', workspaceId)
+      .not('key_result_id', 'is', null),
+  ]);
 
   const keyResults = (krRows as KeyResultRow[] | null)?.map(toKeyResult) ?? [];
-
-  // ActionMaps の key_result_id を確認
-  const { data: actionMaps } = await supabase
-    .from('action_maps')
-    .select('id, key_result_id')
-    .eq('workspace_id', workspaceId)
-    .not('key_result_id', 'is', null);
 
   const actionMapsByKr = (actionMaps ?? []).reduce<Record<string, number>>((acc, am) => {
     const krId = am.key_result_id as string;

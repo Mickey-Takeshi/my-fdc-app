@@ -1,4 +1,4 @@
-# FDC-CORE.md（v1.12 - 2026-03-05）
+# FDC-CORE.md（v1.13 - 2026-03-05）
 
 ## 0. 位置づけ
 
@@ -10,7 +10,7 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **現在の開発状況（2026-03-05）**:
-- **バージョン**: v85.0.0
+- **バージョン**: v88.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
@@ -51,8 +51,9 @@
 - **コンプライアンス**: 法務ドキュメント + データ保護 + 監査ログ（Phase 77-79）
 - **国際化**: next-intl設定 + 翻訳ワークフロー + ローカライズ（Phase 80-82）
 - **モバイル**: Expo基盤 + モバイルUI + プッシュ通知・オフライン対応（Phase 83-85）
-- **現在のPhase**: Phase 85 完了（Mobile: Expo Foundation + Mobile UI + Push Notifications & Offline）
-- **次フェーズ**: Phase 86（次期機能）
+- **React Performance**: 非同期ウォーターフォール排除 + バンドルサイズ最適化 + 再レンダリング最適化（Phase 86-88）
+- **現在のPhase**: Phase 88 完了（React Performance: async optimization, bundle optimization, render optimization）
+- **次フェーズ**: Phase 89（次期機能）
 
 ---
 
@@ -186,6 +187,10 @@ founders-direct-modular/
 │   │   ├── expo-foundation.md     # Expo基盤設計
 │   │   ├── mobile-ui.md           # モバイルUI設計
 │   │   └── push-offline.md        # プッシュ通知・オフライン対応設計
+│   ├── performance/         # React Performance（Phase 86-88）
+│   │   ├── async-optimization.md  # 非同期ウォーターフォール排除
+│   │   ├── bundle-optimization.md # バンドルサイズ最適化
+│   │   └── render-optimization.md # 再レンダリング最適化
 │   └── runbooks/           # ランブック
 ├── package.json
 ├── tsconfig.json
@@ -335,6 +340,9 @@ founders-direct-modular/
 | Phase 83 | ✅ 完了 | Expo基盤（モノレポ構成 + Expo Router + Supabase認証統合 + EAS Build） |
 | Phase 84 | ✅ 完了 | モバイルUI（Tamagui + ジェスチャー + アニメーション + レスポンシブ + ボトムシート） |
 | Phase 85 | ✅ 完了 | プッシュ通知・オフライン対応（Expo Notifications + WatermelonDB + 同期戦略 + バックグラウンド同期） |
+| Phase 86 | ✅ 完了 | 非同期ウォーターフォール排除（Promise.all並列化 + early return + enrichment関数最適化） |
+| Phase 87 | ✅ 完了 | バンドルサイズ最適化（Dynamic Import + モーダル遅延読込 + barrel import回避） |
+| Phase 88 | ✅ 完了 | 再レンダリング最適化（React.memo + リストアイテム最適化 + useCallbackガイドライン） |
 
 ---
 
@@ -364,6 +372,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-05
-**Version**: v85.0.0
-**Status**: Phase 85 完了
+**Version**: v88.0.0
+**Status**: Phase 88 完了
 **Maintained by**: FDC Development Team

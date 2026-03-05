@@ -3,10 +3,11 @@
 /**
  * app/(app)/leads/_components/KanbanCard.tsx
  *
- * カンバンカード（Phase 6）
+ * カンバンカード（Phase 6, Phase 88: React.memo）
  * リードをカード形式で表示
  */
 
+import { memo } from 'react';
 import { Building2, User, Mail, Phone } from 'lucide-react';
 import type { Prospect } from '@/lib/types/prospect';
 
@@ -15,7 +16,8 @@ interface KanbanCardProps {
   onSelect: (prospect: Prospect) => void;
 }
 
-export default function KanbanCard({ prospect, onSelect }: KanbanCardProps) {
+// Phase 88: memo to prevent unnecessary re-renders in kanban list
+const KanbanCard = memo(function KanbanCard({ prospect, onSelect }: KanbanCardProps) {
   return (
     <div
       className="kanban-card"
@@ -73,4 +75,6 @@ export default function KanbanCard({ prospect, onSelect }: KanbanCardProps) {
       </div>
     </div>
   );
-}
+});
+
+export default KanbanCard;

@@ -11,6 +11,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
+import dynamic from 'next/dynamic';
 import {
   Plus,
   Target,
@@ -22,8 +23,13 @@ import {
 import { useWorkspace } from '@/lib/hooks/useWorkspace';
 import type { Objective } from '@/lib/types/okr';
 import type { ActionMap } from '@/lib/types/action-map';
-import AddObjectiveForm from './_components/AddObjectiveForm';
 import ObjectiveCard from './_components/ObjectiveCard';
+
+// Phase 87: Dynamic import for modal component (loaded on demand)
+const AddObjectiveForm = dynamic(
+  () => import('./_components/AddObjectiveForm'),
+  { ssr: false }
+);
 
 export default function OkrPage() {
   const { currentWorkspace, loading: wsLoading } = useWorkspace();

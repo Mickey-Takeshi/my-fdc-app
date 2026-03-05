@@ -10,6 +10,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
+import dynamic from 'next/dynamic';
 import {
   Plus,
   Search,
@@ -23,8 +24,16 @@ import { useWorkspace } from '@/lib/hooks/useWorkspace';
 import { CLIENT_STATUS_LABELS, type Client, type ClientStatus } from '@/lib/types/client';
 import type { Prospect } from '@/lib/types/prospect';
 import { PROSPECT_STATUS_LABELS } from '@/lib/types/prospect';
-import AddClientForm from './_components/AddClientForm';
-import ClientDetailModal from './_components/ClientDetailModal';
+
+// Phase 87: Dynamic imports for modal components (loaded on demand)
+const AddClientForm = dynamic(
+  () => import('./_components/AddClientForm'),
+  { ssr: false }
+);
+const ClientDetailModal = dynamic(
+  () => import('./_components/ClientDetailModal'),
+  { ssr: false }
+);
 
 export default function ClientsPage() {
   const { currentWorkspace, loading: wsLoading } = useWorkspace();

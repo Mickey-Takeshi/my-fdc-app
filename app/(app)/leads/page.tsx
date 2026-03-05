@@ -12,6 +12,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
+import dynamic from 'next/dynamic';
 import {
   Plus,
   Search,
@@ -33,9 +34,20 @@ import {
 import type { Approach } from '@/lib/types/approach';
 import KanbanView from './_components/KanbanView';
 import ListView from './_components/ListView';
-import AddProspectForm from './_components/AddProspectForm';
-import ProspectDetailModal from './_components/ProspectDetailModal';
-import ApproachStatsSection from './_components/ApproachStatsSection';
+
+// Phase 87: Dynamic imports for modal components (loaded on demand)
+const AddProspectForm = dynamic(
+  () => import('./_components/AddProspectForm'),
+  { ssr: false }
+);
+const ProspectDetailModal = dynamic(
+  () => import('./_components/ProspectDetailModal'),
+  { ssr: false }
+);
+const ApproachStatsSection = dynamic(
+  () => import('./_components/ApproachStatsSection'),
+  { ssr: false }
+);
 
 type ViewMode = 'kanban' | 'list';
 

@@ -11,6 +11,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
+import dynamic from 'next/dynamic';
 import {
   Plus,
   ClipboardList,
@@ -22,9 +23,17 @@ import {
 import { useWorkspace } from '@/lib/hooks/useWorkspace';
 import type { Task, Suit, TaskStatus } from '@/lib/types/task';
 import TodoBoard from './_components/TodoBoard';
-import AddTaskForm from './_components/AddTaskForm';
-import TaskDetailModal from './_components/TaskDetailModal';
 import SyncButton from './_components/SyncButton';
+
+// Phase 87: Dynamic imports for modal components (loaded on demand)
+const AddTaskForm = dynamic(
+  () => import('./_components/AddTaskForm'),
+  { ssr: false }
+);
+const TaskDetailModal = dynamic(
+  () => import('./_components/TaskDetailModal'),
+  { ssr: false }
+);
 
 export default function TasksPage() {
   const { currentWorkspace, loading: wsLoading } = useWorkspace();

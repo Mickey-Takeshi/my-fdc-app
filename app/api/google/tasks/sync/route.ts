@@ -42,7 +42,12 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const role = await requireRole(user.id, workspaceId, 'MEMBER');
+  // Phase 86: 権限チェックとトークン取得を並列実行
+  const [role, accessToken] = await Promise.all([
+    requireRole(user.id, workspaceId, 'MEMBER'),
+    getGoogleAccessToken(user.id),
+  ]);
+
   if (!role) {
     return NextResponse.json(
       { error: 'アクセス権限がありません' },
@@ -50,7 +55,6 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const accessToken = await getGoogleAccessToken(user.id);
   if (!accessToken) {
     return NextResponse.json(
       { error: 'Google API 連携が無効です。再ログインしてください。' },

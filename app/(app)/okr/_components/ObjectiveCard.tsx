@@ -3,11 +3,11 @@
 /**
  * app/(app)/okr/_components/ObjectiveCard.tsx
  *
- * Objective カード（Phase 11）
+ * Objective カード（Phase 11, Phase 88: React.memo）
  * 進捗バー + KeyResult リスト + ActionMap 紐付け表示
  */
 
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import {
   ChevronDown,
   ChevronRight,
@@ -209,7 +209,8 @@ function KeyResultItem({
   );
 }
 
-export default function ObjectiveCard({
+// Phase 88: memo to prevent unnecessary re-renders in OKR list
+const ObjectiveCard = memo(function ObjectiveCard({
   objective,
   actionMaps,
   onAddKr,
@@ -380,4 +381,6 @@ export default function ObjectiveCard({
       )}
     </div>
   );
-}
+});
+
+export default ObjectiveCard;

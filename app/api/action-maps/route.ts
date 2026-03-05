@@ -40,22 +40,21 @@ async function enrichActionMaps(
 
   const supabase = createServiceClient();
 
-  // ActionItems を取得
-  const { data: itemRows } = await supabase
-    .from('action_items')
-    .select('*')
-    .eq('workspace_id', workspaceId)
-    .order('sort_order', { ascending: true });
+  // ActionItems と Tasks を並列取得（Phase 86: async waterfall elimination）
+  const [{ data: itemRows }, { data: taskRows }] = await Promise.all([
+    supabase
+      .from('action_items')
+      .select('*')
+      .eq('workspace_id', workspaceId)
+      .order('sort_order', { ascending: true }),
+    supabase
+      .from('tasks')
+      .select('id, action_item_id, status')
+      .eq('workspace_id', workspaceId)
+      .not('action_item_id', 'is', null),
+  ]);
 
   const items = (itemRows as ActionItemRow[] | null)?.map(toActionItem) ?? [];
-
-  // Tasks を取得（action_item_id が設定されているもの）
-  const { data: taskRows } = await supabase
-    .from('tasks')
-    .select('id, action_item_id, status')
-    .eq('workspace_id', workspaceId)
-    .not('action_item_id', 'is', null);
-
   const tasks = (taskRows as Pick<TaskRow, 'id' | 'action_item_id' | 'status'>[] | null) ?? [];
 
   // ActionItem ごとの Task 進捗を計算

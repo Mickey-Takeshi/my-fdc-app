@@ -3,11 +3,11 @@
 /**
  * app/(app)/action-maps/_components/ActionMapCard.tsx
  *
- * ActionMap カード（Phase 10）
+ * ActionMap カード（Phase 10, Phase 88: React.memo）
  * 進捗バー + ActionItem リスト + タスク紐付け
  */
 
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import {
   ChevronDown,
   ChevronRight,
@@ -58,7 +58,8 @@ const statusIcon = (status: ActionItemStatus) => {
   }
 };
 
-export default function ActionMapCard({
+// Phase 88: memo to prevent unnecessary re-renders in action map list
+const ActionMapCard = memo(function ActionMapCard({
   actionMap,
   tasks,
   onAddItem,
@@ -309,4 +310,6 @@ export default function ActionMapCard({
       )}
     </div>
   );
-}
+});
+
+export default ActionMapCard;

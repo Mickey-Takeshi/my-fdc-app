@@ -3,10 +3,11 @@
 /**
  * app/(app)/leads/_components/ListView.tsx
  *
- * リスト表示（Phase 6）
+ * リスト表示（Phase 6, Phase 88: React.memo）
  * テーブル形式でリードを一覧表示
  */
 
+import { memo } from 'react';
 import { Building2, Trash2 } from 'lucide-react';
 import {
   PROSPECT_STATUS_LABELS,
@@ -22,7 +23,8 @@ interface ListViewProps {
   onDelete: (prospectId: string) => void;
 }
 
-export default function ListView({
+// Phase 88: memo to prevent unnecessary re-renders
+const ListView = memo(function ListView({
   prospects,
   onSelect,
   onStatusChange,
@@ -103,4 +105,6 @@ export default function ListView({
       </table>
     </div>
   );
-}
+});
+
+export default ListView;

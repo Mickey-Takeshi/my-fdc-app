@@ -3,10 +3,11 @@
 /**
  * app/(app)/tasks/_components/TodoCard.tsx
  *
- * ドラッグ可能なタスクカード（Phase 9）
+ * ドラッグ可能なタスクカード（Phase 9, Phase 88: React.memo）
  * @dnd-kit を使用したドラッグ&ドロップ対応
  */
 
+import { memo } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import {
@@ -29,7 +30,8 @@ interface TodoCardProps {
   onSelect: (task: Task) => void;
 }
 
-export default function TodoCard({ task, onStatusChange, onSelect }: TodoCardProps) {
+// Phase 88: memo to prevent unnecessary re-renders in task list
+const TodoCard = memo(function TodoCard({ task, onStatusChange, onSelect }: TodoCardProps) {
   const {
     attributes,
     listeners,
@@ -113,4 +115,6 @@ export default function TodoCard({ task, onStatusChange, onSelect }: TodoCardPro
       </div>
     </div>
   );
-}
+});
+
+export default TodoCard;

@@ -11,6 +11,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
+import dynamic from 'next/dynamic';
 import {
   Plus,
   Map,
@@ -22,8 +23,13 @@ import {
 import { useWorkspace } from '@/lib/hooks/useWorkspace';
 import type { ActionMap } from '@/lib/types/action-map';
 import type { Task } from '@/lib/types/task';
-import AddActionMapForm from './_components/AddActionMapForm';
 import ActionMapCard from './_components/ActionMapCard';
+
+// Phase 87: Dynamic import for modal component (loaded on demand)
+const AddActionMapForm = dynamic(
+  () => import('./_components/AddActionMapForm'),
+  { ssr: false }
+);
 
 export default function ActionMapsPage() {
   const { currentWorkspace, loading: wsLoading } = useWorkspace();
