@@ -13,7 +13,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Phase | 内容 |
 |-------|------|
-| Phase 11+ | OKR 以降 |
+| Phase 12+ | Google 連携以降 |
+
+---
+
+## [11.0.0] - 2026-03-04 - Phase 11: OKR (Objectives & Key Results)
+
+### 概要
+
+FDC 3層アーキテクチャの「戦略層」として、OKR（Objectives and Key Results）を実装。Objective と Key Result の階層構造、Action Map との紐付け、ボトムアップ進捗計算（KR 平均 → Objective 進捗）。KR の current_value インライン編集、進捗バー表示。
+
+### Added
+
+| ファイル | 内容 |
+|---------|------|
+| `lib/types/okr.ts` | Objective, KeyResult, ObjectiveRow, KeyResultRow 型定義 |
+| `app/api/objectives/route.ts` | Objective 一覧取得・作成 API（KR 進捗計算付き） |
+| `app/api/objectives/[id]/route.ts` | Objective 更新・削除 API |
+| `app/api/objectives/[id]/key-results/route.ts` | Key Result 作成 API |
+| `app/api/key-results/[id]/route.ts` | Key Result 更新・削除 API |
+| `app/(app)/okr/page.tsx` | OKR 管理ページ（統計・一覧） |
+| `app/(app)/okr/_components/AddObjectiveForm.tsx` | Objective 追加モーダル |
+| `app/(app)/okr/_components/ObjectiveCard.tsx` | Objective カード（進捗バー + KR リスト + ActionMap 紐付け） |
+
+### Changed
+
+| ファイル | 内容 |
+|---------|------|
+| `app/api/action-maps/[id]/route.ts` | UpdateSchema に key_result_id を追加（OKR 紐付け対応） |
+| `app/(app)/layout.tsx` | ナビゲーションに OKR タブ追加（Target アイコン） |
+| `app/globals.css` | OKR 用 CSS 追加（Objective カード、KR リスト、進捗バー） |
 
 ---
 

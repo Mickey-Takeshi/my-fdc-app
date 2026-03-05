@@ -10,7 +10,7 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **📊 現在の開発状況（2026-03-04）**:
-- **バージョン**: v10.0.0
+- **バージョン**: v11.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
@@ -20,8 +20,9 @@
 - **CRM**: リード + クライアント + アプローチ履歴
 - **タスク管理**: アイゼンハワーマトリクス（4象限）+ @dnd-kit DnD
 - **施策管理**: Action Map + ActionItem + Task 紐付け + 進捗計算
-- **現在のPhase**: Phase 10 完了（Action Map）
-- **次フェーズ**: Phase 11（OKR）
+- **OKR**: Objectives & Key Results + Action Map 紐付け + 進捗計算
+- **現在のPhase**: Phase 11 完了（OKR）
+- **次フェーズ**: Phase 12（Google連携）
 - **LP**: ランディングページテンプレート同梱（Phase 24対応）
 
 ---
@@ -41,12 +42,20 @@ founders-direct-modular/
 │   │   │   └── _components/ # カンバン/リスト/フォーム
 │   │   ├── clients/         # クライアント管理ページ（Phase 7）
 │   │   │   └── _components/ # 追加/詳細モーダル
+│   │   ├── action-maps/      # Action Map 管理ページ（Phase 10）
+│   │   │   └── _components/ # AddActionMapForm/ActionMapCard
+│   │   ├── okr/              # OKR 管理ページ（Phase 11）
+│   │   │   └── _components/ # AddObjectiveForm/ObjectiveCard
 │   │   ├── settings/        # 設定ページ
 │   │   └── layout.tsx      # 認証レイアウト（未ログイン時LP表示）
 │   ├── api/                # API Routes
 │   │   ├── auth/
 │   │   │   └── callback/   # OAuth コールバック
 │   │   ├── tasks/          # タスク CRUD API（Phase 9）
+│   │   ├── action-maps/    # Action Map CRUD API（Phase 10）
+│   │   ├── action-items/   # ActionItem CRUD API（Phase 10）
+│   │   ├── objectives/     # Objective CRUD API（Phase 11）
+│   │   ├── key-results/    # Key Result CRUD API（Phase 11）
 │   │   ├── leads/          # リード CRUD API（Phase 6）
 │   │   └── clients/        # クライアント CRUD API（Phase 7）
 │   ├── login/              # ログインページ（Google OAuth + デモ）
