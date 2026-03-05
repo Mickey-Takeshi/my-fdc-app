@@ -1,4 +1,4 @@
-# FDC-CORE.md（v1.3 - 2026-03-05）
+# FDC-CORE.md（v1.4 - 2026-03-05）
 
 ## 0. 位置づけ
 
@@ -10,7 +10,7 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **現在の開発状況（2026-03-05）**:
-- **バージョン**: v49.0.0
+- **バージョン**: v52.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
@@ -37,8 +37,9 @@
 - **セキュリティ強化**: 脆弱性対応ガイド + 災害復旧計画 + 認証・認可の深掘り（Phase 41-43）
 - **ドキュメント整備**: ドキュメントガイド + Next.js 16 移行ガイド + 運用ドキュメント（Phase 44-46）
 - **課金基盤**: Stripe SDK + Checkout/Webhook/Portal API + プラン定義 + Feature Gate（Phase 47-49）
-- **現在のPhase**: Phase 49 完了（Billing: Stripe Integration + Pricing + Subscription Management）
-- **次フェーズ**: Phase 50（次期機能）
+- **OAuth認可**: 同意画面設定ガイド + プライバシーポリシー + 利用規約 + 審査申請ガイド（Phase 50-52）
+- **現在のPhase**: Phase 52 完了（OAuth: Consent Screen + Privacy/Terms Pages + Review Guide）
+- **次フェーズ**: Phase 53（次期機能）
 
 ---
 
@@ -87,6 +88,9 @@ founders-direct-modular/
 │   │   │   ├── webhook/     # Stripe Webhook
 │   │   │   └── workshop/    # Checkout / Portal
 │   │   └── health/         # ヘルスチェック API（Phase 28）
+│   ├── (public)/           # 公開ページ（認証不要）
+│   │   ├── privacy/        # プライバシーポリシー（Phase 51）
+│   │   └── terms/          # 利用規約（Phase 51）
 │   ├── login/              # ログインページ（Google OAuth + デモ）
 │   ├── globals.css         # グローバルスタイル
 │   ├── layout.tsx          # ルートレイアウト
@@ -256,6 +260,9 @@ founders-direct-modular/
 | Phase 47 | ✅ 完了 | 決済基盤（Stripe SDK + Checkout/Webhook/Portal API） |
 | Phase 48 | ✅ 完了 | 価格設定（プラン定義 + 階層別課金モデル） |
 | Phase 49 | ✅ 完了 | 課金状態管理（Webhookハンドラー + Feature Gate + 解約フロー） |
+| Phase 50 | ✅ 完了 | OAuth同意画面設定ガイド |
+| Phase 51 | ✅ 完了 | プライバシーポリシー + 利用規約ページ |
+| Phase 52 | ✅ 完了 | OAuth審査申請ガイド（デモ動画 + Written explanation） |
 
 ---
 
@@ -285,6 +292,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-05
-**Version**: v49.0.0
-**Status**: Phase 49 完了
+**Version**: v52.0.0
+**Status**: Phase 52 完了
 **Maintained by**: FDC Development Team
