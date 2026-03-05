@@ -1,4 +1,4 @@
-# FDC-CORE.md（v1.2 - 2026-03-05）
+# FDC-CORE.md（v1.3 - 2026-03-05）
 
 ## 0. 位置づけ
 
@@ -10,7 +10,7 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **現在の開発状況（2026-03-05）**:
-- **バージョン**: v46.0.0
+- **バージョン**: v49.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
@@ -36,8 +36,9 @@
 - **コード品質**: 孤立ファイル整理 + デバッグガイド + コードレビューガイド（Phase 38-40）
 - **セキュリティ強化**: 脆弱性対応ガイド + 災害復旧計画 + 認証・認可の深掘り（Phase 41-43）
 - **ドキュメント整備**: ドキュメントガイド + Next.js 16 移行ガイド + 運用ドキュメント（Phase 44-46）
-- **現在のPhase**: Phase 46 完了（Documentation: Documentation Guide + Next.js 16 Migration + Operations Guide）
-- **次フェーズ**: Phase 47（次期機能）
+- **課金基盤**: Stripe SDK + Checkout/Webhook/Portal API + プラン定義 + Feature Gate（Phase 47-49）
+- **現在のPhase**: Phase 49 完了（Billing: Stripe Integration + Pricing + Subscription Management）
+- **次フェーズ**: Phase 50（次期機能）
 
 ---
 
@@ -82,6 +83,9 @@ founders-direct-modular/
 │   │   │   ├── audit-logs/  # 監査ログ API
 │   │   │   ├── tenants/     # テナント一覧 API（SA）
 │   │   │   └── metrics/     # メトリクス API（SA）
+│   │   ├── billing/         # 課金 API（Phase 47）
+│   │   │   ├── webhook/     # Stripe Webhook
+│   │   │   └── workshop/    # Checkout / Portal
 │   │   └── health/         # ヘルスチェック API（Phase 28）
 │   ├── login/              # ログインページ（Google OAuth + デモ）
 │   ├── globals.css         # グローバルスタイル
@@ -107,7 +111,14 @@ founders-direct-modular/
 │   │   ├── supabase.ts     # Service Role 用 Supabase クライアント
 │   │   ├── auth.ts         # サーバーサイド認証ヘルパー
 │   │   ├── permissions.ts  # RBAC 権限チェック
-│   │   └── sanitize.ts     # 入力サニタイズ + レート制限（Phase 20）
+│   │   ├── stripe.ts       # Stripe SDK クライアント（Phase 47）
+│   │   ├── sanitize.ts     # 入力サニタイズ + レート制限（Phase 20）
+│   │   └── billing/        # 課金ロジック（Phase 47-49）
+│   │       ├── pricing.ts      # 価格計算ユーティリティ
+│   │       ├── webhook-handlers.ts # Webhook ハンドラー
+│   │       └── feature-gate.ts # 機能ゲーティング
+│   ├── config/             # 設定定義
+│   │   └── pricing.ts      # プラン定義・価格設定（Phase 48）
 │   ├── utils/              # ユーティリティ
 │   │   └── pagination.ts   # ページネーション（Phase 35）
 │   ├── contexts/           # React Context
@@ -121,7 +132,8 @@ founders-direct-modular/
 │       ├── workspace.ts     # Workspace / WorkspaceMember 型
 │       ├── prospect.ts     # Prospect / LeadRow 型（Phase 6）
 │       ├── client.ts       # Client / ClientRow 型（Phase 7）
-│       └── approach.ts     # Approach / ApproachRow 型（Phase 8）
+│       ├── approach.ts     # Approach / ApproachRow 型（Phase 8）
+│       └── billing.ts      # Billing / Subscription 型（Phase 47）
 ├── public/                 # 静的ファイル
 │   └── images/             # LP用画像
 ├── docs/                   # ドキュメント
@@ -186,6 +198,7 @@ founders-direct-modular/
 | データ永続化 | localStorage + Supabase | - |
 | 認証 | Supabase Auth (Google OAuth) | - |
 | バリデーション | Zod | 4.3.6 |
+| 決済 | Stripe | 20.x（API v2026-02-25.clover） |
 
 ---
 
@@ -240,6 +253,9 @@ founders-direct-modular/
 | Phase 44 | ✅ 完了 | ドキュメントガイド（ランブックテンプレート + CHANGELOG書式 + 更新ルール） |
 | Phase 45 | ✅ 完了 | Next.js 16 移行ガイド（proxy.ts + async params + Turbopack対応） |
 | Phase 46 | ✅ 完了 | 運用ドキュメント（インシデント対応 + ポストモーテム + SLO/SLA） |
+| Phase 47 | ✅ 完了 | 決済基盤（Stripe SDK + Checkout/Webhook/Portal API） |
+| Phase 48 | ✅ 完了 | 価格設定（プラン定義 + 階層別課金モデル） |
+| Phase 49 | ✅ 完了 | 課金状態管理（Webhookハンドラー + Feature Gate + 解約フロー） |
 
 ---
 
@@ -269,6 +285,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-05
-**Version**: v46.0.0
-**Status**: Phase 46 完了
+**Version**: v49.0.0
+**Status**: Phase 49 完了
 **Maintained by**: FDC Development Team
