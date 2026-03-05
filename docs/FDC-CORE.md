@@ -10,7 +10,7 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **現在の開発状況（2026-03-05）**:
-- **バージョン**: v37.0.0
+- **バージョン**: v40.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
@@ -33,8 +33,9 @@
 - **DevEnv**: 環境セットアップ + 認証トラブルシューティング + Claude MAX マルチアカウント + CI/CD（Phase 29-31）
 - **アーキテクチャ**: コマンドパターン + 設計レビューチェックリスト + 状態管理ガイド
 - **パフォーマンス**: クエリ最適化 + ページネーション + キャッシュ戦略（Phase 35-37）
-- **現在のPhase**: Phase 37 完了（Performance: Query Optimization + Pagination + Cache Strategy）
-- **次フェーズ**: Phase 38（次期機能）
+- **コード品質**: 孤立ファイル整理 + デバッグガイド + コードレビューガイド（Phase 38-40）
+- **現在のPhase**: Phase 40 完了（Code Quality: File Cleanup + Debug Guide + Code Review Guide）
+- **次フェーズ**: Phase 41（次期機能）
 
 ---
 
@@ -104,10 +105,8 @@ founders-direct-modular/
 │   │   ├── supabase.ts     # Service Role 用 Supabase クライアント
 │   │   ├── auth.ts         # サーバーサイド認証ヘルパー
 │   │   ├── permissions.ts  # RBAC 権限チェック
-│   │   ├── sanitize.ts     # 入力サニタイズ + レート制限（Phase 20）
-│   │   └── logger.ts       # Pino 構造化ログ（Phase 21）
+│   │   └── sanitize.ts     # 入力サニタイズ + レート制限（Phase 20）
 │   ├── utils/              # ユーティリティ
-│   │   ├── performance.ts  # Core Web Vitals（Phase 22）
 │   │   └── pagination.ts   # ページネーション（Phase 35）
 │   ├── contexts/           # React Context
 │   │   ├── AuthContext.tsx # 認証コンテキスト（logout 関数含む）
@@ -128,6 +127,8 @@ founders-direct-modular/
 │   ├── FDC-CORE.md         # 本ファイル
 │   ├── CHANGELOG.md        # 変更履歴
 │   ├── guides/             # ガイド
+│   │   ├── DEBUG-GUIDE.md  # デバッグ手法（Phase 39）
+│   │   └── CODE-REVIEW-GUIDE.md # コードレビュー（Phase 40）
 │   └── runbooks/           # ランブック
 ├── package.json
 ├── tsconfig.json
@@ -228,6 +229,9 @@ founders-direct-modular/
 | Phase 35 | ✅ 完了 | クエリ最適化（推奨インデックス + N+1対策 + EXPLAIN分析） |
 | Phase 36 | ✅ 完了 | フロントエンドパフォーマンス（Core Web Vitals + Dynamic Import） |
 | Phase 37 | ✅ 完了 | キャッシュ戦略（データ型別キャッシュ + Optimistic Update + ページネーション） |
+| Phase 38 | ✅ 完了 | 重複・孤立ファイル整理 |
+| Phase 39 | ✅ 完了 | デバッグ手法ガイド（HAR分析・タイムゾーン・切り分け） |
+| Phase 40 | ✅ 完了 | コードレビュー・リファクタリングガイド |
 
 ---
 
@@ -257,6 +261,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-05
-**Version**: v37.0.0
-**Status**: Phase 37 完了
+**Version**: v40.0.0
+**Status**: Phase 40 完了
 **Maintained by**: FDC Development Team
