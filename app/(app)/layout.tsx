@@ -17,6 +17,7 @@ import {
   CheckSquare,
   Users,
   Building2,
+  Map,
   Settings,
   LogOut,
   type LucideIcon,
@@ -31,6 +32,7 @@ interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   { href: '/dashboard', label: 'ダッシュボード', icon: LayoutDashboard },
   { href: '/tasks', label: 'タスク', icon: CheckSquare },
+  { href: '/action-maps', label: 'Action Map', icon: Map },
   { href: '/leads', label: 'リード', icon: Users },
   { href: '/clients', label: 'クライアント', icon: Building2 },
   { href: '/settings', label: '設定', icon: Settings },

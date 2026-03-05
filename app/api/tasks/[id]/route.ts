@@ -23,6 +23,7 @@ const UpdateTaskSchema = z.object({
   scheduled_date: z.string().nullable().optional(),
   due_date: z.string().nullable().optional(),
   priority: z.number().int().min(0).max(10).optional(),
+  action_item_id: z.uuid().nullable().optional(),
 });
 
 type RouteParams = { params: Promise<{ id: string }> };
@@ -112,6 +113,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
   if (parsed.scheduled_date !== undefined) updateData.scheduled_date = parsed.scheduled_date;
   if (parsed.due_date !== undefined) updateData.due_date = parsed.due_date;
   if (parsed.priority !== undefined) updateData.priority = parsed.priority;
+  if (parsed.action_item_id !== undefined) updateData.action_item_id = parsed.action_item_id;
 
   const { data, error } = await authResult.supabase
     .from('tasks')

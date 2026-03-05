@@ -10,17 +10,18 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **📊 現在の開発状況（2026-03-04）**:
-- **バージョン**: v9.0.0
+- **バージョン**: v10.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
-- **データ永続化**: Supabase PostgreSQL（タスクもSupabase移行済み）
+- **データ永続化**: Supabase PostgreSQL
 - **認証**: Supabase Auth（Google OAuth）+ デモログイン
 - **マルチテナント**: ワークスペース + RBAC（OWNER/ADMIN/MEMBER）
 - **CRM**: リード + クライアント + アプローチ履歴
 - **タスク管理**: アイゼンハワーマトリクス（4象限）+ @dnd-kit DnD
-- **現在のPhase**: Phase 9 完了（Task 4象限）
-- **次フェーズ**: Phase 10（Action Map）
+- **施策管理**: Action Map + ActionItem + Task 紐付け + 進捗計算
+- **現在のPhase**: Phase 10 完了（Action Map）
+- **次フェーズ**: Phase 11（OKR）
 - **LP**: ランディングページテンプレート同梱（Phase 24対応）
 
 ---
@@ -163,6 +164,7 @@ founders-direct-modular/
 | Phase 7 | ✅ 完了 | クライアント管理（一覧 + 追加/編集 + 失注リード表示） |
 | Phase 8 | ✅ 完了 | アプローチ履歴（タイムライン + 統計 + PDCA分析） |
 | Phase 9 | ✅ 完了 | Task 4象限（アイゼンハワーマトリクス + DnD + Joker） |
+| Phase 10 | ✅ 完了 | Action Map（施策管理 + ActionItem + 進捗連動） |
 
 ---
 
@@ -192,6 +194,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-04
-**Version**: v9.0.0
-**Status**: Phase 9 完了
+**Version**: v10.0.0
+**Status**: Phase 10 完了
 **Maintained by**: FDC Development Team

@@ -13,7 +13,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Phase | 内容 |
 |-------|------|
-| Phase 10+ | PART-04 以降（Action Map, OKR） |
+| Phase 11+ | OKR 以降 |
+
+---
+
+## [10.0.0] - 2026-03-04 - Phase 10: Action Map
+
+### 概要
+
+FDC 3層アーキテクチャの「戦術層」として、Action Map（施策管理）を実装。ActionMap と ActionItem の階層構造、Task との紐付け、ボトムアップ進捗計算。ActionItem のステータス管理、優先度設定、タスクリンク機能。
+
+### Added
+
+| ファイル | 内容 |
+|---------|------|
+| `lib/types/action-map.ts` | ActionMap, ActionItem, ActionItemStatus, ActionItemPriority 型定義 |
+| `app/api/action-maps/route.ts` | ActionMap 一覧取得・作成 API（進捗計算付き） |
+| `app/api/action-maps/[id]/route.ts` | ActionMap 更新・削除 API |
+| `app/api/action-maps/[id]/items/route.ts` | ActionItem 作成 API |
+| `app/api/action-items/[id]/route.ts` | ActionItem 更新・削除 API |
+| `app/(app)/action-maps/page.tsx` | Action Map 管理ページ（統計・一覧） |
+| `app/(app)/action-maps/_components/AddActionMapForm.tsx` | ActionMap 追加モーダル |
+| `app/(app)/action-maps/_components/ActionMapCard.tsx` | ActionMap カード（進捗バー + ActionItem リスト + Task 紐付け） |
+
+### Changed
+
+| ファイル | 内容 |
+|---------|------|
+| `app/api/tasks/[id]/route.ts` | action_item_id 更新対応 |
+| `app/(app)/layout.tsx` | ナビゲーションに「Action Map」タブ追加 |
+| `app/globals.css` | ActionMap / ActionItem CSS 追加 |
 
 ---
 
