@@ -9,8 +9,8 @@
 - 技術詳細は `docs/guides/DEVELOPMENT.md` を正とし、本ガイドはその上位コンパスとする。
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
-**📊 現在の開発状況（2026-03-04）**:
-- **バージョン**: v19.0.0
+**📊 現在の開発状況（2026-03-05）**:
+- **バージョン**: v22.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
@@ -24,8 +24,10 @@
 - **Google連携**: OAuth拡張 + Calendar同期 + Tasks双方向同期
 - **ビジネスツール**: Brand Strategy + Lean Canvas + MVV
 - **管理機能**: Workspace Admin + Super Admin（RBAC + 招待 + 監査ログ）
-- **現在のPhase**: Phase 19 完了（Admin）
-- **次フェーズ**: Phase 20（次期機能）
+- **セキュリティ**: RLS + CSP + 入力サニタイズ + レート制限
+- **テスト**: Vitest + Pino ログ + GitHub Actions CI
+- **現在のPhase**: Phase 22 完了（Deploy + Performance）
+- **次フェーズ**: Phase 23（次期機能）
 - **LP**: ランディングページテンプレート同梱（Phase 24対応）
 
 ---
@@ -94,7 +96,11 @@ founders-direct-modular/
 │   ├── server/             # サーバー用ライブラリ
 │   │   ├── supabase.ts     # Service Role 用 Supabase クライアント
 │   │   ├── auth.ts         # サーバーサイド認証ヘルパー
-│   │   └── permissions.ts  # RBAC 権限チェック
+│   │   ├── permissions.ts  # RBAC 権限チェック
+│   │   ├── sanitize.ts     # 入力サニタイズ + レート制限（Phase 20）
+│   │   └── logger.ts       # Pino 構造化ログ（Phase 21）
+│   ├── utils/              # ユーティリティ
+│   │   └── performance.ts  # Core Web Vitals（Phase 22）
 │   ├── contexts/           # React Context
 │   │   ├── AuthContext.tsx # 認証コンテキスト（logout 関数含む）
 │   │   └── DataContext.tsx # データコンテキスト
@@ -196,6 +202,9 @@ founders-direct-modular/
 | Phase 17 | ✅ 完了 | MVV（Mission/Vision/Value） |
 | Phase 18 | ✅ 完了 | Workspace Admin（メンバー管理・招待・監査ログ） |
 | Phase 19 | ✅ 完了 | Super Admin（テナント一覧・メトリクス） |
+| Phase 20 | ✅ 完了 | Security（RLS + CSP + サニタイズ + レート制限） |
+| Phase 21 | ✅ 完了 | Test Strategy + Log Monitoring（Vitest + Pino + CI/CD） |
+| Phase 22 | ✅ 完了 | Deploy + Performance（CWV + 画像最適化 + チェックリスト） |
 
 ---
 
@@ -225,6 +234,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-05
-**Version**: v19.0.0
-**Status**: Phase 19 完了
+**Version**: v22.0.0
+**Status**: Phase 22 完了
 **Maintained by**: FDC Development Team
