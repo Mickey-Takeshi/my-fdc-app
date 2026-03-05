@@ -1,4 +1,4 @@
-# FDC-CORE.md（v1.7 - 2026-03-05）
+# FDC-CORE.md（v1.8 - 2026-03-05）
 
 ## 0. 位置づけ
 
@@ -10,7 +10,7 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **現在の開発状況（2026-03-05）**:
-- **バージョン**: v67.0.0
+- **バージョン**: v70.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
@@ -45,8 +45,9 @@
 - **アナリティクス**: トラッキングプラン + KPIダッシュボード + 実験基盤（Phase 59-61）
 - **AI統合**: AI戦略 + 実装設計 + UX/安全性設計（Phase 62-64）
 - **AI運用**: モニタリング + 品質管理 + インシデント対応（Phase 65-67）
-- **現在のPhase**: Phase 67 完了（AI Ops: Monitoring + Quality + Incident Response）
-- **次フェーズ**: Phase 68（次期機能）
+- **スケーリング**: DBスケーリング + アプリスケーリング + パフォーマンスモニタリング（Phase 68-70）
+- **現在のPhase**: Phase 70 完了（Scaling: DB Scaling + App Scaling + Performance Monitoring）
+- **次フェーズ**: Phase 71（次期機能）
 
 ---
 
@@ -159,6 +160,7 @@ founders-direct-modular/
 │   ├── analytics/          # アナリティクス（Phase 59-61）
 │   ├── ai/                 # AI統合（Phase 62-64）
 │   ├── ai-ops/             # AI運用（Phase 65-67）
+│   ├── scaling/            # スケーリング設計（Phase 68-70）
 │   └── runbooks/           # ランブック
 ├── package.json
 ├── tsconfig.json
@@ -290,6 +292,9 @@ founders-direct-modular/
 | Phase 65 | ✅ 完了 | AIモニタリング（Usage Tracking + コストダッシュボード + アラート + 利用量制限） |
 | Phase 66 | ✅ 完了 | AI品質管理（品質評価 + プロンプトバージョン管理 + A/Bテスト + フィードバックループ） |
 | Phase 67 | ✅ 完了 | AIインシデント対応（フォールバック戦略 + 障害検知 + インシデント対応 + キャパシティプランニング） |
+| Phase 68 | ✅ 完了 | DBスケーリング（インデックス戦略 + クエリ最適化 + コネクションプール + リードレプリカ） |
+| Phase 69 | ✅ 完了 | アプリスケーリング（キャッシュ戦略 + CDN + バックグラウンドジョブ + レート制限） |
+| Phase 70 | ✅ 完了 | パフォーマンスモニタリング（負荷テスト + SLO/SLI + モニタリング + アラート + インシデント対応） |
 
 ---
 
@@ -319,6 +324,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-05
-**Version**: v67.0.0
-**Status**: Phase 67 完了
+**Version**: v70.0.0
+**Status**: Phase 70 完了
 **Maintained by**: FDC Development Team
