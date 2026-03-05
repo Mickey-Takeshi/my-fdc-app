@@ -13,7 +13,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Phase | 内容 |
 |-------|------|
-| Phase 6+ | PART-03 以降 |
+| Phase 7+ | PART-03 以降（クライアント管理、アプローチ履歴） |
+
+---
+
+## [6.0.0] - 2026-03-04 - Phase 6: リード管理
+
+### 概要
+
+CRM の第一歩として、リード（見込み客）管理機能を実装。ファネルステータス（新規/アプローチ中/商談中/提案中/受注/失注）によるカンバン表示、リスト表示切替、フィルター・検索機能、ドラッグ&ドロップによるステータス変更。既存の Supabase `leads` テーブルを活用し、ワークスペース単位でスコープ。
+
+### Added
+
+| ファイル | 内容 |
+|---------|------|
+| `lib/types/prospect.ts` | Prospect, ProspectStatus, LeadRow 型定義、DB 変換関数 |
+| `app/api/leads/route.ts` | リード一覧取得・作成 API（ワークスペーススコープ） |
+| `app/api/leads/[id]/route.ts` | リード詳細・更新・削除 API |
+| `app/(app)/leads/page.tsx` | リード管理ページ（統計・ツールバー・ビュー切替） |
+| `app/(app)/leads/_components/KanbanView.tsx` | カンバン表示（D&D ステータス変更） |
+| `app/(app)/leads/_components/KanbanCard.tsx` | カンバンカードコンポーネント |
+| `app/(app)/leads/_components/ListView.tsx` | リスト（テーブル）表示 |
+| `app/(app)/leads/_components/AddProspectForm.tsx` | リード追加モーダルフォーム |
+| `app/(app)/leads/_components/ProspectDetailModal.tsx` | リード詳細・編集モーダル |
+
+### Changed
+
+| ファイル | 内容 |
+|---------|------|
+| `app/(app)/layout.tsx` | ナビゲーションに「リード」タブを追加 |
+| `app/globals.css` | カンバン・リード関連 CSS スタイルを追加 |
 
 ---
 

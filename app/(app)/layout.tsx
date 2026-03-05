@@ -15,6 +15,7 @@ import LandingPage from '@/components/landing/default/LandingPage';
 import {
   LayoutDashboard,
   CheckSquare,
+  Users,
   Settings,
   LogOut,
   type LucideIcon,
@@ -29,6 +30,7 @@ interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   { href: '/dashboard', label: 'ダッシュボード', icon: LayoutDashboard },
   { href: '/tasks', label: 'タスク', icon: CheckSquare },
+  { href: '/leads', label: 'リード', icon: Users },
   { href: '/settings', label: '設定', icon: Settings },
 ];
 
