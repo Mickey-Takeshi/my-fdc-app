@@ -3,19 +3,22 @@
  *
  * OAuth Callback ハンドラー
  * Phase 4: Google OAuth 認証後のコールバック処理
+ * Phase 12: provider_token / provider_refresh_token を暗号化保存
  *
  * 【フロー】
  * 1. Google -> Supabase -> /api/auth/callback?code=... へリダイレクト
  * 2. code を使って Supabase セッションを取得
  * 3. users テーブルに upsert
- * 4. fdc_session Cookie を設定（proxy.ts との互換性）
- * 5. /dashboard へリダイレクト
+ * 4. provider_token を暗号化して保存（Calendar/Tasks 連携用）
+ * 5. fdc_session Cookie を設定（proxy.ts との互換性）
+ * 6. /dashboard へリダイレクト
  */
 
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { createServiceClient } from '@/lib/server/supabase';
+import { encrypt } from '@/lib/server/encryption';
 
 interface CookieOptions {
   domain?: string;
@@ -64,7 +67,8 @@ export async function GET(request: NextRequest) {
   );
 
   // PKCE コード交換
-  const { error } = await supabase.auth.exchangeCodeForSession(code);
+  const { data: sessionData, error } =
+    await supabase.auth.exchangeCodeForSession(code);
 
   if (error) {
     console.error('Auth code exchange failed:', error.message);
@@ -80,10 +84,10 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(`${origin}/login?error=no_user`);
   }
 
+  const serviceClient = createServiceClient();
+
   // users テーブルに upsert（失敗してもログインは続行）
-  // 既存テーブルは独自 id を持ち、google_sub で auth.users.id を参照
   try {
-    const serviceClient = createServiceClient();
     await serviceClient.from('users').upsert(
       {
         email: user.email,
@@ -101,8 +105,48 @@ export async function GET(request: NextRequest) {
     console.error('User upsert failed:', upsertError);
   }
 
+  // Phase 12: provider_token を暗号化して保存（Calendar/Tasks 連携用）
+  try {
+    const providerToken = sessionData?.session?.provider_token;
+    const providerRefreshToken = sessionData?.session?.provider_refresh_token;
+
+    if (providerToken) {
+      const encryptedAccessToken = encrypt(providerToken);
+      const tokenExpiresAt = new Date(
+        Date.now() + 3600 * 1000
+      ).toISOString();
+
+      await serviceClient
+        .from('users')
+        .update({
+          google_access_token: encryptedAccessToken,
+          google_token_expires_at: tokenExpiresAt,
+          google_api_enabled: true,
+          google_scopes: [
+            'https://www.googleapis.com/auth/calendar.readonly',
+            'https://www.googleapis.com/auth/calendar.events',
+            'https://www.googleapis.com/auth/tasks',
+          ],
+        })
+        .eq('google_sub', user.id);
+    }
+
+    if (providerRefreshToken) {
+      const encryptedRefreshToken = encrypt(providerRefreshToken);
+      await serviceClient
+        .from('users')
+        .update({
+          google_refresh_token: encryptedRefreshToken,
+        })
+        .eq('google_sub', user.id);
+    }
+  } catch (tokenError) {
+    // トークン保存に失敗してもログインは続行
+    console.error('Token save failed:', tokenError);
+  }
+
   // fdc_session Cookie を作成（proxy.ts との互換性）
-  const sessionData = JSON.stringify({
+  const fdcSessionData = JSON.stringify({
     user: {
       id: user.id,
       email: user.email || '',
@@ -124,7 +168,7 @@ export async function GET(request: NextRequest) {
   }
 
   // fdc_session Cookie を設定
-  response.cookies.set('fdc_session', encodeURIComponent(sessionData), {
+  response.cookies.set('fdc_session', encodeURIComponent(fdcSessionData), {
     path: '/',
     maxAge: 60 * 60 * 24 * 7,
     sameSite: 'lax',

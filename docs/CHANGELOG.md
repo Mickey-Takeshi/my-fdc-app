@@ -13,7 +13,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Phase | 内容 |
 |-------|------|
-| Phase 12+ | Google 連携以降 |
+| Phase 13+ | Calendar同期以降 |
+
+---
+
+## [12.0.0] - 2026-03-05 - Phase 12: Google Calendar/Tasks 連携
+
+### 概要
+
+Supabase Auth + Google OAuth に Calendar/Tasks スコープを追加し、provider_token を AES-256-GCM で暗号化保存。リフレッシュトークンによる自動再発行機能を実装。
+
+### Added
+
+| ファイル | 内容 |
+|---------|------|
+| `lib/server/encryption.ts` | AES-256-GCM 暗号化/復号ユーティリティ |
+| `lib/server/google-auth.ts` | Google API トークン取得 + 自動リフレッシュ |
+
+### Changed
+
+| ファイル | 内容 |
+|---------|------|
+| `app/api/auth/callback/route.ts` | provider_token/provider_refresh_token を暗号化保存 |
+| `.env.local` | TOKEN_ENCRYPTION_KEY 追加 |
 
 ---
 

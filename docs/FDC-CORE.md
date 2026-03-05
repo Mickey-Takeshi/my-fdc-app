@@ -10,7 +10,7 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **📊 現在の開発状況（2026-03-04）**:
-- **バージョン**: v11.0.0
+- **バージョン**: v12.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
@@ -21,8 +21,9 @@
 - **タスク管理**: アイゼンハワーマトリクス（4象限）+ @dnd-kit DnD
 - **施策管理**: Action Map + ActionItem + Task 紐付け + 進捗計算
 - **OKR**: Objectives & Key Results + Action Map 紐付け + 進捗計算
-- **現在のPhase**: Phase 11 完了（OKR）
-- **次フェーズ**: Phase 12（Google連携）
+- **Google連携**: OAuth スコープ拡張 + トークン暗号化保存 + 自動リフレッシュ
+- **現在のPhase**: Phase 12 完了（Google Calendar/Tasks 連携）
+- **次フェーズ**: Phase 13（Calendar 同期）
 - **LP**: ランディングページテンプレート同梱（Phase 24対応）
 
 ---
