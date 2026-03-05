@@ -10,7 +10,7 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **現在の開発状況（2026-03-05）**:
-- **バージョン**: v73.0.0
+- **バージョン**: v76.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
@@ -47,8 +47,9 @@
 - **AI運用**: モニタリング + 品質管理 + インシデント対応（Phase 65-67）
 - **スケーリング**: DBスケーリング + アプリスケーリング + パフォーマンスモニタリング（Phase 68-70）
 - **チーム運用**: 開発プロセス + コラボレーション + オンボーディング（Phase 71-73）
-- **現在のPhase**: Phase 73 完了（Team: Dev Process + Collaboration + Onboarding）
-- **次フェーズ**: Phase 74（次期機能）
+- **Founder OS**: エグゼクティブダッシュボード + プロセス設計 + 時間管理（Phase 74-76）
+- **現在のPhase**: Phase 76 完了（Founder OS: Executive Dashboard + Process + Time Management）
+- **次フェーズ**: Phase 77（次期機能）
 
 ---
 
@@ -166,6 +167,10 @@ founders-direct-modular/
 │   │   ├── dev-process.md  # 開発プロセス設計
 │   │   ├── collaboration.md # コラボレーション設計
 │   │   └── onboarding.md   # オンボーディング設計
+│   ├── founder-os/          # Founder OS（Phase 74-76）
+│   │   ├── executive-dashboard.md # エグゼクティブダッシュボード
+│   │   ├── process-design.md      # プロセス設計
+│   │   └── time-management.md     # 時間管理
 │   └── runbooks/           # ランブック
 ├── package.json
 ├── tsconfig.json
@@ -303,6 +308,9 @@ founders-direct-modular/
 | Phase 71 | ✅ 完了 | 開発プロセス設計（ブランチ戦略 + コードレビュー + CI/CD + ADR + PR テンプレート） |
 | Phase 72 | ✅ 完了 | チームコラボレーション設計（マルチテナント + RBAC + 招待フロー + アクティビティログ） |
 | Phase 73 | ✅ 完了 | オンボーディング設計（開発者オンボーディング + ナレッジベース + CODEOWNERS + ペアプロ + メンター） |
+| Phase 74 | ✅ 完了 | エグゼクティブダッシュボード（North Star Metric + 経営指標 + 予算管理 + 取締役会レポート + キャッシュフロー） |
+| Phase 75 | ✅ 完了 | プロセス設計（定例会議 + RACI意思決定 + OKR運用 + ドキュメント文化） |
+| Phase 76 | ✅ 完了 | 時間管理（委任マトリクス + 集中時間 + 情報フィルタリング + バーンアウト防止） |
 
 ---
 
@@ -332,6 +340,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-05
-**Version**: v73.0.0
-**Status**: Phase 73 完了
+**Version**: v76.0.0
+**Status**: Phase 76 完了
 **Maintained by**: FDC Development Team
