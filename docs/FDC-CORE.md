@@ -1,4 +1,4 @@
-# FDC-CORE.md（v1.1 - 2025-12-08）
+# FDC-CORE.md（v1.2 - 2026-03-05）
 
 ## 0. 位置づけ
 
@@ -10,7 +10,7 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **現在の開発状況（2026-03-05）**:
-- **バージョン**: v43.0.0
+- **バージョン**: v46.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
@@ -35,8 +35,9 @@
 - **パフォーマンス**: クエリ最適化 + ページネーション + キャッシュ戦略（Phase 35-37）
 - **コード品質**: 孤立ファイル整理 + デバッグガイド + コードレビューガイド（Phase 38-40）
 - **セキュリティ強化**: 脆弱性対応ガイド + 災害復旧計画 + 認証・認可の深掘り（Phase 41-43）
-- **現在のPhase**: Phase 43 完了（Security: Vulnerability Response + Disaster Recovery + Auth Deep Dive）
-- **次フェーズ**: Phase 44（次期機能）
+- **ドキュメント整備**: ドキュメントガイド + Next.js 16 移行ガイド + 運用ドキュメント（Phase 44-46）
+- **現在のPhase**: Phase 46 完了（Documentation: Documentation Guide + Next.js 16 Migration + Operations Guide）
+- **次フェーズ**: Phase 47（次期機能）
 
 ---
 
@@ -236,6 +237,9 @@ founders-direct-modular/
 | Phase 41 | ✅ 完了 | セキュリティ監視（npm audit + security-check workflow + 脆弱性対応ガイド） |
 | Phase 42 | ✅ 完了 | 災害復旧計画（3層バックアップ + DR Plan テンプレート） |
 | Phase 43 | ✅ 完了 | 認証・認可の深掘り（JWT + RBAC + OAuth + セキュリティヘッダー） |
+| Phase 44 | ✅ 完了 | ドキュメントガイド（ランブックテンプレート + CHANGELOG書式 + 更新ルール） |
+| Phase 45 | ✅ 完了 | Next.js 16 移行ガイド（proxy.ts + async params + Turbopack対応） |
+| Phase 46 | ✅ 完了 | 運用ドキュメント（インシデント対応 + ポストモーテム + SLO/SLA） |
 
 ---
 
@@ -265,6 +269,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-05
-**Version**: v43.0.0
-**Status**: Phase 43 完了
+**Version**: v46.0.0
+**Status**: Phase 46 完了
 **Maintained by**: FDC Development Team

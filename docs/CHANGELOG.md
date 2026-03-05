@@ -13,7 +13,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Phase | 内容 |
 |-------|------|
-| Phase 35+ | 今後の機能拡張 |
+| Phase 47+ | 今後の機能拡張 |
+
+---
+
+## [46.0.0] - 2026-03-05 - Phase 44-46: Documentation
+
+### 概要
+
+ドキュメント整備。ドキュメント運用ガイド（ランブックテンプレート + CHANGELOG書式 + SemVer + 更新ルール）、Next.js 16 移行ガイド（proxy.ts + async params + Turbopack対応 + トラブルシューティング）、運用ドキュメント（インシデント対応フロー + ポストモーテムテンプレート + SLI/SLO/SLA + エラーバジェット）。
+
+### Added
+
+| ファイル | 内容 |
+|---------|------|
+| `docs/guides/DOCUMENTATION-GUIDE.md` | ドキュメント運用ガイド（階層構造 + 更新タイミング + ランブックテンプレート + CHANGELOG書式 + SemVer + 500行ルール）（Phase 44） |
+| `docs/guides/NEXTJS16-MIGRATION.md` | Next.js 16 移行ガイド（proxy.ts + async params/searchParams/cookies/headers + Turbopack ファイル優先順位 + pino互換性 + ESLint移行 + トラブルシューティング）（Phase 45） |
+| `docs/guides/OPERATIONS-GUIDE.md` | 運用ドキュメントガイド（インシデント対応5ステップ + ポストモーテムテンプレート + アラート設計 + オンコール体制 + ステータスページ + SLI/SLO/SLA + エラーバジェット）（Phase 46） |
+
+### Changed
+
+| ファイル | 内容 |
+|---------|------|
+| `docs/FDC-CORE.md` | バージョン v43.0.0 -> v46.0.0、Phase 44-46 追加、現在フェーズ・次フェーズ更新 |
+| `docs/CHANGELOG.md` | Phase 44-46 エントリ追加 |
 
 ---
 
