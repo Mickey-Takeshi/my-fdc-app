@@ -1241,6 +1241,24 @@ html {
   color: var(--text-muted);
 }
 
+/* Client Status Badge (Phase 7) */
+.client-status-badge {
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.client-status-badge.status-active {
+  background: rgba(76, 175, 80, 0.1);
+  color: #2E7D32;
+}
+
+.client-status-badge.status-inactive {
+  background: rgba(158, 158, 158, 0.1);
+  color: #616161;
+}
+
 /* Leads Table (List View) */
 .leads-table {
   width: 100%;

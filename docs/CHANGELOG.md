@@ -13,7 +13,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Phase | 内容 |
 |-------|------|
-| Phase 7+ | PART-03 以降（クライアント管理、アプローチ履歴） |
+| Phase 8+ | アプローチ履歴、PART-04 以降 |
+
+---
+
+## [7.0.0] - 2026-03-04 - Phase 7: クライアント管理
+
+### 概要
+
+リードが受注（Won）した後のクライアント（既存客）管理機能を実装。クライアント一覧テーブル、追加・編集モーダル、失注リード一覧表示。リードからクライアントへの変換時に自動でリードステータスを Won に更新。
+
+### Added
+
+| ファイル | 内容 |
+|---------|------|
+| `lib/types/client.ts` | Client, ClientStatus, ClientRow, HistoryEntry 型定義 |
+| `app/api/clients/route.ts` | クライアント一覧取得・作成 API |
+| `app/api/clients/[id]/route.ts` | クライアント詳細・更新・削除 API |
+| `app/(app)/clients/page.tsx` | クライアント管理ページ（統計・検索・一覧・失注リード） |
+| `app/(app)/clients/_components/AddClientForm.tsx` | クライアント追加モーダル |
+| `app/(app)/clients/_components/ClientDetailModal.tsx` | クライアント詳細・編集モーダル |
+
+### Changed
+
+| ファイル | 内容 |
+|---------|------|
+| `app/(app)/layout.tsx` | ナビゲーションに「クライアント」タブを追加 |
+| `app/globals.css` | クライアントステータスバッジ CSS を追加 |
 
 ---
 

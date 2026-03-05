@@ -10,16 +10,16 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **📊 現在の開発状況（2026-03-04）**:
-- **バージョン**: v6.0.0
+- **バージョン**: v7.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
 - **データ永続化**: localStorage + Supabase PostgreSQL
 - **認証**: Supabase Auth（Google OAuth）+ デモログイン
 - **マルチテナント**: ワークスペース + RBAC（OWNER/ADMIN/MEMBER）
-- **CRM**: リード管理（ファネルステータス + カンバン/リスト表示）
-- **現在のPhase**: Phase 6 完了（リード管理）
-- **次フェーズ**: Phase 7+（クライアント管理、アプローチ履歴）
+- **CRM**: リード管理 + クライアント管理（ファネル + カンバン/リスト）
+- **現在のPhase**: Phase 7 完了（クライアント管理）
+- **次フェーズ**: Phase 8+（アプローチ履歴）
 - **LP**: ランディングページテンプレート同梱（Phase 24対応）
 
 ---
@@ -36,12 +36,15 @@ founders-direct-modular/
 │   │   ├── tasks/           # タスク管理ページ
 │   │   ├── leads/           # リード管理ページ（Phase 6）
 │   │   │   └── _components/ # カンバン/リスト/フォーム
+│   │   ├── clients/         # クライアント管理ページ（Phase 7）
+│   │   │   └── _components/ # 追加/詳細モーダル
 │   │   ├── settings/        # 設定ページ
 │   │   └── layout.tsx      # 認証レイアウト（未ログイン時LP表示）
 │   ├── api/                # API Routes
 │   │   ├── auth/
 │   │   │   └── callback/   # OAuth コールバック
-│   │   └── leads/          # リード CRUD API（Phase 6）
+│   │   ├── leads/          # リード CRUD API（Phase 6）
+│   │   └── clients/        # クライアント CRUD API（Phase 7）
 │   ├── login/              # ログインページ（Google OAuth + デモ）
 │   ├── globals.css         # グローバルスタイル
 │   ├── layout.tsx          # ルートレイアウト
@@ -75,7 +78,8 @@ founders-direct-modular/
 │       ├── task.ts          # Task インターフェース
 │       ├── settings.ts      # Settings インターフェース
 │       ├── workspace.ts     # Workspace / WorkspaceMember 型
-│       └── prospect.ts     # Prospect / LeadRow 型（Phase 6）
+│       ├── prospect.ts     # Prospect / LeadRow 型（Phase 6）
+│       └── client.ts       # Client / ClientRow 型（Phase 7）
 ├── public/                 # 静的ファイル
 │   └── images/             # LP用画像
 ├── docs/                   # ドキュメント
@@ -152,6 +156,7 @@ founders-direct-modular/
 | Phase 4 | ✅ 完了 | Supabase Auth（Google OAuth + デモログイン） |
 | Phase 5 | ✅ 完了 | ワークスペース + ロール（RBAC API + useWorkspace フック） |
 | Phase 6 | ✅ 完了 | リード管理（ファネル + カンバン/リスト + 検索/フィルター） |
+| Phase 7 | ✅ 完了 | クライアント管理（一覧 + 追加/編集 + 失注リード表示） |
 
 ---
 
@@ -181,6 +186,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-04
-**Version**: v6.0.0
-**Status**: Phase 6 完了
+**Version**: v7.0.0
+**Status**: Phase 7 完了
 **Maintained by**: FDC Development Team
