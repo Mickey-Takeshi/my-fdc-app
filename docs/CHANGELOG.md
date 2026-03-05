@@ -13,7 +13,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Phase | 内容 |
 |-------|------|
-| Phase 15+ | 今後の機能拡張 |
+| Phase 18+ | 今後の機能拡張 |
+
+---
+
+## [17.0.0] - 2026-03-05 - Phase 15-17: Business Tools
+
+### 概要
+
+ビジネス戦略ツール群を実装。10ポイントブランド戦略、Lean Canvas（9ブロックモデル）、MVV（Mission/Vision/Value）。Glass morphism デザイン適用。
+
+### Added
+
+| ファイル | 内容 |
+|---------|------|
+| `lib/types/brand.ts` | Brand, BrandPoint 型定義 |
+| `lib/types/lean-canvas.ts` | LeanCanvas, LeanCanvasBlock 型定義 |
+| `lib/types/mvv.ts` | MVV 型定義 |
+| `app/api/brands/**` | Brand CRUD + ポイント upsert API |
+| `app/api/lean-canvas/**` | Canvas CRUD + ブロック upsert API |
+| `app/api/mvv/**` | MVV CRUD API |
+| `app/(app)/brand/**` | ブランド管理ページ + 10ポイント編集 |
+| `app/(app)/lean-canvas/**` | 9ブロック Canvas グリッド |
+| `app/(app)/mvv/**` | MVV 管理ページ（折り畳み式） |
+
+### Changed
+
+| ファイル | 内容 |
+|---------|------|
+| `app/(app)/layout.tsx` | Brand/Canvas/MVV タブ追加 |
+| `app/globals.css` | Glass morphism + Business CSS |
 
 ---
 

@@ -2642,6 +2642,445 @@ html {
   white-space: nowrap;
 }
 
+/* ============================================
+   Glass Morphism（Phase 15-17 共通）
+   ============================================ */
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.2s ease;
+}
+
+.glass-card:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================
+   Brand Strategy（Phase 15）
+   ============================================ */
+
+.brand-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Brand Profile */
+.brand-profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.brand-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.brand-tagline {
+  font-size: 16px;
+  color: var(--primary);
+  margin-bottom: 8px;
+  font-style: italic;
+}
+
+.brand-story {
+  font-size: 14px;
+  color: var(--text-light);
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+/* Brand Points */
+.brand-points-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.brand-points-header h3 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.brand-points-count {
+  font-size: 13px;
+  color: var(--primary);
+  background: var(--primary-bg);
+  padding: 2px 10px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.brand-points-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.brand-point-item {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.brand-point-item.filled {
+  border-left: 3px solid var(--primary);
+}
+
+.brand-point-item.expanded {
+  border-color: var(--primary);
+}
+
+.brand-point-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 14px;
+}
+
+.brand-point-toggle:hover {
+  background: var(--bg-hover);
+}
+
+.brand-point-number {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--primary-bg);
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.brand-point-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 140px;
+}
+
+.brand-point-label {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 13px;
+}
+
+.brand-point-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.brand-point-preview {
+  flex: 1;
+  font-size: 12px;
+  color: var(--text-light);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.brand-point-editor {
+  padding: 0 14px 14px;
+}
+
+.brand-point-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+/* ============================================
+   Lean Canvas（Phase 16）
+   ============================================ */
+
+.canvas-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: auto auto auto;
+  gap: 12px;
+}
+
+@media (max-width: 900px) {
+  .canvas-grid {
+    grid-template-columns: 1fr;
+  }
+  .canvas-block {
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+  }
+}
+
+.canvas-block {
+  min-height: 120px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.canvas-block-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.canvas-block-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.canvas-block-edit-btn {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all 0.2s;
+}
+
+.canvas-block-edit-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.canvas-block-content {
+  flex: 1;
+}
+
+.canvas-block-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.canvas-block-items li {
+  font-size: 13px;
+  color: var(--text-light);
+  padding: 3px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.canvas-block-items li::before {
+  content: "\2022";
+  color: var(--primary);
+  margin-right: 6px;
+}
+
+.canvas-block-empty {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 16px 0;
+  cursor: pointer;
+}
+
+.canvas-block-editor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.canvas-block-items-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.canvas-block-item-edit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px;
+  background: var(--bg-hover);
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.canvas-block-item-edit button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 2px;
+}
+
+.canvas-block-item-edit button:hover {
+  color: var(--red);
+}
+
+.canvas-block-add-item {
+  display: flex;
+  gap: 4px;
+}
+
+.canvas-block-add-item .form-input {
+  font-size: 12px;
+  padding: 4px 8px;
+}
+
+.canvas-block-actions {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+/* ============================================
+   MVV（Phase 17）
+   ============================================ */
+
+.mvv-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mvv-section {
+  padding: 0;
+  overflow: hidden;
+}
+
+.mvv-section-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.mvv-section-toggle:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.mvv-section-label {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.mvv-section-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.mvv-values-count {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--primary);
+  background: var(--primary-bg);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.mvv-section-content {
+  padding: 0 20px 20px;
+}
+
+.mvv-text {
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.mvv-empty {
+  font-size: 14px;
+  color: var(--text-muted);
+  padding: 12px 0;
+}
+
+.mvv-section-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.mvv-values-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mvv-value-item {
+  font-size: 14px;
+  color: var(--text);
+  padding: 8px 12px;
+  background: var(--primary-bg);
+  border-radius: 8px;
+  border-left: 3px solid var(--primary);
+}
+
+.mvv-values-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.mvv-value-item-edit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: var(--bg-hover);
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.mvv-value-item-edit button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 2px;
+}
+
+.mvv-value-item-edit button:hover {
+  color: var(--red);
+}
+
+.mvv-value-add {
+  display: flex;
+  gap: 8px;
+}
+
 /* 低速ネットワーク・アクセシビリティ対応 */
 @media (prefers-reduced-motion: reduce) {
   *,

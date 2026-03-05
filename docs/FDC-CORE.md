@@ -10,7 +10,7 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **📊 現在の開発状況（2026-03-04）**:
-- **バージョン**: v14.0.0
+- **バージョン**: v17.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
@@ -22,8 +22,9 @@
 - **施策管理**: Action Map + ActionItem + Task 紐付け + 進捗計算
 - **OKR**: Objectives & Key Results + Action Map 紐付け + 進捗計算
 - **Google連携**: OAuth拡張 + Calendar同期 + Tasks双方向同期
-- **現在のPhase**: Phase 14 完了（Tasks 同期）
-- **次フェーズ**: Phase 15（次期機能）
+- **ビジネスツール**: Brand Strategy + Lean Canvas + MVV
+- **現在のPhase**: Phase 17 完了（MVV）
+- **次フェーズ**: Phase 18（次期機能）
 - **LP**: ランディングページテンプレート同梱（Phase 24対応）
 
 ---
@@ -182,6 +183,9 @@ founders-direct-modular/
 | Phase 12 | ✅ 完了 | Google Calendar/Tasks 連携（OAuth拡張 + トークン暗号化） |
 | Phase 13 | ✅ 完了 | Calendar 同期（予定取得 + ダッシュボード表示 + タスク化） |
 | Phase 14 | ✅ 完了 | Tasks 同期（双方向同期 + Last Write Wins） |
+| Phase 15 | ✅ 完了 | Brand Strategy（10ポイントブランド戦略） |
+| Phase 16 | ✅ 完了 | Lean Canvas（9ブロックモデル） |
+| Phase 17 | ✅ 完了 | MVV（Mission/Vision/Value） |
 
 ---
 
@@ -211,6 +215,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-05
-**Version**: v14.0.0
-**Status**: Phase 14 完了
+**Version**: v17.0.0
+**Status**: Phase 17 完了
 **Maintained by**: FDC Development Team
