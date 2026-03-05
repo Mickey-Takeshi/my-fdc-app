@@ -10,7 +10,7 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **現在の開発状況（2026-03-05）**:
-- **バージョン**: v61.0.0
+- **バージョン**: v64.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
@@ -43,8 +43,9 @@
 - **プライシング戦略**: 課金モデル + 価格テスト + アップグレード戦略（Phase 55）
 - **顧客ライフサイクル**: オンボーディング + リテンション + チャーン防止（Phase 56-58）
 - **アナリティクス**: トラッキングプラン + KPIダッシュボード + 実験基盤（Phase 59-61）
-- **現在のPhase**: Phase 61 完了（Analytics: Tracking Plan + KPI Dashboard + Experimentation）
-- **次フェーズ**: Phase 62（次期機能）
+- **AI統合**: AI戦略 + 実装設計 + UX/安全性設計（Phase 62-64）
+- **現在のPhase**: Phase 64 完了（AI Integration: Strategy + Implementation + UX/Safety）
+- **次フェーズ**: Phase 65（次期機能）
 
 ---
 
@@ -155,6 +156,7 @@ founders-direct-modular/
 │   ├── strategy/           # プロダクト戦略（Phase 53-55）
 │   ├── lifecycle/          # 顧客ライフサイクル（Phase 56-58）
 │   ├── analytics/          # アナリティクス（Phase 59-61）
+│   ├── ai/                 # AI統合（Phase 62-64）
 │   └── runbooks/           # ランブック
 ├── package.json
 ├── tsconfig.json
@@ -280,6 +282,9 @@ founders-direct-modular/
 | Phase 59 | ✅ 完了 | トラッキングプラン（PostHog + イベントカタログ + プライバシー） |
 | Phase 60 | ✅ 完了 | KPIダッシュボード（SaaS KPI + AARRR + 自動レポート） |
 | Phase 61 | ✅ 完了 | 実験基盤（Feature Flags + A/Bテスト + 統計的有意性） |
+| Phase 62 | ✅ 完了 | AI戦略（ユースケース評価 + LLMプロバイダー選定 + アーキテクチャ設計） |
+| Phase 63 | ✅ 完了 | AI実装設計（ストリーミング + RAG + Structured Output + キャッシュ戦略） |
+| Phase 64 | ✅ 完了 | AI UX/安全性（ローディングUX + エラーハンドリング + コンテンツフィルタリング + 倫理） |
 
 ---
 
@@ -309,6 +314,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-05
-**Version**: v61.0.0
-**Status**: Phase 61 完了
+**Version**: v64.0.0
+**Status**: Phase 64 完了
 **Maintained by**: FDC Development Team
