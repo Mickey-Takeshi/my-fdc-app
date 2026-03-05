@@ -13,7 +13,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Phase | 内容 |
 |-------|------|
-| Phase 9+ | PART-04 以降 |
+| Phase 10+ | PART-04 以降（Action Map, OKR） |
+
+---
+
+## [9.0.0] - 2026-03-04 - Phase 9: Task 4象限
+
+### 概要
+
+アイゼンハワーマトリクス（4象限）によるタスク管理を実装。タスクをスート（Spade/Heart/Diamond/Club）で分類し、4象限ボードUIで表示。@dnd-kit によるドラッグ&ドロップで象限間の移動が可能。Jokerゾーン（未分類タスク）対応。タスクの永続化を localStorage から Supabase に移行。
+
+### Added
+
+| ファイル | 内容 |
+|---------|------|
+| `app/api/tasks/route.ts` | タスク一覧取得・作成 API（ワークスペーススコープ） |
+| `app/api/tasks/[id]/route.ts` | タスク詳細・更新・削除 API |
+| `app/(app)/tasks/_components/TodoBoard.tsx` | 4象限ボード（@dnd-kit DnDContext） |
+| `app/(app)/tasks/_components/QuadrantColumn.tsx` | 各象限カラム（ドロップターゲット） |
+| `app/(app)/tasks/_components/TodoCard.tsx` | ドラッグ可能タスクカード |
+| `app/(app)/tasks/_components/JokerZone.tsx` | 未分類タスクゾーン |
+| `app/(app)/tasks/_components/AddTaskForm.tsx` | タスク追加モーダル（象限選択付き） |
+| `app/(app)/tasks/_components/TaskDetailModal.tsx` | タスク詳細・編集・削除モーダル |
+| `@dnd-kit/core` | ドラッグ&ドロップライブラリ |
+| `@dnd-kit/sortable` | ソート可能リストライブラリ |
+| `@dnd-kit/utilities` | DnDユーティリティ |
+
+### Changed
+
+| ファイル | 内容 |
+|---------|------|
+| `lib/types/task.ts` | Task型拡張（Suit, TaskStatus, TaskRow, toTask 追加） |
+| `lib/hooks/useTaskReducer.ts` | LocalTask型に変更（Phase 1互換レガシー） |
+| `app/(app)/tasks/page.tsx` | Supabase連携 + 4象限ボードに全面刷新 |
+| `app/globals.css` | 4象限ボード / タスクカード / Jokerゾーン CSS 追加 |
 
 ---
 

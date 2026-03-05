@@ -10,16 +10,17 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **📊 現在の開発状況（2026-03-04）**:
-- **バージョン**: v8.0.0
+- **バージョン**: v9.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
-- **データ永続化**: localStorage + Supabase PostgreSQL
+- **データ永続化**: Supabase PostgreSQL（タスクもSupabase移行済み）
 - **認証**: Supabase Auth（Google OAuth）+ デモログイン
 - **マルチテナント**: ワークスペース + RBAC（OWNER/ADMIN/MEMBER）
 - **CRM**: リード + クライアント + アプローチ履歴
-- **現在のPhase**: Phase 8 完了（アプローチ履歴）
-- **次フェーズ**: Phase 9+（PART-04 以降）
+- **タスク管理**: アイゼンハワーマトリクス（4象限）+ @dnd-kit DnD
+- **現在のPhase**: Phase 9 完了（Task 4象限）
+- **次フェーズ**: Phase 10（Action Map）
 - **LP**: ランディングページテンプレート同梱（Phase 24対応）
 
 ---
@@ -33,7 +34,8 @@ founders-direct-modular/
 ├── app/                    # Next.js App Router
 │   ├── (app)/              # 認証済みユーザー用ルート
 │   │   ├── dashboard/      # ダッシュボード
-│   │   ├── tasks/           # タスク管理ページ
+│   │   ├── tasks/           # タスク管理ページ（Phase 9: 4象限）
+│   │   │   └── _components/ # TodoBoard/QuadrantColumn/JokerZone
 │   │   ├── leads/           # リード管理ページ（Phase 6）
 │   │   │   └── _components/ # カンバン/リスト/フォーム
 │   │   ├── clients/         # クライアント管理ページ（Phase 7）
@@ -43,6 +45,7 @@ founders-direct-modular/
 │   ├── api/                # API Routes
 │   │   ├── auth/
 │   │   │   └── callback/   # OAuth コールバック
+│   │   ├── tasks/          # タスク CRUD API（Phase 9）
 │   │   ├── leads/          # リード CRUD API（Phase 6）
 │   │   └── clients/        # クライアント CRUD API（Phase 7）
 │   ├── login/              # ログインページ（Google OAuth + デモ）
@@ -159,6 +162,7 @@ founders-direct-modular/
 | Phase 6 | ✅ 完了 | リード管理（ファネル + カンバン/リスト + 検索/フィルター） |
 | Phase 7 | ✅ 完了 | クライアント管理（一覧 + 追加/編集 + 失注リード表示） |
 | Phase 8 | ✅ 完了 | アプローチ履歴（タイムライン + 統計 + PDCA分析） |
+| Phase 9 | ✅ 完了 | Task 4象限（アイゼンハワーマトリクス + DnD + Joker） |
 
 ---
 
@@ -188,6 +192,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-04
-**Version**: v8.0.0
-**Status**: Phase 8 完了
+**Version**: v9.0.0
+**Status**: Phase 9 完了
 **Maintained by**: FDC Development Team

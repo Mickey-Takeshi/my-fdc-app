@@ -1516,6 +1516,313 @@ html {
   }
 }
 
+/* ===== Phase 9: 4象限ボード / Task Card / Joker Zone ===== */
+
+/* Spin animation */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* --- Quadrant Board --- */
+.quadrant-board {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.quadrant-column {
+  background: var(--bg-white);
+  border: 2px solid var(--border-light);
+  border-radius: 12px;
+  min-height: 200px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.quadrant-column-dragover {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-alpha-15);
+}
+
+.quadrant-spade { border-top: 3px solid #1a1a2e; }
+.quadrant-heart { border-top: 3px solid #e74c3c; }
+.quadrant-diamond { border-top: 3px solid #f39c12; }
+.quadrant-club { border-top: 3px solid #27ae60; }
+
+.quadrant-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.quadrant-symbol {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.quadrant-header-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.quadrant-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.quadrant-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.quadrant-count {
+  background: var(--bg-gray);
+  color: var(--text-light);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  min-width: 24px;
+  text-align: center;
+}
+
+.quadrant-body {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 120px;
+}
+
+.quadrant-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80px;
+  color: var(--text-muted);
+  font-size: 12px;
+  border: 2px dashed var(--border-light);
+  border-radius: 8px;
+}
+
+/* --- Suit Colors --- */
+.suit-spade { color: #1a1a2e; }
+.suit-heart { color: #e74c3c; }
+.suit-diamond { color: #f39c12; }
+.suit-club { color: #27ae60; }
+
+/* --- Todo Card --- */
+.todo-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 8px 10px;
+  background: var(--bg-white);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  cursor: default;
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+
+.todo-card:hover {
+  border-color: var(--primary-alpha-30);
+  box-shadow: 0 2px 6px var(--primary-alpha-08);
+}
+
+.todo-card-done {
+  opacity: 0.6;
+}
+
+.todo-card-overlay {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transform: rotate(2deg);
+  opacity: 0.9;
+}
+
+.todo-card-drag {
+  color: var(--text-muted);
+  cursor: grab;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.todo-card-drag:active {
+  cursor: grabbing;
+}
+
+.todo-card-status {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.todo-card-body {
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.todo-card-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-dark);
+  word-break: break-word;
+}
+
+.todo-card-title-done {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.todo-card-suit {
+  margin-right: 4px;
+  font-size: 14px;
+}
+
+.todo-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.todo-card-date {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* --- Joker Zone --- */
+.joker-zone {
+  background: var(--bg-white);
+  border: 2px dashed var(--border-light);
+  border-radius: 12px;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.joker-zone-dragover {
+  border-color: var(--primary);
+  background: var(--primary-alpha-03);
+}
+
+.joker-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px dashed var(--border-light);
+  color: var(--text-muted);
+}
+
+.joker-title {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-light);
+}
+
+.joker-count {
+  background: var(--bg-gray);
+  color: var(--text-light);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  min-width: 24px;
+  text-align: center;
+}
+
+.joker-body {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 60px;
+}
+
+.joker-empty {
+  text-align: center;
+  padding: 16px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+/* --- Suit Selector (Form) --- */
+.suit-selector {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.suit-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 12px;
+  border: 2px solid var(--border-light);
+  border-radius: 8px;
+  background: var(--bg-white);
+  cursor: pointer;
+  transition: all 0.15s;
+  flex: 1;
+  min-width: 60px;
+}
+
+.suit-option:hover {
+  border-color: var(--primary-alpha-30);
+  background: var(--primary-alpha-03);
+}
+
+.suit-option-active {
+  border-color: var(--primary);
+  background: var(--primary-alpha-06);
+}
+
+.suit-option-symbol {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.suit-option-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .quadrant-board {
+    grid-template-columns: 1fr;
+  }
+
+  .suit-selector {
+    gap: 4px;
+  }
+
+  .suit-option {
+    padding: 6px 8px;
+    min-width: 50px;
+  }
+
+  .suit-option-symbol {
+    font-size: 16px;
+  }
+}
+
 /* 低速ネットワーク・アクセシビリティ対応 */
 @media (prefers-reduced-motion: reduce) {
   *,
