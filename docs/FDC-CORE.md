@@ -1,4 +1,4 @@
-# FDC-CORE.md（v1.5 - 2026-03-05）
+# FDC-CORE.md（v1.6 - 2026-03-05）
 
 ## 0. 位置づけ
 
@@ -10,7 +10,7 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **現在の開発状況（2026-03-05）**:
-- **バージョン**: v55.0.0
+- **バージョン**: v58.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
@@ -41,8 +41,9 @@
 - **プロダクト戦略**: PMF検証 + バリュープロポジション + 競合分析 + ターゲットセグメント（Phase 53）
 - **ロードマップ**: RICE優先順位 + Now/Next/Later + リリース戦略 + 技術負債管理（Phase 54）
 - **プライシング戦略**: 課金モデル + 価格テスト + アップグレード戦略（Phase 55）
-- **現在のPhase**: Phase 55 完了（Product Strategy: PMF + Roadmap + Pricing）
-- **次フェーズ**: Phase 56（次期機能）
+- **顧客ライフサイクル**: オンボーディング + リテンション + チャーン防止（Phase 56-58）
+- **現在のPhase**: Phase 58 完了（Customer Lifecycle: Onboarding + Retention + Churn Prevention）
+- **次フェーズ**: Phase 59（次期機能）
 
 ---
 
@@ -151,6 +152,7 @@ founders-direct-modular/
 │   │   ├── DEBUG-GUIDE.md  # デバッグ手法（Phase 39）
 │   │   └── CODE-REVIEW-GUIDE.md # コードレビュー（Phase 40）
 │   ├── strategy/           # プロダクト戦略（Phase 53-55）
+│   ├── lifecycle/          # 顧客ライフサイクル（Phase 56-58）
 │   └── runbooks/           # ランブック
 ├── package.json
 ├── tsconfig.json
@@ -270,6 +272,9 @@ founders-direct-modular/
 | Phase 53 | ✅ 完了 | プロダクト戦略基礎（PMF + バリュープロポジション + 競合分析 + ターゲットセグメント） |
 | Phase 54 | ✅ 完了 | ロードマップ（RICE優先順位 + Now/Next/Later + リリース戦略 + 技術負債管理） |
 | Phase 55 | ✅ 完了 | プライシング戦略（課金モデル + 価格テスト + アップグレード戦略） |
+| Phase 56 | ✅ 完了 | オンボーディング設計（Aha Moment + チェックリスト + Empty State） |
+| Phase 57 | ✅ 完了 | リテンション施策（Hookedモデル + 通知戦略 + 再活性化） |
+| Phase 58 | ✅ 完了 | チャーン防止（ヘルススコア + 解約フロー + Win-back） |
 
 ---
 
@@ -299,6 +304,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-05
-**Version**: v55.0.0
-**Status**: Phase 55 完了
+**Version**: v58.0.0
+**Status**: Phase 58 完了
 **Maintained by**: FDC Development Team
