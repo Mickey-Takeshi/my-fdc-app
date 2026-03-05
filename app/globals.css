@@ -2411,6 +2411,170 @@ html {
   color: var(--error, #ef4444);
 }
 
+/* ========================================
+ * Phase 13: Google Calendar 同期
+ * ======================================== */
+
+.calendar-schedule {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.calendar-schedule-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.calendar-schedule-count {
+  background: var(--primary-alpha-10);
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-left: auto;
+}
+
+.calendar-schedule-loading,
+.calendar-schedule-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  font-size: 13px;
+  color: var(--text-muted);
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+}
+
+.calendar-schedule-error {
+  color: var(--error, #ef4444);
+}
+
+.calendar-schedule-empty {
+  padding: 24px 16px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.calendar-event-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar-event-item {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border-light);
+  position: relative;
+}
+
+.calendar-event-item:last-child {
+  border-bottom: none;
+}
+
+.calendar-event-item:hover {
+  background: var(--primary-alpha-03);
+}
+
+.calendar-event-time {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.calendar-event-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-dark);
+}
+
+.calendar-event-location {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.calendar-event-actions {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.calendar-event-item:hover .calendar-event-actions {
+  opacity: 1;
+}
+
+.calendar-event-link,
+.calendar-event-task-btn {
+  background: none;
+  border: 1px solid var(--border-light);
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, background 0.15s;
+  text-decoration: none;
+}
+
+.calendar-event-link:hover,
+.calendar-event-task-btn:hover {
+  color: var(--primary);
+  background: var(--primary-alpha-08);
+  border-color: var(--primary-alpha-20);
+}
+
+.calendar-suit-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 6px;
+  padding: 6px 0;
+}
+
+.calendar-suit-option {
+  background: var(--primary-alpha-05);
+  border: 1px solid var(--primary-alpha-10);
+  cursor: pointer;
+  color: var(--text-medium);
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.calendar-suit-option:hover {
+  background: var(--primary-alpha-15);
+  border-color: var(--primary-alpha-25);
+}
+
+.calendar-suit-option.suit-spade { color: #1a1a2e; }
+.calendar-suit-option.suit-heart { color: #dc2626; }
+.calendar-suit-option.suit-diamond { color: #d97706; }
+.calendar-suit-option.suit-club { color: #2563eb; }
+
 /* 低速ネットワーク・アクセシビリティ対応 */
 @media (prefers-reduced-motion: reduce) {
   *,

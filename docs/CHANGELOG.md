@@ -13,7 +13,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Phase | 内容 |
 |-------|------|
-| Phase 13+ | Calendar同期以降 |
+| Phase 14+ | Tasks同期以降 |
+
+---
+
+## [13.0.0] - 2026-03-05 - Phase 13: Calendar 同期
+
+### 概要
+
+Google Calendar API を使ってカレンダーイベントを取得し、ダッシュボードに今日の予定を表示。イベントからワンクリックでタスク化（象限選択付き）。
+
+### Added
+
+| ファイル | 内容 |
+|---------|------|
+| `lib/types/google-calendar.ts` | GoogleCalendar, GoogleEvent, CalendarEvent 型定義 |
+| `app/api/google/calendars/route.ts` | カレンダー一覧取得 API |
+| `app/api/google/calendars/events/route.ts` | イベント取得 API（期間指定、Asia/Tokyo） |
+| `app/(app)/dashboard/_components/TodaySchedule.tsx` | 今日の予定表示 + タスク化 UI |
+
+### Changed
+
+| ファイル | 内容 |
+|---------|------|
+| `app/(app)/dashboard/page.tsx` | 統計表示 + TodaySchedule 統合 |
+| `app/globals.css` | Calendar UI 用 CSS 追加 |
 
 ---
 
