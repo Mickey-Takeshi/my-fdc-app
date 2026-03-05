@@ -1,4 +1,4 @@
-# FDC-CORE.md（v1.6 - 2026-03-05）
+# FDC-CORE.md（v1.7 - 2026-03-05）
 
 ## 0. 位置づけ
 
@@ -10,7 +10,7 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **現在の開発状況（2026-03-05）**:
-- **バージョン**: v64.0.0
+- **バージョン**: v67.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
@@ -44,8 +44,9 @@
 - **顧客ライフサイクル**: オンボーディング + リテンション + チャーン防止（Phase 56-58）
 - **アナリティクス**: トラッキングプラン + KPIダッシュボード + 実験基盤（Phase 59-61）
 - **AI統合**: AI戦略 + 実装設計 + UX/安全性設計（Phase 62-64）
-- **現在のPhase**: Phase 64 完了（AI Integration: Strategy + Implementation + UX/Safety）
-- **次フェーズ**: Phase 65（次期機能）
+- **AI運用**: モニタリング + 品質管理 + インシデント対応（Phase 65-67）
+- **現在のPhase**: Phase 67 完了（AI Ops: Monitoring + Quality + Incident Response）
+- **次フェーズ**: Phase 68（次期機能）
 
 ---
 
@@ -157,6 +158,7 @@ founders-direct-modular/
 │   ├── lifecycle/          # 顧客ライフサイクル（Phase 56-58）
 │   ├── analytics/          # アナリティクス（Phase 59-61）
 │   ├── ai/                 # AI統合（Phase 62-64）
+│   ├── ai-ops/             # AI運用（Phase 65-67）
 │   └── runbooks/           # ランブック
 ├── package.json
 ├── tsconfig.json
@@ -285,6 +287,9 @@ founders-direct-modular/
 | Phase 62 | ✅ 完了 | AI戦略（ユースケース評価 + LLMプロバイダー選定 + アーキテクチャ設計） |
 | Phase 63 | ✅ 完了 | AI実装設計（ストリーミング + RAG + Structured Output + キャッシュ戦略） |
 | Phase 64 | ✅ 完了 | AI UX/安全性（ローディングUX + エラーハンドリング + コンテンツフィルタリング + 倫理） |
+| Phase 65 | ✅ 完了 | AIモニタリング（Usage Tracking + コストダッシュボード + アラート + 利用量制限） |
+| Phase 66 | ✅ 完了 | AI品質管理（品質評価 + プロンプトバージョン管理 + A/Bテスト + フィードバックループ） |
+| Phase 67 | ✅ 完了 | AIインシデント対応（フォールバック戦略 + 障害検知 + インシデント対応 + キャパシティプランニング） |
 
 ---
 
@@ -314,6 +319,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-05
-**Version**: v64.0.0
-**Status**: Phase 64 完了
+**Version**: v67.0.0
+**Status**: Phase 67 完了
 **Maintained by**: FDC Development Team
