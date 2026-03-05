@@ -1,4 +1,4 @@
-# FDC-CORE.md（v1.4 - 2026-03-05）
+# FDC-CORE.md（v1.5 - 2026-03-05）
 
 ## 0. 位置づけ
 
@@ -10,7 +10,7 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **現在の開発状況（2026-03-05）**:
-- **バージョン**: v52.0.0
+- **バージョン**: v55.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
@@ -38,8 +38,11 @@
 - **ドキュメント整備**: ドキュメントガイド + Next.js 16 移行ガイド + 運用ドキュメント（Phase 44-46）
 - **課金基盤**: Stripe SDK + Checkout/Webhook/Portal API + プラン定義 + Feature Gate（Phase 47-49）
 - **OAuth認可**: 同意画面設定ガイド + プライバシーポリシー + 利用規約 + 審査申請ガイド（Phase 50-52）
-- **現在のPhase**: Phase 52 完了（OAuth: Consent Screen + Privacy/Terms Pages + Review Guide）
-- **次フェーズ**: Phase 53（次期機能）
+- **プロダクト戦略**: PMF検証 + バリュープロポジション + 競合分析 + ターゲットセグメント（Phase 53）
+- **ロードマップ**: RICE優先順位 + Now/Next/Later + リリース戦略 + 技術負債管理（Phase 54）
+- **プライシング戦略**: 課金モデル + 価格テスト + アップグレード戦略（Phase 55）
+- **現在のPhase**: Phase 55 完了（Product Strategy: PMF + Roadmap + Pricing）
+- **次フェーズ**: Phase 56（次期機能）
 
 ---
 
@@ -147,6 +150,7 @@ founders-direct-modular/
 │   ├── guides/             # ガイド
 │   │   ├── DEBUG-GUIDE.md  # デバッグ手法（Phase 39）
 │   │   └── CODE-REVIEW-GUIDE.md # コードレビュー（Phase 40）
+│   ├── strategy/           # プロダクト戦略（Phase 53-55）
 │   └── runbooks/           # ランブック
 ├── package.json
 ├── tsconfig.json
@@ -263,6 +267,9 @@ founders-direct-modular/
 | Phase 50 | ✅ 完了 | OAuth同意画面設定ガイド |
 | Phase 51 | ✅ 完了 | プライバシーポリシー + 利用規約ページ |
 | Phase 52 | ✅ 完了 | OAuth審査申請ガイド（デモ動画 + Written explanation） |
+| Phase 53 | ✅ 完了 | プロダクト戦略基礎（PMF + バリュープロポジション + 競合分析 + ターゲットセグメント） |
+| Phase 54 | ✅ 完了 | ロードマップ（RICE優先順位 + Now/Next/Later + リリース戦略 + 技術負債管理） |
+| Phase 55 | ✅ 完了 | プライシング戦略（課金モデル + 価格テスト + アップグレード戦略） |
 
 ---
 
@@ -292,6 +299,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-05
-**Version**: v52.0.0
-**Status**: Phase 52 完了
+**Version**: v55.0.0
+**Status**: Phase 55 完了
 **Maintained by**: FDC Development Team
