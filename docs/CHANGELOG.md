@@ -13,7 +13,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Phase | 内容 |
 |-------|------|
-| Phase 18+ | 今後の機能拡張 |
+| Phase 20+ | 今後の機能拡張 |
+
+---
+
+## [19.0.0] - 2026-03-05 - Phase 18-19: Admin
+
+### 概要
+
+管理者機能を実装。Workspace Admin（メンバー管理、招待、監査ログ）と Super Admin（システム全体管理、テナント一覧、メトリクス）。
+
+### Added
+
+| ファイル | 内容 |
+|---------|------|
+| `lib/types/admin.ts` | Invitation, AuditLog, TenantSummary, SystemMetric 型定義 |
+| `app/api/admin/invitations/route.ts` | 招待 CRUD API（トークン生成、ADMIN+ 権限） |
+| `app/api/admin/audit-logs/route.ts` | 監査ログ取得 API |
+| `app/api/admin/tenants/route.ts` | テナント一覧 API（SA 専用） |
+| `app/api/admin/metrics/route.ts` | システムメトリクス API（SA 専用） |
+| `app/(app)/admin/page.tsx` | 管理者ページ（WS Admin / Super Admin タブ） |
+| `app/(app)/admin/_components/MembersSection.tsx` | メンバー管理（ロール変更・削除） |
+| `app/(app)/admin/_components/InvitationsSection.tsx` | 招待フォーム + 招待一覧 |
+| `app/(app)/admin/_components/AuditLogsSection.tsx` | 監査ログ表示 |
+| `app/(app)/admin/_components/SADashboard.tsx` | SA ダッシュボード（メトリクス + テナント） |
+
+### Changed
+
+| ファイル | 内容 |
+|---------|------|
+| `app/(app)/layout.tsx` | 管理タブ追加 |
+| `app/globals.css` | Admin CSS 追加 |
 
 ---
 

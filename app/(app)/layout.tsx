@@ -22,6 +22,7 @@ import {
   Sparkles,
   Grid3X3,
   Compass,
+  Shield,
   Settings,
   LogOut,
   type LucideIcon,
@@ -43,6 +44,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/mvv', label: 'MVV', icon: Compass },
   { href: '/leads', label: 'リード', icon: Users },
   { href: '/clients', label: 'クライアント', icon: Building2 },
+  { href: '/admin', label: '管理', icon: Shield },
   { href: '/settings', label: '設定', icon: Settings },
 ];
 

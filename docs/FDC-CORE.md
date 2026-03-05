@@ -10,7 +10,7 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **📊 現在の開発状況（2026-03-04）**:
-- **バージョン**: v17.0.0
+- **バージョン**: v19.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
@@ -23,8 +23,9 @@
 - **OKR**: Objectives & Key Results + Action Map 紐付け + 進捗計算
 - **Google連携**: OAuth拡張 + Calendar同期 + Tasks双方向同期
 - **ビジネスツール**: Brand Strategy + Lean Canvas + MVV
-- **現在のPhase**: Phase 17 完了（MVV）
-- **次フェーズ**: Phase 18（次期機能）
+- **管理機能**: Workspace Admin + Super Admin（RBAC + 招待 + 監査ログ）
+- **現在のPhase**: Phase 19 完了（Admin）
+- **次フェーズ**: Phase 20（次期機能）
 - **LP**: ランディングページテンプレート同梱（Phase 24対応）
 
 ---
@@ -48,6 +49,8 @@ founders-direct-modular/
 │   │   │   └── _components/ # AddActionMapForm/ActionMapCard
 │   │   ├── okr/              # OKR 管理ページ（Phase 11）
 │   │   │   └── _components/ # AddObjectiveForm/ObjectiveCard
+│   │   ├── admin/           # 管理者ページ（Phase 18-19）
+│   │   │   └── _components/ # Members/Invitations/AuditLogs/SA
 │   │   ├── settings/        # 設定ページ
 │   │   └── layout.tsx      # 認証レイアウト（未ログイン時LP表示）
 │   ├── api/                # API Routes
@@ -62,7 +65,12 @@ founders-direct-modular/
 │   │   ├── objectives/     # Objective CRUD API（Phase 11）
 │   │   ├── key-results/    # Key Result CRUD API（Phase 11）
 │   │   ├── leads/          # リード CRUD API（Phase 6）
-│   │   └── clients/        # クライアント CRUD API（Phase 7）
+│   │   ├── clients/        # クライアント CRUD API（Phase 7）
+│   │   └── admin/          # 管理者 API（Phase 18-19）
+│   │       ├── invitations/ # 招待 API
+│   │       ├── audit-logs/  # 監査ログ API
+│   │       ├── tenants/     # テナント一覧 API（SA）
+│   │       └── metrics/     # メトリクス API（SA）
 │   ├── login/              # ログインページ（Google OAuth + デモ）
 │   ├── globals.css         # グローバルスタイル
 │   ├── layout.tsx          # ルートレイアウト
@@ -186,6 +194,8 @@ founders-direct-modular/
 | Phase 15 | ✅ 完了 | Brand Strategy（10ポイントブランド戦略） |
 | Phase 16 | ✅ 完了 | Lean Canvas（9ブロックモデル） |
 | Phase 17 | ✅ 完了 | MVV（Mission/Vision/Value） |
+| Phase 18 | ✅ 完了 | Workspace Admin（メンバー管理・招待・監査ログ） |
+| Phase 19 | ✅ 完了 | Super Admin（テナント一覧・メトリクス） |
 
 ---
 
@@ -215,6 +225,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-05
-**Version**: v17.0.0
-**Status**: Phase 17 完了
+**Version**: v19.0.0
+**Status**: Phase 19 完了
 **Maintained by**: FDC Development Team
