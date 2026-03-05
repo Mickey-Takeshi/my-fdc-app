@@ -13,7 +13,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Phase | 内容 |
 |-------|------|
-| Phase 23+ | 今後の機能拡張 |
+| Phase 26+ | 今後の機能拡張 |
+
+---
+
+## [25.0.0] - 2026-03-05 - Phase 23-25: PWA, Landing Page SEO, UI Improvements
+
+### 概要
+
+PWA 対応（Service Worker + manifest + オフラインページ）、ランディングページ SEO メタデータ強化、UI 改善コンポーネント（UndoSnackbar, SyncStatusIndicator, useOptimistic フック）、Dependabot 設定。
+
+### Added
+
+| ファイル | 内容 |
+|---------|------|
+| `public/manifest.json` | PWA マニフェスト（Phase 23） |
+| `public/sw.js` | Service Worker - Network First with Cache Fallback（Phase 23） |
+| `public/offline.html` | オフラインフォールバックページ（Phase 23） |
+| `components/ServiceWorkerRegistration.tsx` | SW 登録クライアントコンポーネント（Phase 23） |
+| `components/UndoSnackbar.tsx` | 取り消し可能アクション用スナックバー（Phase 25） |
+| `components/SyncStatusIndicator.tsx` | データ保存ステータスインジケーター（Phase 25） |
+| `lib/hooks/useOptimistic.ts` | Optimistic UI 更新フック（Phase 25） |
+| `.github/dependabot.yml` | Dependabot 週次更新設定（Phase 25） |
+
+### Changed
+
+| ファイル | 内容 |
+|---------|------|
+| `app/layout.tsx` | PWA manifest リンク + theme-color + SEO メタデータ（OpenGraph）+ SW 登録コンポーネント追加（Phase 23/24） |
+| `app/globals.css` | Snackbar + Sync Status Indicator CSS 追加（Phase 25） |
 
 ---
 

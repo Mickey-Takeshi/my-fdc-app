@@ -9,8 +9,8 @@
 - 技術詳細は `docs/guides/DEVELOPMENT.md` を正とし、本ガイドはその上位コンパスとする。
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
-**📊 現在の開発状況（2026-03-05）**:
-- **バージョン**: v22.0.0
+**現在の開発状況（2026-03-05）**:
+- **バージョン**: v25.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
@@ -26,9 +26,11 @@
 - **管理機能**: Workspace Admin + Super Admin（RBAC + 招待 + 監査ログ）
 - **セキュリティ**: RLS + CSP + 入力サニタイズ + レート制限
 - **テスト**: Vitest + Pino ログ + GitHub Actions CI
-- **現在のPhase**: Phase 22 完了（Deploy + Performance）
-- **次フェーズ**: Phase 23（次期機能）
-- **LP**: ランディングページテンプレート同梱（Phase 24対応）
+- **PWA**: Service Worker + manifest + オフラインページ（Phase 23）
+- **LP SEO**: OpenGraph メタデータ（Phase 24）
+- **UI改善**: UndoSnackbar + SyncStatusIndicator + useOptimistic（Phase 25）
+- **現在のPhase**: Phase 25 完了（PWA + LP SEO + UI Improvements）
+- **次フェーズ**: Phase 26（次期機能）
 
 ---
 
@@ -205,6 +207,9 @@ founders-direct-modular/
 | Phase 20 | ✅ 完了 | Security（RLS + CSP + サニタイズ + レート制限） |
 | Phase 21 | ✅ 完了 | Test Strategy + Log Monitoring（Vitest + Pino + CI/CD） |
 | Phase 22 | ✅ 完了 | Deploy + Performance（CWV + 画像最適化 + チェックリスト） |
+| Phase 23 | ✅ 完了 | PWA Setup（Service Worker + manifest + offline） |
+| Phase 24 | ✅ 完了 | Landing Page SEO（OpenGraph メタデータ） |
+| Phase 25 | ✅ 完了 | UI Improvements（UndoSnackbar + SyncStatus + useOptimistic + Dependabot） |
 
 ---
 
@@ -234,6 +239,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-05
-**Version**: v22.0.0
-**Status**: Phase 22 完了
+**Version**: v25.0.0
+**Status**: Phase 25 完了
 **Maintained by**: FDC Development Team

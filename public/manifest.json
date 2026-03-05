@@ -1,0 +1,16 @@
+{
+  "name": "FDC Modular - Founders Direct Cockpit",
+  "short_name": "FDC",
+  "description": "Founders Direct Cockpit - Business Management Tool",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#667eea",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

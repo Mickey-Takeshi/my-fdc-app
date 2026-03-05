@@ -3429,6 +3429,101 @@ html {
   color: var(--red);
 }
 
+/* ==============================
+   Snackbar (Phase 25)
+   ============================== */
+
+.snackbar {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--text-dark);
+  color: white;
+  border-radius: 8px;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.snackbar-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.snackbar-hidden {
+  opacity: 0;
+  transform: translateX(-50%) translateY(20px);
+  pointer-events: none;
+}
+
+.snackbar-message {
+  flex: 1;
+}
+
+.snackbar-undo {
+  background: none;
+  border: none;
+  color: var(--primary-light);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.snackbar-undo:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.snackbar-close {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.snackbar-close:hover {
+  color: white;
+}
+
+/* ==============================
+   Sync Status Indicator (Phase 25)
+   ============================== */
+
+.sync-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.sync-indicator-saving {
+  color: var(--text-muted);
+}
+
+.sync-indicator-saved {
+  color: #16a34a;
+}
+
+.sync-indicator-error {
+  color: var(--red);
+}
+
+.sync-spinner {
+  animation: spin 1s linear infinite;
+}
+
 /* 低速ネットワーク・アクセシビリティ対応 */
 @media (prefers-reduced-motion: reduce) {
   *,
