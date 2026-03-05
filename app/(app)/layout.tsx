@@ -4,13 +4,13 @@
  * app/(app)/layout.tsx
  *
  * 認証済みユーザー用レイアウト
- * Phase 0: 認証 / Phase 1: タスクページ / Phase 2: 設定ページ
+ * Phase 4: Cookie フォールバック追加、Supabase signOut 統合
  */
 
 import { useEffect, useState, useCallback } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { AuthProvider, type AuthUser } from '@/lib/contexts/AuthContext';
-// Phase 2 以降で DataProvider 統合を検討
+import { createClient } from '@/lib/client/supabase';
 import LandingPage from '@/components/landing/default/LandingPage';
 import {
   LayoutDashboard,
@@ -32,29 +32,58 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/settings', label: '設定', icon: Settings },
 ];
 
+/**
+ * Cookie から fdc_session の値を取得
+ * OAuth コールバックは Cookie のみ設定するため、Cookie からの読み取りが必要
+ */
+function getSessionFromCookie(): string | null {
+  const match = document.cookie
+    .split('; ')
+    .find(row => row.startsWith('fdc_session='));
+
+  if (!match) return null;
+
+  try {
+    return decodeURIComponent(match.substring('fdc_session='.length));
+  } catch {
+    return null;
+  }
+}
+
 export default function AppLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const router = useRouter();
   const pathname = usePathname();
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
 
   const checkAuth = useCallback(() => {
-    const session = localStorage.getItem('fdc_session');
-    if (!session) {
-      // 未ログイン時はリダイレクトせず、LPを表示
+    // 1. localStorage を優先チェック（デモログインで設定）
+    let sessionStr = localStorage.getItem('fdc_session');
+
+    // 2. localStorage になければ Cookie をチェック（OAuth コールバックで設定）
+    if (!sessionStr) {
+      const cookieValue = getSessionFromCookie();
+      if (cookieValue) {
+        sessionStr = cookieValue;
+        // localStorage に同期して次回以降の読み取りを高速化
+        localStorage.setItem('fdc_session', cookieValue);
+      }
+    }
+
+    if (!sessionStr) {
+      // 未ログイン時はリダイレクトせず、LP を表示
       setLoading(false);
       return;
     }
 
     try {
-      const parsed = JSON.parse(session);
+      const parsed = JSON.parse(sessionStr);
       setUser(parsed.user);
     } catch {
-      // セッション無効の場合もLPを表示
+      // セッション無効の場合も LP を表示
       setLoading(false);
     } finally {
       setLoading(false);
@@ -66,10 +95,18 @@ export default function AppLayout({
   }, [checkAuth]);
 
   const handleLogout = () => {
+    // Supabase セッションをクリア（非同期、エラーは無視）
+    const supabase = createClient();
+    supabase.auth.signOut().catch(() => {
+      // ログアウト失敗してもローカル状態はクリアする
+    });
+
+    // fdc_session をクリア
     localStorage.removeItem('fdc_session');
-    // Cookie も削除（proxy.ts のルート保護と同期）
     document.cookie = 'fdc_session=; path=/; max-age=0';
-    router.push('/login');
+
+    // ハードナビゲーションで確実にリダイレクト
+    window.location.href = '/login';
   };
 
   if (loading) {
@@ -80,13 +117,13 @@ export default function AppLayout({
     );
   }
 
-  // 未ログイン時はLPを表示
+  // 未ログイン時は LP を表示
   if (!user) {
     return <LandingPage />;
   }
 
   return (
-    <AuthProvider user={user} loading={loading}>
+    <AuthProvider user={user} loading={loading} logout={handleLogout}>
       {/* ヘッダー */}
       <header className="header">
         <div className="header-content">

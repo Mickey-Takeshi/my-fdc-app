@@ -10,13 +10,14 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **📊 現在の開発状況（2026-03-04）**:
-- **バージョン**: v3.0.0
+- **バージョン**: v4.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
 - **データ永続化**: localStorage + Supabase PostgreSQL
-- **現在のPhase**: Phase 3 完了（Supabase セットアップ）
-- **次フェーズ**: Phase 4（Supabase Auth / Google OAuth）
+- **認証**: Supabase Auth（Google OAuth）+ デモログイン
+- **現在のPhase**: Phase 4 完了（Supabase Auth / Google OAuth）
+- **次フェーズ**: Phase 5（ワークスペース + ロール）
 - **LP**: ランディングページテンプレート同梱（Phase 24対応）
 
 ---
@@ -33,7 +34,10 @@ founders-direct-modular/
 │   │   ├── tasks/           # タスク管理ページ
 │   │   ├── settings/        # 設定ページ
 │   │   └── layout.tsx      # 認証レイアウト（未ログイン時LP表示）
-│   ├── login/              # ログインページ
+│   ├── api/                # API Routes
+│   │   └── auth/
+│   │       └── callback/   # OAuth コールバック
+│   ├── login/              # ログインページ（Google OAuth + デモ）
 │   ├── globals.css         # グローバルスタイル
 │   ├── layout.tsx          # ルートレイアウト
 │   └── page.tsx            # エントリー（LP表示）
@@ -51,8 +55,12 @@ founders-direct-modular/
 │           ├── LandingFooter.tsx
 │           └── ContactForm.tsx
 ├── lib/                    # 共通ライブラリ
+│   ├── client/             # クライアント用ライブラリ
+│   │   └── supabase.ts     # ブラウザ用 Supabase クライアント
+│   ├── server/             # サーバー用ライブラリ
+│   │   └── supabase.ts     # Service Role 用 Supabase クライアント
 │   ├── contexts/           # React Context
-│   │   ├── AuthContext.tsx # 認証コンテキスト
+│   │   ├── AuthContext.tsx # 認証コンテキスト（logout 関数含む）
 │   │   └── DataContext.tsx # データコンテキスト
 │   ├── hooks/              # カスタムフック
 │   └── types/              # 型定義
@@ -119,6 +127,7 @@ founders-direct-modular/
 | UIライブラリ | React | 19.2.1 |
 | 言語 | TypeScript | 5.7.2 |
 | データ永続化 | localStorage + Supabase | - |
+| 認証 | Supabase Auth (Google OAuth) | - |
 
 ---
 
@@ -130,7 +139,7 @@ founders-direct-modular/
 | Phase 1 | ✅ 完了 | タスクページ追加（CRUD + 統計 + 進捗バー） |
 | Phase 2 | ✅ 完了 | 設定ページ追加（Profile / Export / Import / Reset） |
 | Phase 3 | ✅ 完了 | Supabase セットアップ（PostgreSQL 接続基盤） |
-| Phase 4 | 🔜 予定 | Supabase Auth（Google OAuth） |
+| Phase 4 | ✅ 完了 | Supabase Auth（Google OAuth + デモログイン） |
 | Phase 5 | 🔜 予定 | ワークスペース + ロール |
 
 ---
@@ -161,6 +170,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-04
-**Version**: v3.0.0
-**Status**: Phase 3 完了
+**Version**: v4.0.0
+**Status**: Phase 4 完了
 **Maintained by**: FDC Development Team

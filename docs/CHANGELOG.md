@@ -13,8 +13,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Phase | 内容 |
 |-------|------|
-| Phase 4 | Supabase Auth（Google OAuth） |
 | Phase 5 | ワークスペース + ロール |
+
+---
+
+## [4.0.0] - 2026-03-04 - Phase 4: Supabase Auth (Google OAuth)
+
+### 概要
+
+Google OAuth 認証を実装。Supabase Auth と連携し、Google アカウントでのログインを実現。既存のデモログインも併存。PKCE フローによるセキュアな認証コールバック、Cookie ベースのセッション管理、AuthContext への logout 関数追加。
+
+### Added
+
+| ファイル | 内容 |
+|---------|------|
+| `app/api/auth/callback/route.ts` | OAuth コールバックハンドラー（PKCE コード交換 + users upsert + Cookie 設定） |
+
+### Changed
+
+| ファイル | 内容 |
+|---------|------|
+| `app/login/page.tsx` | Google OAuth ボタン追加、エラーハンドリング強化、デモログインとの共存 |
+| `lib/contexts/AuthContext.tsx` | `logout` 関数を Context に追加、`useAuth()` から利用可能に |
+| `app/(app)/layout.tsx` | Cookie フォールバック追加（OAuth 後の localStorage 同期）、Supabase signOut 統合 |
 
 ---
 
