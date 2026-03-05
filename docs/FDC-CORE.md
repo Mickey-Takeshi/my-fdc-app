@@ -10,7 +10,7 @@
 - 矛盾が生じた場合は、本ガイド → DEVELOPMENT の順で整合を取る。
 
 **現在の開発状況（2026-03-05）**:
-- **バージョン**: v25.0.0
+- **バージョン**: v28.0.0
 - **フロントエンド構成**: Next.js 16.0.10 + App Router + React 19.2.1
 - **TypeScript**: 5.7.2（strict mode）
 - **Node.js**: 22.x
@@ -29,8 +29,9 @@
 - **PWA**: Service Worker + manifest + オフラインページ（Phase 23）
 - **LP SEO**: OpenGraph メタデータ（Phase 24）
 - **UI改善**: UndoSnackbar + SyncStatusIndicator + useOptimistic（Phase 25）
-- **現在のPhase**: Phase 25 完了（PWA + LP SEO + UI Improvements）
-- **次フェーズ**: Phase 26（次期機能）
+- **運用基盤**: Dependabot + バージョン管理 + DB メンテナンス + ヘルスチェック + インシデント対応（Phase 26-28）
+- **現在のPhase**: Phase 28 完了（Operations: Version Management + DB Maintenance + Monitoring）
+- **次フェーズ**: Phase 29（次期機能）
 
 ---
 
@@ -70,11 +71,12 @@ founders-direct-modular/
 │   │   ├── key-results/    # Key Result CRUD API（Phase 11）
 │   │   ├── leads/          # リード CRUD API（Phase 6）
 │   │   ├── clients/        # クライアント CRUD API（Phase 7）
-│   │   └── admin/          # 管理者 API（Phase 18-19）
-│   │       ├── invitations/ # 招待 API
-│   │       ├── audit-logs/  # 監査ログ API
-│   │       ├── tenants/     # テナント一覧 API（SA）
-│   │       └── metrics/     # メトリクス API（SA）
+│   │   ├── admin/          # 管理者 API（Phase 18-19）
+│   │   │   ├── invitations/ # 招待 API
+│   │   │   ├── audit-logs/  # 監査ログ API
+│   │   │   ├── tenants/     # テナント一覧 API（SA）
+│   │   │   └── metrics/     # メトリクス API（SA）
+│   │   └── health/         # ヘルスチェック API（Phase 28）
 │   ├── login/              # ログインページ（Google OAuth + デモ）
 │   ├── globals.css         # グローバルスタイル
 │   ├── layout.tsx          # ルートレイアウト
@@ -210,6 +212,9 @@ founders-direct-modular/
 | Phase 23 | ✅ 完了 | PWA Setup（Service Worker + manifest + offline） |
 | Phase 24 | ✅ 完了 | Landing Page SEO（OpenGraph メタデータ） |
 | Phase 25 | ✅ 完了 | UI Improvements（UndoSnackbar + SyncStatus + useOptimistic + Dependabot） |
+| Phase 26 | ✅ 完了 | Version Management（Dependabot 強化 + TECH-STACK-VERSIONS） |
+| Phase 27 | ✅ 完了 | DB Maintenance（BACKUP-DR + db-maintenance.sql） |
+| Phase 28 | ✅ 完了 | Monitoring & Incident Response（Health Check API + INCIDENT-RESPONSE + vercel.json） |
 
 ---
 
@@ -239,6 +244,6 @@ founders-direct-modular/
 ---
 
 **Last Updated**: 2026-03-05
-**Version**: v25.0.0
-**Status**: Phase 25 完了
+**Version**: v28.0.0
+**Status**: Phase 28 完了
 **Maintained by**: FDC Development Team

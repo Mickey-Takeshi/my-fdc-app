@@ -13,7 +13,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Phase | 内容 |
 |-------|------|
-| Phase 26+ | 今後の機能拡張 |
+| Phase 29+ | 今後の機能拡張 |
+
+---
+
+## [28.0.0] - 2026-03-05 - Phase 26-28: Operations (Version Management, DB Maintenance, Monitoring)
+
+### 概要
+
+運用基盤を整備。Dependabot 設定の強化（タイムゾーン・ラベル・GitHub Actions 対応）、テックスタックバージョン管理、DB メンテナンスクエリ集、バックアップ/DR ガイド、ヘルスチェック API、インシデント対応ガイド、Vercel デプロイ設定。
+
+### Added
+
+| ファイル | 内容 |
+|---------|------|
+| `docs/specs/TECH-STACK-VERSIONS.md` | テックスタックバージョン管理ドキュメント（Phase 26） |
+| `docs/guides/BACKUP-DR.md` | バックアップ & ディザスタリカバリガイド（Phase 27） |
+| `docs/sql/db-maintenance.sql` | DB メンテナンスクエリ集（インデックス確認・テーブルサイズ・アーカイブ）（Phase 27） |
+| `app/api/health/route.ts` | ヘルスチェック API（DB 接続確認付き）（Phase 28） |
+| `docs/guides/INCIDENT-RESPONSE.md` | インシデント対応ガイド（重要度レベル・対応フロー・ポストモーテム）（Phase 28） |
+| `vercel.json` | Vercel デプロイ設定（Phase 28） |
+
+### Changed
+
+| ファイル | 内容 |
+|---------|------|
+| `.github/dependabot.yml` | Asia/Tokyo タイムゾーン、ラベル、GitHub Actions エコシステム、コミットメッセージプレフィックス追加（Phase 26） |
 
 ---
 
