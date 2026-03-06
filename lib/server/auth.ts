@@ -129,6 +129,8 @@ export async function getSessionUser(
       .single();
 
     if (user) {
+      // 既存ユーザーにもワークスペースが無ければ自動作成
+      await ensureDefaultWorkspace(supabase, user.id);
       setCachedUser(email, user);
       return user;
     }
