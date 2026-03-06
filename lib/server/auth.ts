@@ -7,6 +7,7 @@
  */
 
 import type { NextRequest } from 'next/server';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import { createServiceClient } from './supabase';
 
 interface SessionUser {
@@ -45,6 +46,54 @@ function setCachedUser(email: string, user: SessionUser): void {
     if (firstKey) userCache.delete(firstKey);
   }
   userCache.set(email, { user, expiresAt: Date.now() + USER_CACHE_TTL });
+}
+
+// -- Default Workspace --------------------------------------------------------
+// 新規ユーザーにデフォルトワークスペースを自動作成
+
+async function ensureDefaultWorkspace(
+  supabase: SupabaseClient,
+  userId: string
+): Promise<void> {
+  try {
+    // 既にワークスペースメンバーシップがあればスキップ
+    const { data: existing } = await supabase
+      .from('workspace_members')
+      .select('id')
+      .eq('user_id', userId)
+      .limit(1);
+
+    if (existing && existing.length > 0) return;
+
+    // デフォルトワークスペースを作成
+    const { data: ws, error: wsError } = await supabase
+      .from('workspaces')
+      .insert({ name: 'マイワークスペース' })
+      .select('id')
+      .single();
+
+    if (wsError || !ws) {
+      console.error('Default workspace creation failed:', wsError);
+      return;
+    }
+
+    // OWNER として追加
+    const { error: memberError } = await supabase
+      .from('workspace_members')
+      .insert({
+        workspace_id: ws.id,
+        user_id: userId,
+        role: 'OWNER',
+      });
+
+    if (memberError) {
+      console.error('Default workspace member addition failed:', memberError);
+      // ワークスペースだけ残るのを防止
+      await supabase.from('workspaces').delete().eq('id', ws.id);
+    }
+  } catch (err) {
+    console.error('ensureDefaultWorkspace error:', err);
+  }
 }
 
 // -- Main Function ------------------------------------------------------------
@@ -101,6 +150,8 @@ export async function getSessionUser(
 
     if (newUser) {
       setCachedUser(email, newUser);
+      // 新規ユーザーにデフォルトワークスペースを自動作成
+      await ensureDefaultWorkspace(supabase, newUser.id);
     }
 
     return newUser;
