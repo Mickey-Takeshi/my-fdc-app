@@ -22,6 +22,7 @@ import {
   Loader,
 } from 'lucide-react';
 import { useWorkspace } from '@/lib/hooks/useWorkspace';
+import WorkspaceGuard from '@/components/WorkspaceGuard';
 import { CLIENT_STATUS_LABELS, type Client, type ClientStatus } from '@/lib/types/client';
 import type { Prospect } from '@/lib/types/prospect';
 import { PROSPECT_STATUS_LABELS } from '@/lib/types/prospect';
@@ -37,7 +38,7 @@ const ClientDetailModal = dynamic(
 );
 
 export default function ClientsPage() {
-  const { currentWorkspace, loading: wsLoading } = useWorkspace();
+  const { currentWorkspace } = useWorkspace();
 
   const [clients, setClients] = useState<Client[]>([]);
   const [lostLeads, setLostLeads] = useState<Prospect[]>([]);
@@ -201,28 +202,10 @@ export default function ClientsPage() {
     lostLeads: lostLeads.length,
   };
 
-  if (wsLoading) {
-    return (
-      <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
-        <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
-        <p style={{ marginTop: '8px' }}>読み込み中...</p>
-      </div>
-    );
-  }
-
-  if (!currentWorkspace) {
-    return (
-      <div className="card">
-        <div className="empty-state">
-          <Loader size={64} className="empty-state-icon" />
-          <p>ワークスペースがありません</p>
-          <p style={{ fontSize: 14 }}>設定ページからワークスペースを作成してください</p>
-        </div>
-      </div>
-    );
-  }
+  if (!currentWorkspace) return null;
 
   return (
+    <WorkspaceGuard>
     <div>
       {/* 統計カード */}
       <div className="stats-grid">
@@ -452,5 +435,6 @@ export default function ClientsPage() {
         />
       )}
     </div>
+    </WorkspaceGuard>
   );
 }

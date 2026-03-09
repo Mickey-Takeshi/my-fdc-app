@@ -26,6 +26,7 @@ import {
   Loader,
 } from 'lucide-react';
 import { useWorkspace } from '@/lib/hooks/useWorkspace';
+import WorkspaceGuard from '@/components/WorkspaceGuard';
 import {
   ALL_STATUSES,
   PROSPECT_STATUS_LABELS,
@@ -53,7 +54,7 @@ const ApproachStatsSection = dynamic(
 type ViewMode = 'kanban' | 'list';
 
 export default function LeadsPage() {
-  const { currentWorkspace, loading: wsLoading } = useWorkspace();
+  const { currentWorkspace } = useWorkspace();
 
   const [leads, setLeads] = useState<Prospect[]>([]);
   const [approaches, setApproaches] = useState<Approach[]>([]);
@@ -239,28 +240,10 @@ export default function LeadsPage() {
     lost: leads.filter((l) => l.status === 'lost').length,
   };
 
-  if (wsLoading) {
-    return (
-      <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
-        <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
-        <p style={{ marginTop: '8px' }}>読み込み中...</p>
-      </div>
-    );
-  }
-
-  if (!currentWorkspace) {
-    return (
-      <div className="card">
-        <div className="empty-state">
-          <Loader size={64} className="empty-state-icon" />
-          <p>ワークスペースがありません</p>
-          <p style={{ fontSize: 14 }}>設定ページからワークスペースを作成してください</p>
-        </div>
-      </div>
-    );
-  }
+  if (!currentWorkspace) return null;
 
   return (
+    <WorkspaceGuard>
     <div>
       {/* 統計カード */}
       <div className="stats-grid">
@@ -489,5 +472,6 @@ export default function LeadsPage() {
         />
       )}
     </div>
+    </WorkspaceGuard>
   );
 }

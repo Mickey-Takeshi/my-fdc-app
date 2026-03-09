@@ -16,12 +16,13 @@ import {
   AlertCircle,
 } from 'lucide-react';
 import { useWorkspace } from '@/lib/hooks/useWorkspace';
+import WorkspaceGuard from '@/components/WorkspaceGuard';
 import type { Brand } from '@/lib/types/brand';
 import type { LeanCanvas, LeanCanvasBlock, LeanCanvasBlockType } from '@/lib/types/lean-canvas';
 import CanvasGrid from './_components/CanvasGrid';
 
 export default function LeanCanvasPage() {
-  const { currentWorkspace, loading: wsLoading } = useWorkspace();
+  const { currentWorkspace } = useWorkspace();
 
   const [brands, setBrands] = useState<Brand[]>([]);
   const [canvases, setCanvases] = useState<LeanCanvas[]>([]);
@@ -147,28 +148,10 @@ export default function LeanCanvasPage() {
     }
   };
 
-  if (wsLoading) {
-    return (
-      <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
-        <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
-        <p style={{ marginTop: '8px' }}>読み込み中...</p>
-      </div>
-    );
-  }
-
-  if (!currentWorkspace) {
-    return (
-      <div className="card">
-        <div className="empty-state">
-          <Loader size={64} className="empty-state-icon" />
-          <p>ワークスペースがありません</p>
-          <p style={{ fontSize: 14 }}>設定ページからワークスペースを作成してください</p>
-        </div>
-      </div>
-    );
-  }
+  if (!currentWorkspace) return null;
 
   return (
+    <WorkspaceGuard>
     <div>
       {/* ヘッダー */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
@@ -229,5 +212,6 @@ export default function LeanCanvasPage() {
         </div>
       )}
     </div>
+    </WorkspaceGuard>
   );
 }

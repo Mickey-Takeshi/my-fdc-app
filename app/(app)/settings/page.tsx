@@ -22,6 +22,7 @@ import {
   Loader,
 } from 'lucide-react';
 import { useWorkspace } from '@/lib/hooks/useWorkspace';
+import WorkspaceGuard from '@/components/WorkspaceGuard';
 import type { Settings, ExportData } from '@/lib/types/settings';
 import type { Task } from '@/lib/types/task';
 
@@ -43,7 +44,7 @@ function saveSettings(settings: Settings): void {
 }
 
 export default function SettingsPage() {
-  const { currentWorkspace, loading: wsLoading } = useWorkspace();
+  const { currentWorkspace } = useWorkspace();
 
   const [settings, setSettings] = useState<Settings>({ profileName: '' });
   const [saveMessage, setSaveMessage] = useState('');
@@ -198,16 +199,10 @@ export default function SettingsPage() {
     setTimeout(() => setSaveMessage(''), 2000);
   }, []);
 
-  if (wsLoading) {
-    return (
-      <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
-        <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
-        <p style={{ marginTop: '8px' }}>読み込み中...</p>
-      </div>
-    );
-  }
+  if (!currentWorkspace) return null;
 
   return (
+    <WorkspaceGuard>
     <div>
       <h2 style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         <User size={24} style={{ color: 'var(--primary)' }} />
@@ -382,5 +377,6 @@ export default function SettingsPage() {
         </div>
       )}
     </div>
+    </WorkspaceGuard>
   );
 }

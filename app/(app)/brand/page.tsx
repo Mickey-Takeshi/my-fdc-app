@@ -18,13 +18,14 @@ import {
   Trash2,
 } from 'lucide-react';
 import { useWorkspace } from '@/lib/hooks/useWorkspace';
+import WorkspaceGuard from '@/components/WorkspaceGuard';
 import type { Brand, BrandPoint, BrandPointType } from '@/lib/types/brand';
 import BrandProfile from './_components/BrandProfile';
 import BrandPoints from './_components/BrandPoints';
 import AddBrandForm from './_components/AddBrandForm';
 
 export default function BrandPage() {
-  const { currentWorkspace, loading: wsLoading } = useWorkspace();
+  const { currentWorkspace } = useWorkspace();
 
   const [brands, setBrands] = useState<Brand[]>([]);
   const [selectedBrand, setSelectedBrand] = useState<Brand | null>(null);
@@ -189,28 +190,10 @@ export default function BrandPage() {
     }
   };
 
-  if (wsLoading) {
-    return (
-      <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
-        <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
-        <p style={{ marginTop: '8px' }}>読み込み中...</p>
-      </div>
-    );
-  }
-
-  if (!currentWorkspace) {
-    return (
-      <div className="card">
-        <div className="empty-state">
-          <Loader size={64} className="empty-state-icon" />
-          <p>ワークスペースがありません</p>
-          <p style={{ fontSize: 14 }}>設定ページからワークスペースを作成してください</p>
-        </div>
-      </div>
-    );
-  }
+  if (!currentWorkspace) return null;
 
   return (
+    <WorkspaceGuard>
     <div>
       {/* ヘッダー */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
@@ -298,5 +281,6 @@ export default function BrandPage() {
         />
       )}
     </div>
+    </WorkspaceGuard>
   );
 }
