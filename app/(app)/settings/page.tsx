@@ -5,6 +5,7 @@
  *
  * 設定ページ（Phase 2）
  * プロフィール編集、データExport/Import、リセット
+ * Phase 3 以降: タスクデータは Supabase API 経由で取得・操作
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';
@@ -18,12 +19,13 @@ import {
   User,
   Database,
   X,
+  Loader,
 } from 'lucide-react';
+import { useWorkspace } from '@/lib/hooks/useWorkspace';
 import type { Settings, ExportData } from '@/lib/types/settings';
 import type { Task } from '@/lib/types/task';
 
 const SETTINGS_KEY = 'fdc_settings';
-const TASKS_KEY = 'fdc_tasks';
 
 function loadSettings(): Settings {
   if (typeof window === 'undefined') return { profileName: '' };
@@ -40,26 +42,39 @@ function saveSettings(settings: Settings): void {
   localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
 }
 
-function loadTasks(): Task[] {
-  try {
-    const raw = localStorage.getItem(TASKS_KEY);
-    if (raw) return JSON.parse(raw) as Task[];
-  } catch {
-    // ignore
-  }
-  return [];
-}
-
 export default function SettingsPage() {
+  const { currentWorkspace, loading: wsLoading } = useWorkspace();
+
   const [settings, setSettings] = useState<Settings>({ profileName: '' });
   const [saveMessage, setSaveMessage] = useState('');
   const [showResetDialog, setShowResetDialog] = useState(false);
   const [importMessage, setImportMessage] = useState('');
+  const [taskCount, setTaskCount] = useState(0);
+  const [importing, setImporting] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setSettings(loadSettings());
   }, []);
+
+  // タスク数を API から取得
+  useEffect(() => {
+    if (!currentWorkspace) return;
+    (async () => {
+      try {
+        const res = await fetch(
+          `/api/tasks?workspace_id=${currentWorkspace.id}`,
+          { headers: { 'Content-Type': 'application/json' } }
+        );
+        if (res.ok) {
+          const json = await res.json();
+          setTaskCount((json.tasks ?? []).length);
+        }
+      } catch {
+        // silent
+      }
+    })();
+  }, [currentWorkspace]);
 
   // プロフィール保存
   const handleSave = useCallback(() => {
@@ -68,9 +83,24 @@ export default function SettingsPage() {
     setTimeout(() => setSaveMessage(''), 2000);
   }, [settings]);
 
-  // JSON エクスポート
-  const handleExport = useCallback(() => {
-    const tasks = loadTasks();
+  // JSON エクスポート（Supabase API からタスク取得）
+  const handleExport = useCallback(async () => {
+    let tasks: Task[] = [];
+    if (currentWorkspace) {
+      try {
+        const res = await fetch(
+          `/api/tasks?workspace_id=${currentWorkspace.id}`,
+          { headers: { 'Content-Type': 'application/json' } }
+        );
+        if (res.ok) {
+          const json = await res.json();
+          tasks = json.tasks ?? [];
+        }
+      } catch {
+        // エクスポート時はエラーでも空配列で続行
+      }
+    }
+
     const exportData: ExportData = {
       version: '2.4.0',
       exportedAt: new Date().toISOString(),
@@ -89,15 +119,15 @@ export default function SettingsPage() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-  }, [settings]);
+  }, [settings, currentWorkspace]);
 
-  // JSON インポート
+  // JSON インポート（Supabase API 経由でタスク作成）
   const handleImport = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = (event) => {
+    reader.onload = async (event) => {
       try {
         const data = JSON.parse(event.target?.result as string) as ExportData;
 
@@ -107,20 +137,46 @@ export default function SettingsPage() {
           return;
         }
 
+        setImporting(true);
+
         // 設定を復元
         if (data.settings) {
           saveSettings(data.settings);
           setSettings(data.settings);
         }
 
-        // タスクを復元
-        if (Array.isArray(data.tasks)) {
-          localStorage.setItem(TASKS_KEY, JSON.stringify(data.tasks));
+        // タスクを API 経由で復元
+        if (Array.isArray(data.tasks) && data.tasks.length > 0 && currentWorkspace) {
+          let importedCount = 0;
+          for (const task of data.tasks) {
+            try {
+              const res = await fetch('/api/tasks', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  workspace_id: currentWorkspace.id,
+                  title: task.title,
+                  description: task.description || '',
+                  status: task.status || 'not_started',
+                  suit: task.suit || null,
+                  scheduled_date: task.scheduledDate || null,
+                  due_date: task.dueDate || null,
+                  priority: task.priority ?? 0,
+                }),
+              });
+              if (res.ok) importedCount++;
+            } catch {
+              // 個別タスクの失敗はスキップ
+            }
+          }
+          setTaskCount((prev) => prev + importedCount);
         }
 
+        setImporting(false);
         setImportMessage('success');
         setTimeout(() => setImportMessage(''), 3000);
       } catch {
+        setImporting(false);
         setImportMessage('error');
         setTimeout(() => setImportMessage(''), 3000);
       }
@@ -131,19 +187,25 @@ export default function SettingsPage() {
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
-  }, []);
+  }, [currentWorkspace]);
 
-  // データリセット
+  // データリセット（設定のみ。タスクは Supabase 側で管理）
   const handleReset = useCallback(() => {
     localStorage.removeItem(SETTINGS_KEY);
-    localStorage.removeItem(TASKS_KEY);
     setSettings({ profileName: '' });
     setShowResetDialog(false);
     setSaveMessage('reset');
     setTimeout(() => setSaveMessage(''), 2000);
   }, []);
 
-  const taskCount = loadTasks().length;
+  if (wsLoading) {
+    return (
+      <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
+        <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
+        <p style={{ marginTop: '8px' }}>読み込み中...</p>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -210,6 +272,11 @@ export default function SettingsPage() {
 
         <p style={{ color: 'var(--text-light)', fontSize: '14px', marginBottom: '20px' }}>
           Current data: {taskCount} task{taskCount !== 1 ? 's' : ''}
+          {currentWorkspace && (
+            <span style={{ marginLeft: '8px', color: 'var(--text-muted)' }}>
+              (Workspace: {currentWorkspace.name})
+            </span>
+          )}
         </p>
 
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginBottom: '16px' }}>
@@ -223,9 +290,10 @@ export default function SettingsPage() {
           <button
             className="btn btn-secondary"
             onClick={() => fileInputRef.current?.click()}
+            disabled={importing}
           >
             <Upload size={16} />
-            Import JSON
+            {importing ? 'Importing...' : 'Import JSON'}
           </button>
           <input
             ref={fileInputRef}
@@ -261,7 +329,7 @@ export default function SettingsPage() {
           marginTop: '8px',
         }}>
           <p style={{ color: 'var(--text-muted)', fontSize: '13px', marginBottom: '12px' }}>
-            Danger Zone: This will permanently delete all your data.
+            Danger Zone: This will reset your profile settings.
           </p>
           <button
             className="btn btn-danger btn-small"
@@ -292,10 +360,10 @@ export default function SettingsPage() {
             </div>
 
             <p style={{ color: 'var(--text-light)', marginBottom: '8px' }}>
-              Are you sure you want to reset all data?
+              Are you sure you want to reset settings?
             </p>
             <p style={{ color: 'var(--text-muted)', fontSize: '13px', marginBottom: '24px' }}>
-              This will delete all tasks, settings, and profile data. This action cannot be undone.
+              This will reset your profile name and email settings. Task data in the database will not be affected.
             </p>
 
             <div className="modal-actions">
@@ -307,7 +375,7 @@ export default function SettingsPage() {
               </button>
               <button className="btn btn-danger" onClick={handleReset}>
                 <Trash2 size={16} />
-                Reset All Data
+                Reset Settings
               </button>
             </div>
           </div>
