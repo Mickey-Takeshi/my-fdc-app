@@ -202,8 +202,6 @@ export default function ClientsPage() {
     lostLeads: lostLeads.length,
   };
 
-  if (!currentWorkspace) return null;
-
   return (
     <WorkspaceGuard>
     <div>

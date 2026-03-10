@@ -87,8 +87,6 @@ export default function DashboardPage() {
     }
   }, [currentWorkspace, fetchStats]);
 
-  if (!currentWorkspace) return null;
-
   return (
     <WorkspaceGuard>
     <div>
@@ -132,7 +130,7 @@ export default function DashboardPage() {
       ) : (
         <div style={{ marginTop: '24px' }}>
           <TodaySchedule
-            workspaceId={currentWorkspace.id}
+            workspaceId={currentWorkspace!.id}
             onTaskCreated={fetchStats}
           />
         </div>

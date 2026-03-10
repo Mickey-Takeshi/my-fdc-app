@@ -148,8 +148,6 @@ export default function LeanCanvasPage() {
     }
   };
 
-  if (!currentWorkspace) return null;
-
   return (
     <WorkspaceGuard>
     <div>

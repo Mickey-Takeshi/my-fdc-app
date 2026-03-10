@@ -190,8 +190,6 @@ export default function BrandPage() {
     }
   };
 
-  if (!currentWorkspace) return null;
-
   return (
     <WorkspaceGuard>
     <div>

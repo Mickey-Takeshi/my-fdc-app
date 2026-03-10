@@ -247,8 +247,6 @@ export default function ActionMapsPage() {
     ? Math.round(activeMaps.reduce((sum, m) => sum + (m.progressRate ?? 0), 0) / activeMaps.length)
     : 0;
 
-  if (!currentWorkspace) return null;
-
   return (
     <WorkspaceGuard>
     <div>

@@ -240,8 +240,6 @@ export default function LeadsPage() {
     lost: leads.filter((l) => l.status === 'lost').length,
   };
 
-  if (!currentWorkspace) return null;
-
   return (
     <WorkspaceGuard>
     <div>

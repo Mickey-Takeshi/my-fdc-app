@@ -237,8 +237,6 @@ export default function TasksPage() {
         : 0,
   };
 
-  if (!currentWorkspace) return null;
-
   return (
     <WorkspaceGuard>
     <div>
@@ -326,7 +324,7 @@ export default function TasksPage() {
       {/* 追加ボタン + 同期ボタン */}
       <div style={{ marginBottom: '16px', display: 'flex', justifyContent: 'flex-end', gap: '8px', alignItems: 'center' }}>
         <SyncButton
-          workspaceId={currentWorkspace.id}
+          workspaceId={currentWorkspace!.id}
           onSyncComplete={fetchTasks}
         />
         <button

@@ -255,8 +255,6 @@ export default function OkrPage() {
         )
       : 0;
 
-  if (!currentWorkspace) return null;
-
   return (
     <WorkspaceGuard>
     <div>

@@ -171,8 +171,6 @@ export default function MVVPage() {
     setEditValues((prev) => prev.filter((_, i) => i !== index));
   };
 
-  if (!currentWorkspace) return null;
-
   if (!loading && brands.length === 0) {
     return (
       <WorkspaceGuard>
