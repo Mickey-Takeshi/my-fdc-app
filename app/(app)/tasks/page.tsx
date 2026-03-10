@@ -23,10 +23,16 @@ import {
 import { useWorkspace } from '@/lib/hooks/useWorkspace';
 import WorkspaceGuard from '@/components/WorkspaceGuard';
 import type { Task, Suit, TaskStatus } from '@/lib/types/task';
-import TodoBoard from './_components/TodoBoard';
-import SyncButton from './_components/SyncButton';
 
-// Phase 87: Dynamic imports for modal components (loaded on demand)
+// Dynamic imports for components that use browser-only APIs (ssr: false)
+const TodoBoard = dynamic(
+  () => import('./_components/TodoBoard'),
+  { ssr: false }
+);
+const SyncButton = dynamic(
+  () => import('./_components/SyncButton'),
+  { ssr: false }
+);
 const AddTaskForm = dynamic(
   () => import('./_components/AddTaskForm'),
   { ssr: false }
@@ -323,10 +329,12 @@ export default function TasksPage() {
 
       {/* 追加ボタン + 同期ボタン */}
       <div style={{ marginBottom: '16px', display: 'flex', justifyContent: 'flex-end', gap: '8px', alignItems: 'center' }}>
-        <SyncButton
-          workspaceId={currentWorkspace!.id}
-          onSyncComplete={fetchTasks}
-        />
+        {currentWorkspace && (
+          <SyncButton
+            workspaceId={currentWorkspace.id}
+            onSyncComplete={fetchTasks}
+          />
+        )}
         <button
           className="btn btn-primary"
           onClick={() => setShowAddForm(true)}
