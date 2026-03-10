@@ -76,7 +76,7 @@ export default function LeanCanvasPage() {
         setBlocks(json.blocks ?? []);
       }
     } catch {
-      // silent
+      setError('ブロックの取得に失敗しました');
     }
   }, [selectedCanvas]);
 

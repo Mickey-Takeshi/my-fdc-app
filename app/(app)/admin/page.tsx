@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { useWorkspace } from '@/lib/hooks/useWorkspace';
 import { useAuth } from '@/lib/contexts/AuthContext';
+import WorkspaceGuard from '@/components/WorkspaceGuard';
 import type { WorkspaceMemberWithUser, WorkspaceRole } from '@/lib/types/workspace';
 import type { Invitation, AuditLog } from '@/lib/types/admin';
 import MembersSection from './_components/MembersSection';
@@ -26,7 +27,7 @@ import SADashboard from './_components/SADashboard';
 type AdminTab = 'workspace' | 'super';
 
 export default function AdminPage() {
-  const { currentWorkspace, loading: wsLoading } = useWorkspace();
+  const { currentWorkspace } = useWorkspace();
   const { user } = useAuth();
 
   const [activeTab, setActiveTab] = useState<AdminTab>('workspace');
@@ -177,69 +178,74 @@ export default function AdminPage() {
     }
   };
 
-  if (wsLoading || loading) {
-    return (
-      <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
-        <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
-        <p style={{ marginTop: '8px' }}>読み込み中...</p>
-      </div>
-    );
-  }
-
   return (
+    <WorkspaceGuard>
     <div>
-      {/* タブ切替 */}
-      <div className="admin-tabs">
-        <button
-          className={`admin-tab ${activeTab === 'workspace' ? 'active' : ''}`}
-          onClick={() => setActiveTab('workspace')}
-        >
-          <Shield size={14} /> Workspace Admin
-        </button>
-        {isSA && (
-          <button
-            className={`admin-tab ${activeTab === 'super' ? 'active' : ''}`}
-            onClick={() => setActiveTab('super')}
-          >
-            <Shield size={14} /> Super Admin
-          </button>
-        )}
-      </div>
-
-      {/* エラー */}
-      {error && (
-        <div className="alert alert-error" style={{ marginBottom: '16px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <AlertCircle size={16} />
-            {error}
-            <button
-              onClick={() => setError('')}
-              style={{ marginLeft: 'auto', background: 'none', border: 'none', cursor: 'pointer', color: 'inherit' }}
-            >
-              x
-            </button>
-          </div>
+      {/* ローディング */}
+      {loading && (
+        <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
+          <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
+          <p style={{ marginTop: '8px' }}>読み込み中...</p>
         </div>
       )}
 
-      {/* コンテンツ */}
-      {activeTab === 'workspace' ? (
-        <div className="admin-content">
-          <MembersSection
-            members={members}
-            currentUserId={user?.id || ''}
-            onRoleChange={handleRoleChange}
-            onRemove={handleRemoveMember}
-          />
-          <InvitationsSection
-            invitations={invitations}
-            onInvite={handleInvite}
-          />
-          <AuditLogsSection logs={auditLogs} />
-        </div>
-      ) : (
-        <SADashboard />
+      {/* タブ切替 */}
+      {!loading && (
+        <>
+          <div className="admin-tabs">
+            <button
+              className={`admin-tab ${activeTab === 'workspace' ? 'active' : ''}`}
+              onClick={() => setActiveTab('workspace')}
+            >
+              <Shield size={14} /> Workspace Admin
+            </button>
+            {isSA && (
+              <button
+                className={`admin-tab ${activeTab === 'super' ? 'active' : ''}`}
+                onClick={() => setActiveTab('super')}
+              >
+                <Shield size={14} /> Super Admin
+              </button>
+            )}
+          </div>
+
+          {/* エラー */}
+          {error && (
+            <div className="alert alert-error" style={{ marginBottom: '16px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <AlertCircle size={16} />
+                {error}
+                <button
+                  onClick={() => setError('')}
+                  style={{ marginLeft: 'auto', background: 'none', border: 'none', cursor: 'pointer', color: 'inherit' }}
+                >
+                  x
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* コンテンツ */}
+          {activeTab === 'workspace' ? (
+            <div className="admin-content">
+              <MembersSection
+                members={members}
+                currentUserId={user?.id || ''}
+                onRoleChange={handleRoleChange}
+                onRemove={handleRemoveMember}
+              />
+              <InvitationsSection
+                invitations={invitations}
+                onInvite={handleInvite}
+              />
+              <AuditLogsSection logs={auditLogs} />
+            </div>
+          ) : (
+            <SADashboard />
+          )}
+        </>
       )}
     </div>
+    </WorkspaceGuard>
   );
 }

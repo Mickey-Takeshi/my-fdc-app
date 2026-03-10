@@ -88,7 +88,7 @@ export default function MVVPage() {
         }
       }
     } catch {
-      // silent
+      setError('MVVの取得に失敗しました');
     }
   }, [selectedBrand]);
 

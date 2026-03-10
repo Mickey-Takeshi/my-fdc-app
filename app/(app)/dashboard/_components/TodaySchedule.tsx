@@ -90,7 +90,7 @@ export default function TodaySchedule({ workspaceId, onTaskCreated }: TodaySched
         onTaskCreated?.();
       }
     } catch {
-      // silent fail
+      setError('タスクの作成に失敗しました');
     } finally {
       setConvertingId(null);
     }

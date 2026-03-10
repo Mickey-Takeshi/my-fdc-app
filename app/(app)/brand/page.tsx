@@ -74,7 +74,7 @@ export default function BrandPage() {
         setPoints(json.points ?? []);
       }
     } catch {
-      // silent
+      setError('ブランドポイントの取得に失敗しました');
     }
   }, [selectedBrand]);
 

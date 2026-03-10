@@ -75,7 +75,7 @@ export default function DashboardPage() {
         }));
       }
     } catch {
-      // silent
+      // stats fetch failure is non-critical — dashboard still renders with defaults
     } finally {
       setLoading(false);
     }
@@ -127,14 +127,14 @@ export default function DashboardPage() {
         <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
           <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
         </div>
-      ) : (
+      ) : currentWorkspace ? (
         <div style={{ marginTop: '24px' }}>
           <TodaySchedule
-            workspaceId={currentWorkspace!.id}
+            workspaceId={currentWorkspace.id}
             onTaskCreated={fetchStats}
           />
         </div>
-      )}
+      ) : null}
     </div>
     </WorkspaceGuard>
   );

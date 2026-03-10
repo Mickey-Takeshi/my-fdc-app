@@ -267,7 +267,7 @@ export default function SettingsPage() {
           Current data: {taskCount} task{taskCount !== 1 ? 's' : ''}
           {currentWorkspace && (
             <span style={{ marginLeft: '8px', color: 'var(--text-muted)' }}>
-              (Workspace: {currentWorkspace!.name})
+              (Workspace: {currentWorkspace.name})
             </span>
           )}
         </p>
