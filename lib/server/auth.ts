@@ -65,10 +65,11 @@ async function ensureDefaultWorkspace(
 
     if (existing && existing.length > 0) return;
 
-    // デフォルトワークスペースを作成
+    // デフォルトワークスペースを作成（slug は NOT NULL なので生成必須）
+    const slug = `my-workspace-${Date.now().toString(36)}`;
     const { data: ws, error: wsError } = await supabase
       .from('workspaces')
-      .insert({ name: 'マイワークスペース' })
+      .insert({ name: 'マイワークスペース', slug })
       .select('id')
       .single();
 

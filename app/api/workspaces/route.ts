@@ -102,10 +102,14 @@ export async function POST(request: NextRequest) {
   const { name } = result.data;
   const supabase = createServiceClient();
 
+  // slug を生成（英数字のみ抽出 + タイムスタンプで一意性確保）
+  const base = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  const slug = (base || 'workspace') + '-' + Date.now().toString(36);
+
   // ワークスペース作成
   const { data: workspace, error: wsError } = await supabase
     .from('workspaces')
-    .insert({ name })
+    .insert({ name, slug })
     .select()
     .single();
 
