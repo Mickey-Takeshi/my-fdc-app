@@ -3,14 +3,14 @@
 /**
  * app/login/page.tsx
  *
- * ログインページ（ミニマルスターター版）
- * SaaS版と同じUI・デザインを使用
- * デモ用: パスワード = "fdc"
+ * ログインページ（Supabase Auth + Google OAuth）
+ * デモモード: パスワード "fdc" でも引き続きログイン可能
  */
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Lock, LogIn, Rocket } from 'lucide-react';
+import { Lock, LogIn, Rocket, Chrome } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -18,16 +18,34 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = async () => {
+  const handleGoogleLogin = async () => {
     setIsLoading(true);
-    // デモ用認証
+    setError('');
+    try {
+      const supabase = createClient();
+      const { error: authError } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/api/auth/callback?next=/dashboard`,
+        },
+      });
+      if (authError) {
+        setError(authError.message);
+        setIsLoading(false);
+      }
+    } catch {
+      setError('ログインに失敗しました');
+      setIsLoading(false);
+    }
+  };
+
+  const handleDemoLogin = async () => {
+    setIsLoading(true);
     if (password === 'fdc') {
-      // セッションをlocalStorageに保存
       localStorage.setItem('fdc_session', JSON.stringify({
         user: { id: '1', email: 'demo@example.com', name: 'Demo User' },
         loggedInAt: new Date().toISOString(),
       }));
-      // 少し遅延を入れてUIを見せる
       await new Promise(resolve => setTimeout(resolve, 300));
       router.push('/dashboard');
     } else {
@@ -50,12 +68,33 @@ export default function LoginPage() {
         </div>
 
         <h1>FDC Modular</h1>
-        <p>Founders Direct Cockpit - 学習用スターター</p>
+        <p>Founders Direct Cockpit</p>
 
+        {/* Google OAuth */}
+        <button
+          className="btn btn-primary"
+          style={{ width: '100%', marginTop: '24px' }}
+          onClick={handleGoogleLogin}
+          disabled={isLoading}
+        >
+          <Chrome size={18} />
+          Google でログイン
+        </button>
+
+        <div style={{
+          margin: '20px 0',
+          textAlign: 'center',
+          color: 'var(--text-muted)',
+          fontSize: '12px',
+        }}>
+          または
+        </div>
+
+        {/* デモログイン */}
         <div className="form-group" style={{ textAlign: 'left' }}>
           <label style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <Lock size={14} />
-            パスワード
+            デモパスワード
           </label>
           <input
             type="password"
@@ -64,7 +103,7 @@ export default function LoginPage() {
               setPassword(e.target.value);
               setError('');
             }}
-            onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
+            onKeyDown={(e) => e.key === 'Enter' && handleDemoLogin()}
             placeholder="パスワードを入力"
             disabled={isLoading}
           />
@@ -80,13 +119,13 @@ export default function LoginPage() {
         )}
 
         <button
-          className="btn btn-primary"
+          className="btn btn-secondary"
           style={{ width: '100%' }}
-          onClick={handleLogin}
+          onClick={handleDemoLogin}
           disabled={isLoading}
         >
           <LogIn size={18} />
-          {isLoading ? 'ログイン中...' : 'ログイン'}
+          {isLoading ? 'ログイン中...' : 'デモログイン'}
         </button>
 
         <p style={{

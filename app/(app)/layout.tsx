@@ -14,6 +14,10 @@ import { AuthProvider, type AuthUser } from '@/lib/contexts/AuthContext';
 import {
   LayoutDashboard,
   LogOut,
+  Users,
+  FileText,
+  CreditCard,
+  Settings,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -25,8 +29,10 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { href: '/dashboard', label: 'ダッシュボード', icon: LayoutDashboard },
-  // ランブックで追加: { href: '/tasks', label: 'タスク', icon: CheckSquare },
-  // ランブックで追加: { href: '/settings', label: '設定', icon: Settings },
+  { href: '/customers', label: '顧客管理', icon: Users },
+  { href: '/forms', label: 'フォーム', icon: FileText },
+  { href: '/billing', label: '決済管理', icon: CreditCard },
+  { href: '/settings', label: '設定', icon: Settings },
 ];
 
 export default function AppLayout({
