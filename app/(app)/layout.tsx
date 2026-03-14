@@ -84,7 +84,7 @@ export default function AppLayout({
   }
 
   return (
-    <AuthProvider user={user} loading={loading}>
+    <AuthProvider user={user} loading={loading} logout={handleLogout}>
       {/* Phase 1 で DataProvider でラップ */}
       {/* ヘッダー */}
       <header className="header">

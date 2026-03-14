@@ -3,116 +3,139 @@
 /**
  * app/(app)/dashboard/page.tsx
  *
- * ダッシュボードページ（Phase 0: 空ダッシュボード）
- * Phase 1 でタスク機能を追加します
+ * ダッシュボードページ
+ * Phase 13: 今日のカレンダー予定を統合表示
  */
 
-import { Rocket, ArrowRight, CheckSquare, Settings, Database } from 'lucide-react';
+import { useState, useEffect, useCallback } from 'react';
+import {
+  Target,
+  CheckSquare,
+  TrendingUp,
+  Calendar,
+  Loader,
+} from 'lucide-react';
+import { useWorkspace } from '@/lib/hooks/useWorkspace';
+import WorkspaceGuard from '@/components/WorkspaceGuard';
+import TodaySchedule from './_components/TodaySchedule';
+
+interface DashboardStats {
+  totalTasks: number;
+  doneTasks: number;
+  progressRate: number;
+  totalObjectives: number;
+}
 
 export default function DashboardPage() {
+  const { currentWorkspace } = useWorkspace();
+  const [stats, setStats] = useState<DashboardStats>({
+    totalTasks: 0,
+    doneTasks: 0,
+    progressRate: 0,
+    totalObjectives: 0,
+  });
+  const [loading, setLoading] = useState(true);
+
+  const fetchStats = useCallback(async () => {
+    if (!currentWorkspace) return;
+    setLoading(true);
+    try {
+      const [tasksRes, objRes] = await Promise.all([
+        fetch(`/api/tasks?workspace_id=${currentWorkspace.id}`, {
+          headers: { 'Content-Type': 'application/json' },
+        }),
+        fetch(`/api/objectives?workspace_id=${currentWorkspace.id}`, {
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      ]);
+
+      if (tasksRes.ok) {
+        const tasksData = await tasksRes.json();
+        const tasks = tasksData.tasks ?? [];
+        const done = tasks.filter(
+          (t: { status: string }) => t.status === 'done'
+        ).length;
+        setStats((prev) => ({
+          ...prev,
+          totalTasks: tasks.length,
+          doneTasks: done,
+          progressRate:
+            tasks.length > 0 ? Math.round((done / tasks.length) * 100) : 0,
+        }));
+      }
+
+      if (objRes.ok) {
+        const objData = await objRes.json();
+        const objectives = (objData.objectives ?? []).filter(
+          (o: { isArchived: boolean }) => !o.isArchived
+        );
+        setStats((prev) => ({
+          ...prev,
+          totalObjectives: objectives.length,
+        }));
+      }
+    } catch {
+      // stats fetch failure is non-critical — dashboard still renders with defaults
+    } finally {
+      setLoading(false);
+    }
+  }, [currentWorkspace]);
+
+  useEffect(() => {
+    if (currentWorkspace) {
+      fetchStats();
+    }
+  }, [currentWorkspace, fetchStats]);
+
   return (
+    <WorkspaceGuard>
     <div>
-      {/* ウェルカムカード */}
-      <div className="card" style={{ textAlign: 'center', padding: '48px 32px' }}>
-        <Rocket
-          size={64}
-          style={{
-            color: 'var(--primary)',
-            marginBottom: '24px',
-          }}
-        />
-
-        <h2 style={{
-          fontSize: '28px',
-          fontWeight: 700,
-          marginBottom: '16px',
-          color: 'var(--text-dark)',
-          border: 'none',
-          padding: 0,
-        }}>
-          FDC Modular Starter へようこそ！
-        </h2>
-
-        <p style={{
-          color: 'var(--text-light)',
-          fontSize: '16px',
-          marginBottom: '32px',
-          maxWidth: '500px',
-          margin: '0 auto 32px',
-        }}>
-          このダッシュボードは Phase 0 の初期状態です。<br />
-          各 Phase を進めることで機能が追加されていきます。
-        </p>
-
-        {/* 次のステップ */}
-        <div style={{
-          background: 'var(--bg-gray)',
-          borderRadius: '12px',
-          padding: '24px',
-          textAlign: 'left',
-          maxWidth: '400px',
-          margin: '0 auto',
-        }}>
-          <h3 style={{
-            fontSize: '14px',
-            fontWeight: 600,
-            color: 'var(--text-dark)',
-            marginBottom: '16px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-          }}>
-            📚 次のステップ
-          </h3>
-
-          <ul style={{
-            listStyle: 'none',
-            padding: 0,
-            margin: 0,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '12px',
-          }}>
-            <li style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <CheckSquare size={18} style={{ color: 'var(--primary)' }} />
-              <span style={{ fontSize: '14px', color: 'var(--text-medium)' }}>
-                Phase 1: タスク機能を追加
-              </span>
-              <ArrowRight size={14} style={{ color: 'var(--text-muted)', marginLeft: 'auto' }} />
-            </li>
-            <li style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <Settings size={18} style={{ color: 'var(--primary)' }} />
-              <span style={{ fontSize: '14px', color: 'var(--text-medium)' }}>
-                Phase 2: 設定ページを追加
-              </span>
-              <ArrowRight size={14} style={{ color: 'var(--text-muted)', marginLeft: 'auto' }} />
-            </li>
-            <li style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <Database size={18} style={{ color: 'var(--primary)' }} />
-              <span style={{ fontSize: '14px', color: 'var(--text-medium)' }}>
-                Phase 3: Supabase 統合
-              </span>
-              <ArrowRight size={14} style={{ color: 'var(--text-muted)', marginLeft: 'auto' }} />
-            </li>
-          </ul>
+      {/* 統計カード */}
+      <div className="stats-grid">
+        <div className="stat-card">
+          <div className="stat-value">{loading ? '--' : stats.totalTasks}</div>
+          <div className="stat-label">
+            <CheckSquare size={14} style={{ verticalAlign: 'middle', marginRight: 4 }} />
+            タスク
+          </div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-value">{loading ? '--' : stats.doneTasks}</div>
+          <div className="stat-label">
+            <TrendingUp size={14} style={{ verticalAlign: 'middle', marginRight: 4 }} />
+            完了
+          </div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-value">{loading ? '--' : `${stats.progressRate}%`}</div>
+          <div className="stat-label">
+            <Target size={14} style={{ verticalAlign: 'middle', marginRight: 4 }} />
+            進捗率
+          </div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-value">{loading ? '--' : stats.totalObjectives}</div>
+          <div className="stat-label">
+            <Calendar size={14} style={{ verticalAlign: 'middle', marginRight: 4 }} />
+            OKR
+          </div>
         </div>
       </div>
 
-      {/* Coming Soon カード */}
-      <div className="stats-grid" style={{ marginTop: '24px' }}>
-        <div className="stat-card" style={{ opacity: 0.6 }}>
-          <div className="stat-value">—</div>
-          <div className="stat-label">タスク数（Phase 1）</div>
+      {/* 今日の予定 */}
+      {loading ? (
+        <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
+          <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
         </div>
-        <div className="stat-card" style={{ opacity: 0.6 }}>
-          <div className="stat-value">—</div>
-          <div className="stat-label">完了数（Phase 1）</div>
+      ) : currentWorkspace ? (
+        <div style={{ marginTop: '24px' }}>
+          <TodaySchedule
+            workspaceId={currentWorkspace.id}
+            onTaskCreated={fetchStats}
+          />
         </div>
-        <div className="stat-card" style={{ opacity: 0.6 }}>
-          <div className="stat-value">—</div>
-          <div className="stat-label">進捗率（Phase 1）</div>
-        </div>
-      </div>
+      ) : null}
     </div>
+    </WorkspaceGuard>
   );
 }
