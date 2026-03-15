@@ -42,10 +42,12 @@ export default function LoginPage() {
   const handleDemoLogin = async () => {
     setIsLoading(true);
     if (password === 'fdc') {
-      localStorage.setItem('fdc_session', JSON.stringify({
+      const sessionData = JSON.stringify({
         user: { id: '1', email: 'demo@example.com', name: 'Demo User' },
         loggedInAt: new Date().toISOString(),
-      }));
+      });
+      localStorage.setItem('fdc_session', sessionData);
+      document.cookie = `fdc_session=${encodeURIComponent(sessionData)}; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Lax`;
       await new Promise(resolve => setTimeout(resolve, 300));
       router.push('/dashboard');
     } else {

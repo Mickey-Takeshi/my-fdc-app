@@ -68,6 +68,7 @@ export default function AppLayout({
 
   const handleLogout = () => {
     localStorage.removeItem('fdc_session');
+    document.cookie = 'fdc_session=; path=/; max-age=0';
     router.push('/login');
   };
 

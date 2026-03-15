@@ -48,6 +48,37 @@ function setCachedUser(email: string, user: SessionUser): void {
   userCache.set(email, { user, expiresAt: Date.now() + USER_CACHE_TTL });
 }
 
+// -- Profile ------------------------------------------------------------------
+// workspace_members の FK が profiles(id) を参照するため、
+// users と同期して profiles レコードを確保する
+
+async function ensureProfile(
+  supabase: SupabaseClient,
+  userId: string,
+  email: string,
+  name: string
+): Promise<void> {
+  try {
+    const { data: existing } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('id', userId)
+      .single();
+
+    if (existing) return;
+
+    const { error } = await supabase
+      .from('profiles')
+      .insert({ id: userId, email, name });
+
+    if (error) {
+      console.error('Profile creation failed:', error);
+    }
+  } catch (err) {
+    console.error('ensureProfile error:', err);
+  }
+}
+
 // -- Default Workspace --------------------------------------------------------
 // 新規ユーザーにデフォルトワークスペースを自動作成
 
@@ -130,6 +161,8 @@ export async function getSessionUser(
       .single();
 
     if (user) {
+      // profiles テーブルにも存在することを確認（FK 整合性）
+      await ensureProfile(supabase, user.id, user.email, user.name);
       // 既存ユーザーにもワークスペースが無ければ自動作成
       await ensureDefaultWorkspace(supabase, user.id);
       setCachedUser(email, user);
@@ -152,6 +185,8 @@ export async function getSessionUser(
     }
 
     if (newUser) {
+      // profiles テーブルにも作成（workspace_members の FK に必要）
+      await ensureProfile(supabase, newUser.id, newUser.email, newUser.name);
       setCachedUser(email, newUser);
       // 新規ユーザーにデフォルトワークスペースを自動作成
       await ensureDefaultWorkspace(supabase, newUser.id);
